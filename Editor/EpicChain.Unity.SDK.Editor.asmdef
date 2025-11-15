@@ -1,0 +1,18 @@
+{
+    "name": "EpicChain.Unity.SDK.Editor",
+    "rootNamespace": "EpicChain.Unity.SDK.Editor",
+    "references": [
+        "EpicChain.Unity.SDK"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,23 @@
+{
+    "name": "EpicChain.Unity.SDK",
+    "rootNamespace": "EpicChain.Unity.SDK",
+    "references": [
+        "Unity.Addressables",
+        "Unity.Nuget.Newtonsoft-Json"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.nuget.newtonsoft-json",
+            "expression": "3.2.1",
+            "define": "EPICCHAIN_NEWTONSOFT_JSON"
+        }
+    ],
+    "noEngineReferences": false
+}

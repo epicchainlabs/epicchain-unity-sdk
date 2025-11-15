@@ -1,0 +1,49 @@
+{
+  "name": "com.epicchain.unity-sdk",
+  "displayName": "EpicChain Unity SDK",
+  "version": "1.0.0",
+  "description": "Comprehensive EpicChain blockchain SDK for Unity game developers. Enables seamless integration of blockchain functionality including wallet management, smart contract interaction, and NFT operations.",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "keywords": [
+    "blockchain",
+    "epicchain",
+    "nft",
+    "smart-contracts",
+    "wallet",
+    "cryptocurrency",
+    "web3",
+    "gaming"
+  ],
+  "author": {
+    "name": "EpicChain Community",
+    "email": "support@epic-chain.org",
+    "url": "https://epic-chain.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/epicchainlabs/epicchain-unity-sdk.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.addressables": "1.21.17"
+  },
+  "samples": [
+    {
+      "displayName": "NFT Marketplace Game",
+      "description": "Complete NFT marketplace with game integration showcasing Neo blockchain operations.",
+      "path": "Samples~/NFTMarketplaceGame"
+    },
+    {
+      "displayName": "Blockchain RPG",
+      "description": "RPG game with blockchain-based items, achievements, and economic system.",
+      "path": "Samples~/BlockchainRPG"
+    },
+    {
+      "displayName": "Wallet Integration Demo", 
+      "description": "Demonstrates wallet creation, management, and transaction operations in Unity.",
+      "path": "Samples~/WalletIntegrationDemo"
+    }
+  ]
+}
