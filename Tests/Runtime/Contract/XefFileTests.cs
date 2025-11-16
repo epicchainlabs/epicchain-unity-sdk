@@ -17,8 +17,8 @@ namespace EpicChain.Unity.SDK.Tests.Contract
     [TestFixture]
     public class NefFileTests
     {
-        private const string MAGIC = "4e454633"; // NEF3 in hex (reversed)
-        private const string TESTCONTRACT_COMPILER = "neon-3.0.0.0";
+        private const string MAGIC = "4e454633"; // XEF3 in hex (reversed)
+        private const string TESTCONTRACT_COMPILER = "epicvault-1.0.0.0";
         private const string TESTCONTRACT_COMPILER_HEX = "6e656f77336a2d332e302e3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
         private const string RESERVED_BYTES = "0000";
         private const string TESTCONTRACT_SCRIPT_SIZE = "05";

@@ -17,7 +17,7 @@ namespace EpicChain.Unity.SDK.Contracts
     {
         #region Private Fields
         
-        private readonly NeoUnity neoUnity;
+        private readonly EpicChainUnity epicchainUnity;
         private readonly string sessionId;
         private readonly string iteratorId;
         private readonly Func<StackItem, T> mapper;
@@ -47,13 +47,13 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Creates a new iterator with the specified parameters.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance for RPC calls</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance for RPC calls</param>
         /// <param name="sessionId">The session ID</param>
         /// <param name="iteratorId">The iterator ID</param>
         /// <param name="mapper">Function to map stack items to desired type</param>
-        public Iterator(NeoUnity neoUnity, string sessionId, string iteratorId, Func<StackItem, T> mapper)
+        public Iterator(EpicChainUnity epicchainUnity, string sessionId, string iteratorId, Func<StackItem, T> mapper)
         {
-            this.epicchainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            this.epicchainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
             this.sessionId = sessionId ?? throw new ArgumentNullException(nameof(sessionId));
             this.iteratorId = iteratorId ?? throw new ArgumentNullException(nameof(iteratorId));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -328,49 +328,49 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Creates a simple iterator that maps stack items to their string representation.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="sessionId">The session ID</param>
         /// <param name="iteratorId">The iterator ID</param>
         /// <returns>String iterator</returns>
-        public static Iterator<string> CreateStringIterator(NeoUnity neoUnity, string sessionId, string iteratorId)
+        public static Iterator<string> CreateStringIterator(EpicChainUnity epicchainUnity, string sessionId, string iteratorId)
         {
-            return new Iterator<string>(neoUnity, sessionId, iteratorId, item => item.GetString());
+            return new Iterator<string>(epicchainUnity, sessionId, iteratorId, item => item.GetString());
         }
         
         /// <summary>
         /// Creates an iterator that maps stack items to their integer representation.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="sessionId">The session ID</param>
         /// <param name="iteratorId">The iterator ID</param>
         /// <returns>Integer iterator</returns>
-        public static Iterator<int> CreateIntegerIterator(NeoUnity neoUnity, string sessionId, string iteratorId)
+        public static Iterator<int> CreateIntegerIterator(EpicChainUnity epicchainUnity, string sessionId, string iteratorId)
         {
-            return new Iterator<int>(neoUnity, sessionId, iteratorId, item => item.GetInteger());
+            return new Iterator<int>(epicchainUnity, sessionId, iteratorId, item => item.GetInteger());
         }
         
         /// <summary>
         /// Creates an iterator that maps stack items to their byte array representation.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="sessionId">The session ID</param>
         /// <param name="iteratorId">The iterator ID</param>
         /// <returns>Byte array iterator</returns>
-        public static Iterator<byte[]> CreateByteArrayIterator(NeoUnity neoUnity, string sessionId, string iteratorId)
+        public static Iterator<byte[]> CreateByteArrayIterator(EpicChainUnity epicchainUnity, string sessionId, string iteratorId)
         {
-            return new Iterator<byte[]>(neoUnity, sessionId, iteratorId, item => item.GetByteArray());
+            return new Iterator<byte[]>(epicchainUnity, sessionId, iteratorId, item => item.GetByteArray());
         }
         
         /// <summary>
         /// Creates an iterator that preserves the original stack items.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="sessionId">The session ID</param>
         /// <param name="iteratorId">The iterator ID</param>
         /// <returns>StackItem iterator</returns>
-        public static Iterator<StackItem> CreateStackItemIterator(NeoUnity neoUnity, string sessionId, string iteratorId)
+        public static Iterator<StackItem> CreateStackItemIterator(EpicChainUnity epicchainUnity, string sessionId, string iteratorId)
         {
-            return new Iterator<StackItem>(neoUnity, sessionId, iteratorId, item => item);
+            return new Iterator<StackItem>(epicchainUnity, sessionId, iteratorId, item => item);
         }
     }
 }

@@ -11,9 +11,9 @@ using System.Linq;
 namespace EpicChain.Unity.SDK.Tests.Helpers
 {
     /// <summary>
-    /// Mock implementation of INeoUnity for testing
+    /// Mock implementation of IEpicChainUnity for testing
     /// </summary>
-    public class MockNeoSwift : INeoUnity
+    public class MockEpicChainSwift : IEpicChainUnity
     {
         private readonly Dictionary<string, object> _mockResponses;
         private readonly Dictionary<string, Dictionary<string, object>> _mockInvokeFunctions;
@@ -24,7 +24,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         private int _errorCode;
         private int _requestId = 0;
 
-        public MockNeoSwift()
+        public MockEpicChainSwift()
         {
             _mockResponses = new Dictionary<string, object>();
             _mockInvokeFunctions = new Dictionary<string, Dictionary<string, object>>();
@@ -55,7 +55,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         {
             var manifest = new ContractManifest
             {
-                Name = "neow3j"
+                Name = "epicchain-jdk"
             };
             _mockResponses["getcontractstate"] = new EpicChainGetContractStateResponse { Manifest = manifest };
         }
@@ -87,7 +87,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
                 stackItems.Add(new StackItem { Type = "Any", Value = returnValue });
             }
 
-            var result = new NeoInvokeFunctionResponse
+            var result = new EpicChainInvokeFunctionResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -105,7 +105,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             if (!_mockInvokeFunctions.ContainsKey("invokefunction"))
                 _mockInvokeFunctions["invokefunction"] = new Dictionary<string, object>();
 
-            var result = new NeoInvokeFunctionResponse
+            var result = new EpicChainInvokeFunctionResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -127,7 +127,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             if (!_mockInvokeFunctions.ContainsKey("invokefunction"))
                 _mockInvokeFunctions["invokefunction"] = new Dictionary<string, object>();
 
-            var result = new NeoInvokeFunctionResponse
+            var result = new EpicChainInvokeFunctionResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -148,7 +148,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             if (!_mockInvokeFunctions.ContainsKey("invokefunction"))
                 _mockInvokeFunctions["invokefunction"] = new Dictionary<string, object>();
 
-            var result = new NeoInvokeFunctionResponse
+            var result = new EpicChainInvokeFunctionResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -165,7 +165,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         public void SetupTraverseIterator(string iteratorId, string sessionId, string[] results)
         {
             var stackItems = results.Select(r => new StackItem { Type = "ByteString", Value = r }).ToList();
-            _mockResponses["traverseiterator"] = new NeoTraverseIteratorResponse
+            _mockResponses["traverseiterator"] = new EpicChainTraverseIteratorResponse
             {
                 Result = stackItems
             };
@@ -174,7 +174,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         public void SetupTraverseIteratorComplex(string iteratorId, string sessionId, object[] results)
         {
             var stackItems = results.Select(r => new StackItem { Type = "Array", Value = r }).ToList();
-            _mockResponses["traverseiterator"] = new NeoTraverseIteratorResponse
+            _mockResponses["traverseiterator"] = new EpicChainTraverseIteratorResponse
             {
                 Result = stackItems
             };
@@ -182,7 +182,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
 
         public void SetupTerminateSession(string sessionId)
         {
-            _mockResponses["terminatesession"] = new NeoTerminateSessionResponse
+            _mockResponses["terminatesession"] = new EpicChainTerminateSessionResponse
             {
                 Result = true
             };
@@ -196,7 +196,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
                 Value = new { Address = addr.ToAddress() }
             }).ToList();
 
-            _mockResponses["invokescript"] = new NeoInvokeScriptResponse
+            _mockResponses["invokescript"] = new EpicChainInvokeScriptResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -209,7 +209,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
 
         #endregion
 
-        #region INeoUnity Implementation
+        #region IEpicChainUnity Implementation
 
         public async Task<EpicChainGetBestBlockHashResponse> GetBestBlockHash()
         {
@@ -219,7 +219,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
                 await Task.Delay(_timeoutDelay);
                 
             if (!string.IsNullOrEmpty(_errorMessage))
-                throw new NeoUnityException(_errorMessage);
+                throw new EpicChainUnityException(_errorMessage);
 
             return new EpicChainGetBestBlockHashResponse { Result = "mock_best_block_hash" };
         }
@@ -237,7 +237,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             
             return new EpicChainGetBlockResponse
             {
-                Result = new NeoBlock
+                Result = new EpicChainBlock
                 {
                     Hash = $"mock_block_hash_{blockIndex}",
                     Index = blockIndex,
@@ -253,7 +253,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             
             return new EpicChainGetBlockResponse
             {
-                Result = new NeoBlock
+                Result = new EpicChainBlock
                 {
                     Hash = blockHash.ToString(),
                     Index = 12345,
@@ -265,7 +265,7 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         public async Task<EpicChainGetBlockResponse> GetRawBlock(int blockIndex)
         {
             _requestInterceptor?.Invoke(CreateRequest("getblock", blockIndex, 0));
-            return new EpicChainGetBlockResponse { Result = new NeoBlock { Hash = $"raw_block_{blockIndex}" } };
+            return new EpicChainGetBlockResponse { Result = new EpicChainBlock { Hash = $"raw_block_{blockIndex}" } };
         }
 
         public async Task<EpicChainGetBlockCountResponse> GetBlockHeaderCount()
@@ -279,27 +279,27 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             _requestInterceptor?.Invoke(CreateRequest("getblockcount"));
             
             if (!string.IsNullOrEmpty(_errorMessage))
-                throw new NeoUnityException(_errorMessage);
+                throw new EpicChainUnityException(_errorMessage);
                 
             return new EpicChainGetBlockCountResponse { Result = 1000 };
         }
 
-        public async Task<NeoListNativeContractsResponse> GetNativeContracts()
+        public async Task<EpicChainListNativeContractsResponse> GetNativeContracts()
         {
             _requestInterceptor?.Invoke(CreateRequest("getnativecontracts"));
-            return new NeoListNativeContractsResponse { Result = new List<NativeContractState>() };
+            return new EpicChainListNativeContractsResponse { Result = new List<NativeContractState>() };
         }
 
         public async Task<EpicChainGetBlockResponse> GetBlockHeader(int blockIndex)
         {
             _requestInterceptor?.Invoke(CreateRequest("getblockheader", blockIndex, 1));
-            return new EpicChainGetBlockResponse { Result = new NeoBlock { Hash = $"header_{blockIndex}" } };
+            return new EpicChainGetBlockResponse { Result = new EpicChainBlock { Hash = $"header_{blockIndex}" } };
         }
 
         public async Task<EpicChainGetBlockResponse> GetRawBlockHeader(int blockIndex)
         {
             _requestInterceptor?.Invoke(CreateRequest("getblockheader", blockIndex, 0));
-            return new EpicChainGetBlockResponse { Result = new NeoBlock { Hash = $"raw_header_{blockIndex}" } };
+            return new EpicChainGetBlockResponse { Result = new EpicChainBlock { Hash = $"raw_header_{blockIndex}" } };
         }
 
         public async Task<EpicChainGetContractStateResponse> GetContractState(Hash160 contractHash)
@@ -333,13 +333,13 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         public async Task<EpicChainGetTransactionResponse> GetTransaction(Hash256 transactionHash)
         {
             _requestInterceptor?.Invoke(CreateRequest("getrawtransaction", transactionHash.ToString(), 1));
-            return new EpicChainGetTransactionResponse { Result = new NeoTransaction { Hash = transactionHash.ToString() } };
+            return new EpicChainGetTransactionResponse { Result = new EpicChainTransaction { Hash = transactionHash.ToString() } };
         }
 
         public async Task<EpicChainGetTransactionResponse> GetRawTransaction(Hash256 transactionHash)
         {
             _requestInterceptor?.Invoke(CreateRequest("getrawtransaction", transactionHash.ToString(), 0));
-            return new EpicChainGetTransactionResponse { Result = new NeoTransaction { Hash = transactionHash.ToString() } };
+            return new EpicChainGetTransactionResponse { Result = new EpicChainTransaction { Hash = transactionHash.ToString() } };
         }
 
         public async Task<EpicChainGetStorageResponse> GetStorage(Hash160 contractHash, string key)
@@ -385,19 +385,19 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             return new EpicChainGetVersionResponse { Result = new Version() };
         }
 
-        public async Task<NeoSendRawTransactionResponse> SendRawTransaction(string rawTransactionHex)
+        public async Task<EpicChainSendRawTransactionResponse> SendRawTransaction(string rawTransactionHex)
         {
             _requestInterceptor?.Invoke(CreateRequest("sendrawtransaction", rawTransactionHex));
-            return new NeoSendRawTransactionResponse { Result = new SendRawTransaction() };
+            return new EpicChainSendRawTransactionResponse { Result = new SendRawTransaction() };
         }
 
-        public async Task<NeoSubmitBlockResponse> SubmitBlock(string blockHex)
+        public async Task<EpicChainSubmitBlockResponse> SubmitBlock(string blockHex)
         {
             _requestInterceptor?.Invoke(CreateRequest("submitblock", blockHex));
-            return new NeoSubmitBlockResponse { Result = true };
+            return new EpicChainSubmitBlockResponse { Result = true };
         }
 
-        public async Task<NeoInvokeFunctionResponse> InvokeFunction(Hash160 contractHash, string functionName, List<ContractParameter> parameters, List<AccountSigner> signers = null)
+        public async Task<EpicChainInvokeFunctionResponse> InvokeFunction(Hash160 contractHash, string functionName, List<ContractParameter> parameters, List<AccountSigner> signers = null)
         {
             var signerArray = signers?.Select(s => new
             {
@@ -419,9 +419,9 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             _requestInterceptor?.Invoke(CreateRequest("invokefunction", contractHash.ToString(), functionName, parameters.ToArray(), signerArray.ToArray()));
             
             if (_mockInvokeFunctions.ContainsKey("invokefunction") && _mockInvokeFunctions["invokefunction"].ContainsKey(functionName))
-                return _mockInvokeFunctions["invokefunction"][functionName] as NeoInvokeFunctionResponse;
+                return _mockInvokeFunctions["invokefunction"][functionName] as EpicChainInvokeFunctionResponse;
                 
-            return new NeoInvokeFunctionResponse
+            return new EpicChainInvokeFunctionResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -431,21 +431,21 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             };
         }
 
-        public async Task<NeoInvokeFunctionResponse> InvokeFunctionDiagnostics(Hash160 contractHash, string functionName, List<ContractParameter> parameters, List<AccountSigner> signers = null)
+        public async Task<EpicChainInvokeFunctionResponse> InvokeFunctionDiagnostics(Hash160 contractHash, string functionName, List<ContractParameter> parameters, List<AccountSigner> signers = null)
         {
             _requestInterceptor?.Invoke(CreateRequest("invokefunction", contractHash.ToString(), functionName, parameters.ToArray(), signers?.ToArray() ?? new object[0], 1));
             return await InvokeFunction(contractHash, functionName, parameters, signers);
         }
 
-        public async Task<NeoInvokeScriptResponse> InvokeScript(string scriptHex, List<AccountSigner> signers = null)
+        public async Task<EpicChainInvokeScriptResponse> InvokeScript(string scriptHex, List<AccountSigner> signers = null)
         {
             var scriptBase64 = Convert.ToBase64String(ByteExtensions.HexToBytes(scriptHex));
             _requestInterceptor?.Invoke(CreateRequest("invokescript", scriptBase64, signers?.ToArray() ?? new object[0]));
             
             if (_mockResponses.ContainsKey("invokescript"))
-                return _mockResponses["invokescript"] as NeoInvokeScriptResponse;
+                return _mockResponses["invokescript"] as EpicChainInvokeScriptResponse;
                 
-            return new NeoInvokeScriptResponse
+            return new EpicChainInvokeScriptResponse
             {
                 InvocationResult = new InvocationResult
                 {
@@ -455,43 +455,43 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             };
         }
 
-        public async Task<NeoInvokeScriptResponse> InvokeScriptDiagnostics(string scriptHex, List<AccountSigner> signers = null)
+        public async Task<EpicChainInvokeScriptResponse> InvokeScriptDiagnostics(string scriptHex, List<AccountSigner> signers = null)
         {
             var scriptBase64 = Convert.ToBase64String(ByteExtensions.HexToBytes(scriptHex));
             _requestInterceptor?.Invoke(CreateRequest("invokescript", scriptBase64, signers?.ToArray() ?? new object[0], 1));
             return await InvokeScript(scriptHex, signers);
         }
 
-        public async Task<NeoTraverseIteratorResponse> TraverseIterator(string sessionId, string iteratorId, int count)
+        public async Task<EpicChainTraverseIteratorResponse> TraverseIterator(string sessionId, string iteratorId, int count)
         {
             _requestInterceptor?.Invoke(CreateRequest("traverseiterator", sessionId, iteratorId, count));
             
             if (_mockResponses.ContainsKey("traverseiterator"))
-                return _mockResponses["traverseiterator"] as NeoTraverseIteratorResponse;
+                return _mockResponses["traverseiterator"] as EpicChainTraverseIteratorResponse;
                 
-            return new NeoTraverseIteratorResponse { Result = new List<StackItem>() };
+            return new EpicChainTraverseIteratorResponse { Result = new List<StackItem>() };
         }
 
-        public async Task<NeoTerminateSessionResponse> TerminateSession(string sessionId)
+        public async Task<EpicChainTerminateSessionResponse> TerminateSession(string sessionId)
         {
             _requestInterceptor?.Invoke(CreateRequest("terminatesession", sessionId));
             
             if (_mockResponses.ContainsKey("terminatesession"))
-                return _mockResponses["terminatesession"] as NeoTerminateSessionResponse;
+                return _mockResponses["terminatesession"] as EpicChainTerminateSessionResponse;
                 
-            return new NeoTerminateSessionResponse { Result = true };
+            return new EpicChainTerminateSessionResponse { Result = true };
         }
 
-        public async Task<NeoListPluginsResponse> ListPlugins()
+        public async Task<EpicChainListPluginsResponse> ListPlugins()
         {
             _requestInterceptor?.Invoke(CreateRequest("listplugins"));
-            return new NeoListPluginsResponse { Result = new List<Plugin>() };
+            return new EpicChainListPluginsResponse { Result = new List<Plugin>() };
         }
 
-        public async Task<NeoValidateAddressResponse> ValidateAddress(string address)
+        public async Task<EpicChainValidateAddressResponse> ValidateAddress(string address)
         {
             _requestInterceptor?.Invoke(CreateRequest("validateaddress", address));
-            return new NeoValidateAddressResponse { Result = new AddressValidation() };
+            return new EpicChainValidateAddressResponse { Result = new AddressValidation() };
         }
 
         public async Task<EpicChainGetXep17TransfersResponse> GetXep17Transfers(Hash160 accountHash, DateTime? fromDate = null, DateTime? toDate = null)
@@ -512,10 +512,10 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
             return new EpicChainGetXep17BalancesResponse { Result = new Xep17Balances() };
         }
 
-        public async Task<NeoApplicationLogResponse> GetApplicationLog(Hash256 transactionHash)
+        public async Task<EpicChainApplicationLogResponse> GetApplicationLog(Hash256 transactionHash)
         {
             _requestInterceptor?.Invoke(CreateRequest("getapplicationlog", transactionHash.ToString()));
-            return new NeoApplicationLogResponse { Result = new NeoApplicationLog() };
+            return new EpicChainApplicationLogResponse { Result = new EpicChainApplicationLog() };
         }
 
         public async Task<EpicChainGetStateRootResponse> GetStateRoot(int blockIndex)
@@ -550,10 +550,10 @@ namespace EpicChain.Unity.SDK.Tests.Helpers
         }
     }
 
-    public class NeoUnityException : Exception
+    public class EpicChainUnityException : Exception
     {
-        public NeoUnityException(string message) : base(message) { }
-        public NeoUnityException(string message, Exception innerException) : base(message, innerException) { }
+        public EpicChainUnityException(string message) : base(message) { }
+        public EpicChainUnityException(string message, Exception innerException) : base(message, innerException) { }
     }
 
     public class ContractException : Exception

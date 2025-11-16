@@ -12,7 +12,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 {
     /// <summary>
     /// Represents the EpicChain native contract and provides methods to invoke its functions.
-    /// The NEO token is the governance token of the Neo blockchain, used for voting and committee participation.
+    /// The EpicChain token is the governance token of the EpicChain blockchain, used for voting and committee participation.
     /// </summary>
     [System.Serializable]
     public class EpicChain : FungibleToken
@@ -45,17 +45,17 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Constructor
 
         /// <summary>
-        /// Constructs a new NeoToken instance that uses the given NeoUnity instance for invocations.
+        /// Constructs a new EpicChainoken instance that uses the given EpicChainUnity instance for invocations.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public NeoToken(NeoUnity neoUnity) : base(SCRIPT_HASH, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public EpicChainToken(EpicChainUnity epicchainUnity) : base(SCRIPT_HASH, epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a new NeoToken instance using the singleton NeoUnity instance.
+        /// Constructs a new EpicChainToken instance using the singleton EpicChainUnity instance.
         /// </summary>
-        public NeoToken() : base(SCRIPT_HASH)
+        public EpicChainToken() : base(SCRIPT_HASH)
         {
         }
 
@@ -65,7 +65,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Returns the name of the XPR token.
-        /// Doesn't require a call to the Neo node.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The name</returns>
         public async Task<string> GetName()
@@ -75,7 +75,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Returns the symbol of the XPR token.
-        /// Doesn't require a call to the Neo node.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The symbol</returns>
         public override async Task<string> GetSymbol()
@@ -85,7 +85,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Returns the total supply of the XPR token.
-        /// Doesn't require a call to the Neo node.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The total supply</returns>
         public override async Task<int> GetTotalSupply()
@@ -95,7 +95,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Returns the number of decimals of the XPR token.
-        /// Doesn't require a call to the Neo node.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The number of decimals</returns>
         public override async Task<int> GetDecimals()
@@ -108,11 +108,11 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Unclaimed Gas
 
         /// <summary>
-        /// Gets the amount of unclaimed GAS at the given height for the given account.
+        /// Gets the amount of unclaimed EpicPulse at the given height for the given account.
         /// </summary>
         /// <param name="account">The account</param>
         /// <param name="blockHeight">The block height</param>
-        /// <returns>The amount of unclaimed GAS in GAS fractions</returns>
+        /// <returns>The amount of unclaimed EpicPulse in EpicPulse fractions</returns>
         public async Task<long> GetUnclaimedGas(Account account, int blockHeight)
         {
             if (account == null)
@@ -124,11 +124,11 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Gets the amount of unclaimed GAS at the given height for the given account script hash.
+        /// Gets the amount of unclaimed EpicPulse at the given height for the given account script hash.
         /// </summary>
         /// <param name="scriptHash">The account's script hash</param>
         /// <param name="blockHeight">The block height</param>
-        /// <returns>The amount of unclaimed GAS in GAS fractions</returns>
+        /// <returns>The amount of unclaimed EpicPulse in EpicPulse fractions</returns>
         public async Task<long> GetUnclaimedGas(Hash160 scriptHash, int blockHeight)
         {
             if (scriptHash == null)
@@ -147,7 +147,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[EpicChainToken] Unclaimed GAS for {scriptHash} at block {blockHeight}: {result}");
+                Debug.Log($"[EpicChainToken] Unclaimed EpicPulse for {scriptHash} at block {blockHeight}: {result}");
             }
 
             return result;
@@ -461,19 +461,19 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Network Settings
 
         /// <summary>
-        /// Gets the number of GAS generated in each block.
+        /// Gets the number of EpicPulse generated in each block.
         /// </summary>
-        /// <returns>The max GAS amount per block in GAS fractions</returns>
+        /// <returns>The max EpicPulse amount per block in EpicPulse fractions</returns>
         public async Task<long> GetGasPerBlock()
         {
             return await CallFunctionReturningInt(GET_GAS_PER_BLOCK);
         }
 
         /// <summary>
-        /// Creates a transaction script to set the number of GAS generated in each block and initializes a TransactionBuilder based on this script.
+        /// Creates a transaction script to set the number of EpicPulse generated in each block and initializes a TransactionBuilder based on this script.
         /// This contract invocation can only be successful if it is signed by the network committee.
         /// </summary>
-        /// <param name="gasPerBlock">The maximum amount of GAS in one block in GAS fractions</param>
+        /// <param name="gasPerBlock">The maximum amount of EpicPulse in one block in EpicPulse fractions</param>
         /// <returns>The transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> SetGasPerBlock(long gasPerBlock)
         {
@@ -488,7 +488,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>
         /// Gets the price to register as a candidate.
         /// </summary>
-        /// <returns>The price to register as a candidate in GAS fractions</returns>
+        /// <returns>The price to register as a candidate in EpicPulse fractions</returns>
         public async Task<long> GetRegisterPrice()
         {
             return await CallFunctionReturningInt(GET_REGISTER_PRICE);
@@ -498,7 +498,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to set the price for candidate registration and initializes a TransactionBuilder based on this script.
         /// This contract invocation can only be successful if it is signed by the network committee.
         /// </summary>
-        /// <param name="registerPrice">The price to register as a candidate in GAS fractions</param>
+        /// <param name="registerPrice">The price to register as a candidate in EpicPulse fractions</param>
         /// <returns>The transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> SetRegisterPrice(long registerPrice)
         {
@@ -519,7 +519,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// </summary>
         /// <param name="account">The account to get the state from</param>
         /// <returns>The account state</returns>
-        public async Task<NeoAccountState> GetAccountState(Account account)
+        public async Task<EpicChainAccountState> GetAccountState(Account account)
         {
             if (account == null)
             {
@@ -534,7 +534,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// </summary>
         /// <param name="scriptHash">The account script hash to get the state from</param>
         /// <returns>The account state</returns>
-        public async Task<NeoAccountState> GetAccountState(Hash160 scriptHash)
+        public async Task<EpicChainAccountState> GetAccountState(Hash160 scriptHash)
         {
             if (scriptHash == null)
             {
@@ -555,7 +555,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             // Check if account has no balance (returns Any/null)
             if (stackItem.IsAny())
             {
-                return NeoAccountState.WithNoBalance();
+                return EpicChainAccountState.WithNoBalance();
             }
 
             if (!stackItem.IsArray())
@@ -576,13 +576,13 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             // Check if account has no vote (publicKey is Any/null)
             if (publicKeyItem.IsAny())
             {
-                return NeoAccountState.WithNoVote(balance, (int)updateHeight);
+                return EpicChainAccountState.WithNoVote(balance, (int)updateHeight);
             }
 
             var publicKeyBytes = publicKeyItem.GetByteArray();
             var publicKey = new ECPublicKey(publicKeyBytes);
 
-            return new NeoAccountState(balance, (int)updateHeight, publicKey);
+            return new EpicChainAccountState(balance, (int)updateHeight, publicKey);
         }
 
         #endregion
@@ -594,8 +594,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Since XPR has 0 decimals, this returns whole numbers.
         /// </summary>
         /// <param name="scriptHash">The script hash to get balance for</param>
-        /// <returns>Formatted balance string (e.g., "100 NEO")</returns>
-        public async Task<string> GetFormattedNeoBalance(Hash160 scriptHash)
+        /// <returns>Formatted balance string (e.g., "100 XPR")</returns>
+        public async Task<string> GetFormattedEpicChainBalance(Hash160 scriptHash)
         {
             var balance = await GetBalanceOf(scriptHash);
             return $"{balance} {SYMBOL}";
@@ -616,7 +616,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Gets the voting power of an account (equivalent to XPR balance).
         /// </summary>
         /// <param name="account">The account to check</param>
-        /// <returns>The voting power (NEO balance)</returns>
+        /// <returns>The voting power (EpicChain balance)</returns>
         public async Task<long> GetVotingPower(Account account)
         {
             return await GetBalanceOf(account);
@@ -626,7 +626,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
     }
 
     /// <summary>
-    /// Represents the state of a Neo candidate.
+    /// Represents the state of a EpicChain candidate.
     /// </summary>
     [System.Serializable]
     public class Candidate : IEquatable<Candidate>
@@ -649,9 +649,9 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Gets the Neo address of this candidate.
+        /// Gets the EpicChain address of this candidate.
         /// </summary>
-        /// <returns>The candidate's Neo address</returns>
+        /// <returns>The candidate's EpicChain address</returns>
         public string GetAddress()
         {
             // Create a temporary key pair to get the address
@@ -682,10 +682,10 @@ namespace EpicChain.Unity.SDK.Contracts.Native
     }
 
     /// <summary>
-    /// Represents the state of a Neo account.
+    /// Represents the state of a EpicChain account.
     /// </summary>
     [System.Serializable]
-    public class NeoAccountState
+    public class EpicChainAccountState
     {
         /// <summary>The account's XPR balance</summary>
         public long Balance { get; private set; }
@@ -703,12 +703,12 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         public bool IsVoting => VoteTo != null;
 
         /// <summary>
-        /// Creates a new Neo account state.
+        /// Creates a new EpicChain account state.
         /// </summary>
         /// <param name="balance">The XPR balance</param>
         /// <param name="balanceHeight">The balance update height</param>
         /// <param name="voteTo">The public key being voted for, or null</param>
-        public NeoAccountState(long balance, int balanceHeight, ECPublicKey voteTo = null)
+        public EpicChainAccountState(long balance, int balanceHeight, ECPublicKey voteTo = null)
         {
             Balance = balance;
             BalanceHeight = balanceHeight;
@@ -719,9 +719,9 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates an account state with no balance.
         /// </summary>
         /// <returns>Account state with zero balance</returns>
-        public static NeoAccountState WithNoBalance()
+        public static EpicChainAccountState WithNoBalance()
         {
-            return new NeoAccountState(0, 0, null);
+            return new EpicChainAccountState(0, 0, null);
         }
 
         /// <summary>
@@ -730,15 +730,15 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <param name="balance">The XPR balance</param>
         /// <param name="balanceHeight">The balance update height</param>
         /// <returns>Account state with balance but no vote</returns>
-        public static NeoAccountState WithNoVote(long balance, int balanceHeight)
+        public static EpicChainAccountState WithNoVote(long balance, int balanceHeight)
         {
-            return new NeoAccountState(balance, balanceHeight, null);
+            return new EpicChainAccountState(balance, balanceHeight, null);
         }
 
         public override string ToString()
         {
             var voteInfo = IsVoting ? $", Voting for: {VoteTo.GetEncoded(true).ToHexString()}" : "";
-            return $"NeoAccountState(Balance: {Balance}, Height: {BalanceHeight}{voteInfo})";
+            return $"EpicChainAccountState(Balance: {Balance}, Height: {BalanceHeight}{voteInfo})";
         }
     }
 }

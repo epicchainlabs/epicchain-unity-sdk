@@ -12,7 +12,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Contains all XEP-17 token balances and metadata for a specific address.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetXep17BalancesResponse : NeoResponse<Xep17Balances>
+    public class EpicChainGetXep17BalancesResponse : EpicChainResponse<Xep17Balances>
     {
         /// <summary>
         /// Gets the XEP-17 balances from the response.
@@ -27,7 +27,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the XEP-17 balances or throws if the response failed.
         /// </summary>
         /// <returns>XEP-17 balances</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         public Xep17Balances GetBalancesOrThrow()
         {
             return GetResult();

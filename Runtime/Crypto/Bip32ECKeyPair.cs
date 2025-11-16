@@ -11,7 +11,7 @@ using EpicChain.Unity.SDK.Utils;
 namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
-    /// BIP-32 Hierarchical Deterministic (HD) key pair implementation for Neo blockchain.
+    /// BIP-32 Hierarchical Deterministic (HD) key pair implementation for EpicChain blockchain.
     /// Enables deterministic key derivation from a master seed for wallet hierarchies.
     /// Production-ready implementation following BIP-32 specification.
     /// </summary>
@@ -397,17 +397,17 @@ namespace EpicChain.Unity.SDK.Crypto
         #region Standard Derivation Paths
         
         /// <summary>
-        /// Derives a Neo account using standard BIP-44 path (m/44'/888'/0'/0/index).
+        /// Derives a EpicChain account using standard BIP-44 path (m/44'/888'/0'/0/index).
         /// </summary>
         /// <param name="accountIndex">The account index</param>
         /// <returns>Derived account key pair</returns>
-        public async Task<Bip32ECKeyPair> DeriveNeoAccount(uint accountIndex = 0)
+        public async Task<Bip32ECKeyPair> DeriveEpicChainAccount(uint accountIndex = 0)
         {
-            // BIP-44 path for Neo: m/44'/888'/account'/0/0
+            // BIP-44 path for EpicChain: m/44'/888'/account'/0/0
             var path = new uint[]
             {
                 MakeHardened(44),   // Purpose (BIP-44)
-                MakeHardened(888),  // Coin type (Neo)
+                MakeHardened(888),  // Coin type (EpicChain)
                 MakeHardened(accountIndex), // Account
                 0,                  // Change (0 = external)
                 0                   // Address index
@@ -417,12 +417,12 @@ namespace EpicChain.Unity.SDK.Crypto
         }
         
         /// <summary>
-        /// Derives multiple Neo accounts for a wallet.
+        /// Derives multiple EpicChain accounts for a wallet.
         /// </summary>
         /// <param name="numberOfAccounts">Number of accounts to derive</param>
         /// <param name="startIndex">Starting account index</param>
         /// <returns>List of derived account key pairs</returns>
-        public async Task<List<Bip32ECKeyPair>> DeriveNeoAccounts(int numberOfAccounts, uint startIndex = 0)
+        public async Task<List<Bip32ECKeyPair>> DeriveEpicChainAccounts(int numberOfAccounts, uint startIndex = 0)
         {
             if (numberOfAccounts <= 0)
                 throw new ArgumentException("Number of accounts must be positive", nameof(numberOfAccounts));
@@ -431,7 +431,7 @@ namespace EpicChain.Unity.SDK.Crypto
             
             for (uint i = 0; i < numberOfAccounts; i++)
             {
-                var account = await DeriveNeoAccount(startIndex + i);
+                var account = await DeriveEpicChainAccount(startIndex + i);
                 accounts.Add(account);
             }
             

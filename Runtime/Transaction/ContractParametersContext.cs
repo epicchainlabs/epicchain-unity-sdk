@@ -15,9 +15,9 @@ namespace EpicChain.Unity.SDK.Transaction
     public class ContractParametersContext
     {
         /// <summary>
-        /// The type identifier for Neo transactions.
+        /// The type identifier for EpicChain transactions.
         /// </summary>
-        public const string TRANSACTION_TYPE = "Neo.Network.P2P.Payloads.Transaction";
+        public const string TRANSACTION_TYPE = "EpicChain.Network.P2P.Payloads.Transaction";
 
         [SerializeField]
         private string _type;
@@ -97,7 +97,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <param name="transaction">The transaction to create context for.</param>
         /// <param name="network">The network identifier.</param>
         /// <returns>A new ContractParametersContext instance.</returns>
-        public static ContractParametersContext FromTransaction(NeoTransaction transaction, int network = 0)
+        public static ContractParametersContext FromTransaction(EpicChainTransaction transaction, int network = 0)
         {
             if (transaction == null)
                 throw new ArgumentNullException(nameof(transaction));

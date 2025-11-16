@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a witness in a Neo transaction.
+    /// Represents a witness in a EpicChain transaction.
     /// Contains invocation and verification scripts for transaction authorization.
     /// </summary>
     [System.Serializable]
-    public class NeoWitness
+    public class EpicChainWitness
     {
         #region Properties
         
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoWitness()
+        public EpicChainWitness()
         {
         }
         
@@ -37,7 +37,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="invocation">The invocation script</param>
         /// <param name="verification">The verification script</param>
-        public NeoWitness(string invocation, string verification)
+        public EpicChainWitness(string invocation, string verification)
         {
             Invocation = invocation;
             Verification = verification;
@@ -200,7 +200,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>True if equal, false otherwise</returns>
         public override bool Equals(object obj)
         {
-            if (obj is NeoWitness other)
+            if (obj is EpicChainWitness other)
             {
                 return Invocation == other.Invocation && Verification == other.Verification;
             }
@@ -228,7 +228,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             var invLen = HasInvocation ? Invocation.Length : 0;
             var verLen = HasVerification ? Verification.Length : 0;
-            return $"NeoWitness(Invocation: {invLen} chars, Verification: {verLen} chars)";
+            return $"EpicChainWitness(Invocation: {invLen} chars, Verification: {verLen} chars)";
         }
         
         #endregion

@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Core
 {
     /// <summary>
     /// Base service interface for EpicChain Unity SDK network operations.
-    /// Defines the contract for sending requests and receiving responses from Neo RPC nodes.
+    /// Defines the contract for sending requests and receiving responses from EpicChain RPC nodes.
     /// </summary>
     public interface IEpicChainUnityService
     {
@@ -18,7 +18,7 @@ namespace EpicChain.Unity.SDK.Core
         bool IncludeRawResponses { get; }
         
         /// <summary>
-        /// Send a request to the Neo RPC node and receive a typed response.
+        /// Send a request to the EpicChain RPC node and receive a typed response.
         /// </summary>
         /// <typeparam name="TResponse">Response type implementing IResponse</typeparam>
         /// <typeparam name="TResult">Result data type</typeparam>
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Core
             where TResponse : IResponse<TResult>, new();
             
         /// <summary>
-        /// Perform raw I/O operation with the Neo RPC node.
+        /// Perform raw I/O operation with the EpicChain RPC node.
         /// </summary>
         /// <param name="payload">Request payload as JSON bytes</param>
         /// <returns>Response data as JSON bytes</returns>
@@ -36,10 +36,10 @@ namespace EpicChain.Unity.SDK.Core
     }
     
     /// <summary>
-    /// Unity-optimized HTTP service for Neo blockchain RPC communication.
+    /// Unity-optimized HTTP service for EpicChain blockchain RPC communication.
     /// Uses UnityWebRequest for cross-platform compatibility and proper Unity integration.
     /// </summary>
-    public class NeoUnityHttpService : INeoUnityService
+    public class EpicChainUnityHttpService : IEpicChainUnityService
     {
         private readonly string baseUrl;
         private readonly float timeoutSeconds;
@@ -53,11 +53,11 @@ namespace EpicChain.Unity.SDK.Core
         /// <summary>
         /// Create a new EpicChain Unity HTTP service.
         /// </summary>
-        /// <param name="baseUrl">Neo RPC node base URL</param>
+        /// <param name="baseUrl">EpicChain RPC node base URL</param>
         /// <param name="includeRawResponses">Whether to include raw responses</param>
         /// <param name="timeoutSeconds">Request timeout in seconds</param>
         /// <param name="enableDebugLogging">Enable debug logging</param>
-        public NeoUnityHttpService(string baseUrl, bool includeRawResponses = false, float timeoutSeconds = 30f, bool enableDebugLogging = false)
+        public EpicChainUnityHttpService(string baseUrl, bool includeRawResponses = false, float timeoutSeconds = 30f, bool enableDebugLogging = false)
         {
             this.baseUrl = baseUrl?.TrimEnd('/') ?? throw new ArgumentNullException(nameof(baseUrl));
             this.IncludeRawResponses = includeRawResponses;
@@ -66,7 +66,7 @@ namespace EpicChain.Unity.SDK.Core
         }
         
         /// <summary>
-        /// Send a request to the Neo RPC node and receive a typed response.
+        /// Send a request to the EpicChain RPC node and receive a typed response.
         /// </summary>
         /// <typeparam name="TResponse">Response type implementing IResponse</typeparam>
         /// <typeparam name="TResult">Result data type</typeparam>
@@ -109,12 +109,12 @@ namespace EpicChain.Unity.SDK.Core
             catch (Exception ex)
             {
                 Debug.LogError($"[EpicChainUnityHttpService] Request failed: {ex.Message}");
-                throw new NeoUnityException($"Failed to send request: {ex.Message}", ex);
+                throw new EpicChainUnityException($"Failed to send request: {ex.Message}", ex);
             }
         }
         
         /// <summary>
-        /// Perform raw I/O operation with the Neo RPC node using UnityWebRequest.
+        /// Perform raw I/O operation with the EpicChain RPC node using UnityWebRequest.
         /// </summary>
         /// <param name="payload">Request payload as JSON bytes</param>
         /// <returns>Response data as JSON bytes</returns>
@@ -151,14 +151,14 @@ namespace EpicChain.Unity.SDK.Core
                         Debug.LogError($"[EpicChainUnityHttpService] HTTP request failed: {errorMessage}");
                         Debug.LogError($"[EpicChainUnityHttpService] Response: {request.downloadHandler?.text}");
                     }
-                    throw new NeoUnityException($"HTTP request failed: {errorMessage}");
+                    throw new EpicChainUnityException($"HTTP request failed: {errorMessage}");
                 }
             }
         }
     }
     
     /// <summary>
-    /// Request object for Neo RPC calls.
+    /// Request object for EpicChain RPC calls.
     /// </summary>
     /// <typeparam name="TResponse">Response type</typeparam>
     /// <typeparam name="TResult">Result data type</typeparam>
@@ -184,7 +184,7 @@ namespace EpicChain.Unity.SDK.Core
         
         /// <summary>Service instance for sending the request</summary>
         [JsonIgnore]
-        public INeoUnityService Service { get; set; }
+        public IEpicChainUnityService Service { get; set; }
         
         /// <summary>
         /// Create a new request.
@@ -192,7 +192,7 @@ namespace EpicChain.Unity.SDK.Core
         /// <param name="method">RPC method name</param>
         /// <param name="parameters">Method parameters</param>
         /// <param name="service">Service instance</param>
-        public Request(string method, object[] parameters, INeoUnityService service)
+        public Request(string method, object[] parameters, IEpicChainUnityService service)
         {
             Method = method ?? throw new ArgumentNullException(nameof(method));
             Params = parameters ?? new object[0];
@@ -203,7 +203,7 @@ namespace EpicChain.Unity.SDK.Core
         /// <summary>
         /// Send this request and return the response.
         /// </summary>
-        /// <returns>The response from the Neo RPC node</returns>
+        /// <returns>The response from the EpicChain RPC node</returns>
         public async Task<TResponse> SendAsync()
         {
             return await Service.SendAsync<TResponse, TResult>(this);
@@ -211,7 +211,7 @@ namespace EpicChain.Unity.SDK.Core
     }
     
     /// <summary>
-    /// Base interface for all Neo RPC responses.
+    /// Base interface for all EpicChain RPC responses.
     /// </summary>
     /// <typeparam name="T">Result data type</typeparam>
     public interface IResponse<T>
@@ -245,7 +245,7 @@ namespace EpicChain.Unity.SDK.Core
     }
     
     /// <summary>
-    /// Base response implementation for Neo RPC calls.
+    /// Base response implementation for EpicChain RPC calls.
     /// </summary>
     /// <typeparam name="T">Result data type</typeparam>
     [System.Serializable]
@@ -279,12 +279,12 @@ namespace EpicChain.Unity.SDK.Core
         /// Get the result or throw if there's an error.
         /// </summary>
         /// <returns>The response result</returns>
-        /// <exception cref="NeoUnityException">If the response contains an error</exception>
+        /// <exception cref="EpicChainUnityException">If the response contains an error</exception>
         public T GetResult()
         {
             if (HasError)
             {
-                throw new NeoUnityException($"RPC Error {Error.Code}: {Error.Message}");
+                throw new EpicChainUnityException($"RPC Error {Error.Code}: {Error.Message}");
             }
             return Result;
         }

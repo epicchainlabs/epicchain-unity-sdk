@@ -12,12 +12,12 @@ using EpicChainUnityUtils;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Represents a verification script used in Neo transactions.
+    /// Represents a verification script used in EpicChain transactions.
     /// Verification scripts define what needs to be verified for a witness to be valid,
     /// typically containing signature checking logic for single-sig or multi-sig accounts.
     /// </summary>
     [System.Serializable]
-    public class VerificationScript : IEquatable<VerificationScript>, IDisposable, INeoSerializable
+    public class VerificationScript : IEquatable<VerificationScript>, IDisposable, IEpicChainSerializable
     {
         #region Fields
         
@@ -204,8 +204,8 @@ namespace EpicChain.Unity.SDK.Script
             if (publicKey == null)
                 throw new ArgumentNullException(nameof(publicKey));
             
-            if (publicKey.Length != NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED)
-                throw new ArgumentException($"Public key must be {NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes (compressed format)");
+            if (publicKey.Length != EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED)
+                throw new ArgumentException($"Public key must be {EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes (compressed format)");
             
             try
             {
@@ -326,7 +326,7 @@ namespace EpicChain.Unity.SDK.Script
                 
                 // Read signing threshold (must be positive)
                 var threshold = ReadPushInteger(reader);
-                if (threshold <= 0 || threshold > NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
+                if (threshold <= 0 || threshold > EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
                     return false;
                 
                 // Count public keys
@@ -346,7 +346,7 @@ namespace EpicChain.Unity.SDK.Script
                 }
                 
                 // Validate key count constraints
-                if (keyCount < threshold || keyCount > NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
+                if (keyCount < threshold || keyCount > EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
                     return false;
                 
                 // Reset and verify final structure
@@ -565,8 +565,8 @@ namespace EpicChain.Unity.SDK.Script
             if (signingThreshold < 1 || signingThreshold > publicKeys.Length)
                 throw new ArgumentException("Signing threshold must be between 1 and the number of public keys");
             
-            if (publicKeys.Length > NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
-                throw new ArgumentException($"Too many public keys (max {NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
+            if (publicKeys.Length > EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
+                throw new ArgumentException($"Too many public keys (max {EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
         }
         
         /// <summary>

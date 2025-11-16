@@ -12,13 +12,13 @@ using EpicChain.Unity.SDK.Models;
 namespace EpicChain.Unity.SDK.Tests.Contract
 {
     /// <summary>
-    /// Unity Test Framework implementation of NeoToken contract tests
-    /// Converted from Swift NeoTokenTests.swift with Unity-specific enhancements
+    /// Unity Test Framework implementation of EpicChain contract tests
+    /// Converted from Swift EpicChainTests.swift with Unity-specific enhancements
     /// </summary>
     [TestFixture]
-    public class NeoTokenTests
+    public class EpicChainTests
     {
-        private const string NEOTOKEN_SCRIPTHASH = "ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5";
+        private const string EPICCHAINTOKEN_SCRIPTHASH = "ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5";
         private const string VOTE = "vote";
         private const string REGISTER_CANDIDATE = "registerCandidate";
         private const string UNREGISTER_CANDIDATE = "unregisterCandidate";
@@ -30,14 +30,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
         private Account account1;
         private MockEpicChainSwift mockEpicChainSwift;
-        private NeoToken neoToken;
+        private EpicChainToken epicchainToken;
 
         [SetUp]
         public void SetUp()
         {
             account1 = TestHelpers.CreateTestAccount("e6e919577dd7b8e97805151c05ae07ff4f752654d6d8797597aca989c02c4cb3");
             mockEpicChainSwift = new MockEpicChainSwift();
-            epicchainToken = new NeoToken(mockEpicChainSwift);
+            epicchainToken = new EpicChainToken(mockEpicChainSwift);
         }
 
         [TearDown]
@@ -53,24 +53,24 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             mockEpicChainSwift
                 .WithMockInvokeFunctions(new Dictionary<string, string>
                 {
-                    ["name"] = TestHelpers.LoadJsonResource("invokefunction_name_neo"),
-                    ["symbol"] = TestHelpers.LoadJsonResource("invokefunction_symbol_neo"),
+                    ["name"] = TestHelpers.LoadJsonResource("invokefunction_name_epicchain"),
+                    ["symbol"] = TestHelpers.LoadJsonResource("invokefunction_symbol_epicchain"),
                     ["totalSupply"] = TestHelpers.LoadJsonResource("invokefunction_totalSupply"),
                     ["decimals"] = TestHelpers.LoadJsonResource("invokefunction_decimals")
                 });
 
             // Act
-            var name = await neoToken.GetNameAsync();
-            var symbol = await neoToken.GetSymbolAsync();
-            var totalSupply = await neoToken.GetTotalSupplyAsync();
-            var decimals = await neoToken.GetDecimalsAsync();
+            var name = await EpicChainTokenGetNameAsync();
+            var symbol = await EpicChainTokenGetSymbolAsync();
+            var totalSupply = await EpicChainTokenGetTotalSupplyAsync();
+            var decimals = await EpicChainTokenGetDecimalsAsync();
 
             // Assert
-            Assert.AreEqual("NeoToken", name);
-            Assert.AreEqual("NEO", symbol);
-            Assert.AreEqual(100_000_000, totalSupply);
+            Assert.AreEqual("EpicChain", name);
+            Assert.AreEqual("XPR", symbol);
+            Assert.AreEqual(1_000_000_000, totalSupply);
             Assert.AreEqual(0, decimals);
-            Assert.AreEqual(NEOTOKEN_SCRIPTHASH, neoToken.ScriptHash.ToString());
+            Assert.AreEqual(EPICCHAINTOKEN_SCRIPTHASH, EpicChainTokenScriptHash.ToString());
         }
 
         [Test]
@@ -86,14 +86,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             var pubKeyBytes = account1.KeyPair.PublicKey.GetEncoded(compressed: true);
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, REGISTER_CANDIDATE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, REGISTER_CANDIDATE, new ContractParameter[]
                 {
                     ContractParameter.PublicKey(pubKeyBytes)
                 })
                 .ToArray();
 
             // Act
-            var builder = await neoToken
+            var builder = await epicchainToken
                 .RegisterCandidateAsync(account1.KeyPair.PublicKey)
                 .ConfigureAwait(false);
 
@@ -118,14 +118,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             var pubKeyBytes = account1.KeyPair.PublicKey.GetEncoded(compressed: true);
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, UNREGISTER_CANDIDATE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, UNREGISTER_CANDIDATE, new ContractParameter[]
                 {
                     ContractParameter.PublicKey(pubKeyBytes)
                 })
                 .ToArray();
 
             // Act
-            var builder = await neoToken
+            var builder = await epicchainToken
                 .UnregisterCandidateAsync(account1.KeyPair.PublicKey)
                 .ConfigureAwait(false);
 
@@ -148,7 +148,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var result = await neoToken.GetCandidatesAsync();
+            var result = await EpicChainTokenGetCandidatesAsync();
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -172,7 +172,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             var pubKey = new ECPublicKey("02c0b60c995bc092e866f15a37c176bb59b7ebacf069ba94c0ebf561cb8f956238");
 
             // Act
-            var isCandidate = await neoToken.IsCandidateAsync(pubKey);
+            var isCandidate = await EpicChainTokenIsCandidateAsync(pubKey);
 
             // Assert
             Assert.IsTrue(isCandidate);
@@ -186,7 +186,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["terminatesession"] = TestHelpers.LoadJsonResource("terminatesession"),
-                    ["traverseiterator"] = TestHelpers.LoadJsonResource("neo_getAllCandidates_traverseiterator")
+                    ["traverseiterator"] = TestHelpers.LoadJsonResource("epicchain_getAllCandidates_traverseiterator")
                 })
                 .WithMockInvokeFunctions(new Dictionary<string, string>
                 {
@@ -194,7 +194,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var iterator = await neoToken.GetAllCandidatesIteratorAsync();
+            var iterator = await EpicChainTokenGetAllCandidatesIteratorAsync();
             var candidates = await iterator.TraverseAsync(2);
 
             // Assert
@@ -231,7 +231,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var votes = await neoToken.GetCandidateVotesAsync(keyPair.PublicKey);
+            var votes = await EpicChainTokenGetCandidateVotesAsync(keyPair.PublicKey);
 
             // Assert
             Assert.AreEqual(721_978, votes);
@@ -254,7 +254,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             var pubKey = account1.KeyPair.PublicKey.GetEncoded(compressed: true);
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, VOTE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, VOTE, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.PublicKey(pubKey)
@@ -262,7 +262,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 .ToArray();
 
             // Act
-            var builder = await neoToken
+            var builder = await epicchainToken
                 .VoteAsync(account1, new ECPublicKey(pubKey))
                 .ConfigureAwait(false);
 
@@ -288,7 +288,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, VOTE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, VOTE, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Any(null)
@@ -296,7 +296,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 .ToArray();
 
             // Act
-            var builder = await neoToken
+            var builder = await epicchainToken
                 .CancelVoteAsync(account1)
                 .ConfigureAwait(false);
 
@@ -312,7 +312,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             // Arrange
             var pubKey = account1.KeyPair.PublicKey;
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, VOTE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, VOTE, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.PublicKey(pubKey.GetEncoded(compressed: true))
@@ -320,7 +320,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 .ToArray();
 
             // Act
-            var script = neoToken.BuildVoteScript(account1.GetScriptHash(), pubKey);
+            var script = EpicChainTokenBuildVoteScript(account1.GetScriptHash(), pubKey);
 
             // Assert
             TestHelpers.AssertBytesEqual(expectedScript, script);
@@ -331,7 +331,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         {
             // Arrange
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, VOTE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, VOTE, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Any(null)
@@ -339,7 +339,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 .ToArray();
 
             // Act
-            var script = neoToken.BuildVoteScript(account1.GetScriptHash(), null);
+            var script = EpicChainTokenBuildVoteScript(account1.GetScriptHash(), null);
 
             // Assert
             TestHelpers.AssertBytesEqual(expectedScript, script);
@@ -356,7 +356,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var gas = await neoToken.GetGasPerBlockAsync();
+            var epicpulse = await EpicChainTokenGetGasPerBlockAsync();
 
             // Assert
             Assert.AreEqual(500_000, gas);
@@ -373,17 +373,17 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
                 });
 
-            var gas = 10_000;
+            var epicpulse = 10_000;
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, SET_GAS_PER_BLOCK, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, SET_GAS_PER_BLOCK, new ContractParameter[]
                 {
-                    ContractParameter.Integer(gas)
+                    ContractParameter.Integer(epicpulse)
                 })
                 .ToArray();
 
             // Act
-            var txBuilder = neoToken
-                .SetGasPerBlock(gas)
+            var txBuilder = epicchainToken
+                .SetGasPerBlock(epicpulse)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) });
 
             // Assert
@@ -401,7 +401,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var price = await neoToken.GetRegisterPriceAsync();
+            var price = await EpicChainTokenGetRegisterPriceAsync();
 
             // Assert
             Assert.AreEqual(100_000_000_000, price);
@@ -420,14 +420,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             var price = 50_000_000_000;
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NeoToken.SCRIPT_HASH, SET_REGISTER_PRICE, new ContractParameter[]
+                .ContractCall(EpicChainTokenSCRIPT_HASH, SET_REGISTER_PRICE, new ContractParameter[]
                 {
                     ContractParameter.Integer(price)
                 })
                 .ToArray();
 
             // Act
-            var txBuilder = neoToken
+            var txBuilder = epicchainToken
                 .SetRegisterPrice(price)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) });
 
@@ -446,14 +446,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var neoAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
+            var epicchainAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
 
             // Assert
-            Assert.AreEqual(20_000, neoAccountState.Balance);
-            Assert.AreEqual(259, neoAccountState.BalanceHeight);
+            Assert.AreEqual(20_000, epicchainAccountState.Balance);
+            Assert.AreEqual(259, epicchainAccountState.BalanceHeight);
 
             var expectedPublicKey = new ECPublicKey("037279f3a507817251534181116cb38ef30468b25074827db34cbbc6adc8873932");
-            Assert.AreEqual(expectedPublicKey, neoAccountState.PublicKey);
+            Assert.AreEqual(expectedPublicKey, epicchainAccountState.PublicKey);
         }
 
         [Test]
@@ -467,12 +467,12 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var neoAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
+            var epicchainAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
 
             // Assert
-            Assert.AreEqual(12_000, neoAccountState.Balance);
-            Assert.AreEqual(820, neoAccountState.BalanceHeight);
-            Assert.IsNull(neoAccountState.PublicKey);
+            Assert.AreEqual(12_000, epicchainAccountState.Balance);
+            Assert.AreEqual(820, epicchainAccountState.BalanceHeight);
+            Assert.IsNull(epicchainAccountState.PublicKey);
         }
 
         [Test]
@@ -486,12 +486,12 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 });
 
             // Act
-            var neoAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
+            var epicchainAccountState = await epicchainToken.GetAccountStateAsync(account1.GetScriptHash());
 
             // Assert
-            Assert.AreEqual(0, neoAccountState.Balance);
-            Assert.IsNull(neoAccountState.BalanceHeight);
-            Assert.IsNull(neoAccountState.PublicKey);
+            Assert.AreEqual(0, epicchainAccountState.Balance);
+            Assert.IsNull(epicchainAccountState.BalanceHeight);
+            Assert.IsNull(epicchainAccountState.PublicKey);
         }
 
         #region Unity-Specific Tests
@@ -518,18 +518,18 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         }
 
         [Test]
-        public void TestMemoryUsage_CreateNeoToken()
+        public void TestMemoryUsage_CreateEpicChainToken()
         {
             // Act & Assert
             var memoryUsage = TestHelpers.MeasureMemoryUsage(() =>
             {
-                var token = new NeoToken(mockEpicChainSwift);
+                var token = new EpicChainToken(mockEpicChainSwift);
                 // Force garbage collection to measure actual usage
                 GC.KeepAlive(token);
             });
 
-            Assert.Less(Math.Abs(memoryUsage), 1024 * 1024, "NeoToken creation should use less than 1MB");
-            Debug.Log($"NeoToken memory usage: {memoryUsage} bytes");
+            Assert.Less(Math.Abs(memoryUsage), 1024 * 1024, "EpicChain creation should use less than 1MB");
+            Debug.Log($"EpicChain memory usage: {memoryUsage} bytes");
         }
 
         [UnityTest]
@@ -539,7 +539,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             mockEpicChainSwift
                 .WithMockInvokeFunctions(new Dictionary<string, string>
                 {
-                    ["name"] = TestHelpers.LoadJsonResource("invokefunction_name_neo")
+                    ["name"] = TestHelpers.LoadJsonResource("invokefunction_name_epicchain")
                 });
 
             bool completed = false;
@@ -556,20 +556,20 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             yield return new WaitUntil(() => completed);
 
             // Assert
-            Assert.AreEqual("NeoToken", result);
+            Assert.AreEqual("EpicChain", result);
         }
 
         [Test]
         public void TestSerializationCompatibility()
         {
-            // Test that NeoToken can be serialized for Unity Inspector
-            var token = new NeoToken(mockEpicChainSwift);
+            // Test that EpicChain can be serialized for Unity Inspector
+            var token = new EpicChainToken(mockEpicChainSwift);
             
             // This would be used for Inspector serialization
             var jsonString = JsonUtility.ToJson(token, true);
             Assert.IsNotNull(jsonString);
             
-            Debug.Log($"NeoToken serialized: {jsonString}");
+            Debug.Log($"EpicChain serialized: {jsonString}");
         }
 
         #endregion

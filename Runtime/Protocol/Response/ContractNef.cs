@@ -6,8 +6,8 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a Neo Executable Format (NEF) file containing compiled smart contract bytecode.
-    /// NEF files contain the executable code, metadata, and method tokens for Neo smart contracts.
+    /// Represents a EpicChain Executable Format (NEF) file containing compiled smart contract bytecode.
+    /// NEF files contain the executable code, metadata, and method tokens for EpicChain smart contracts.
     /// </summary>
     [System.Serializable]
     public class ContractNef
@@ -282,13 +282,13 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>
         /// Calculates the checksum for this NEF file.
-        /// Note: This is a simplified calculation and may not match Neo's exact algorithm.
+        /// Note: This is a simplified calculation and may not match EpicChain's exact algorithm.
         /// </summary>
         /// <returns>Calculated checksum</returns>
         private long CalculateChecksum()
         {
             // Simplified checksum calculation
-            // In a real implementation, this would follow Neo's exact checksum algorithm
+            // In a real implementation, this would follow EpicChain's exact checksum algorithm
             var scriptBytes = GetScriptBytes();
             long checksum = Magic;
             

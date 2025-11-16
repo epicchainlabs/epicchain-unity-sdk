@@ -7,11 +7,11 @@ using EpicChain.Unity.SDK.Types;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a Neo transaction with all its components.
+    /// Represents a EpicChain transaction with all its components.
     /// Contains transaction metadata, signers, witnesses, and execution information.
     /// </summary>
     [System.Serializable]
-    public class NeoTransaction
+    public class EpicChainTransaction
     {
         #region Properties
         
@@ -61,7 +61,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>List of witnesses (signatures) for this transaction</summary>
         [JsonProperty("witnesses")]
-        public List<NeoWitness> Witnesses { get; set; }
+        public List<EpicChainWitness> Witnesses { get; set; }
         
         /// <summary>Hash of the block containing this transaction (if mined)</summary>
         [JsonProperty("blockhash")]
@@ -77,7 +77,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>The VM state after execution</summary>
         [JsonProperty("vmstate")]
-        public NeoVMStateType? VMState { get; set; }
+        public EpicChainVMStateType? VMState { get; set; }
         
         #endregion
         
@@ -86,15 +86,15 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoTransaction()
+        public EpicChainTransaction()
         {
             Signers = new List<TransactionSigner>();
             Attributes = new List<TransactionAttribute>();
-            Witnesses = new List<NeoWitness>();
+            Witnesses = new List<EpicChainWitness>();
         }
         
         /// <summary>
-        /// Creates a new Neo transaction.
+        /// Creates a new EpicChain transaction.
         /// </summary>
         /// <param name="hash">Transaction hash</param>
         /// <param name="size">Transaction size</param>
@@ -108,10 +108,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <param name="signers">Transaction signers</param>
         /// <param name="attributes">Transaction attributes</param>
         /// <param name="witnesses">Transaction witnesses</param>
-        public NeoTransaction(Hash256 hash, int size, int version, long nonce, string sender, 
+        public EpicChainTransaction(Hash256 hash, int size, int version, long nonce, string sender, 
                              string systemFee, string networkFee, long validUntilBlock, string script,
                              List<TransactionSigner> signers = null, List<TransactionAttribute> attributes = null, 
-                             List<NeoWitness> witnesses = null)
+                             List<EpicChainWitness> witnesses = null)
         {
             Hash = hash;
             Size = size;
@@ -124,7 +124,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             Script = script;
             Signers = signers ?? new List<TransactionSigner>();
             Attributes = attributes ?? new List<TransactionAttribute>();
-            Witnesses = witnesses ?? new List<NeoWitness>();
+            Witnesses = witnesses ?? new List<EpicChainWitness>();
         }
         
         #endregion
@@ -141,11 +141,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Whether this transaction execution was successful</summary>
         [JsonIgnore]
-        public bool IsSuccessful => VMState == NeoVMStateType.Halt;
+        public bool IsSuccessful => VMState == EpicChainVMStateType.Halt;
         
         /// <summary>Whether this transaction execution faulted</summary>
         [JsonIgnore]
-        public bool HasFaulted => VMState == NeoVMStateType.Fault;
+        public bool HasFaulted => VMState == EpicChainVMStateType.Fault;
         
         /// <summary>Whether this transaction has signers</summary>
         [JsonIgnore]
@@ -215,27 +215,27 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         }
         
         /// <summary>
-        /// Gets the system fee in GAS fractions (smallest unit).
+        /// Gets the system fee in EpicPulse fractions (smallest unit).
         /// </summary>
         /// <returns>System fee in fractions</returns>
         public long GetSystemFeeFractions()
         {
             var feeDecimal = GetSystemFeeDecimal();
-            return (long)(feeDecimal * 100_000_000); // Convert to GAS fractions
+            return (long)(feeDecimal * 100_000_000); // Convert to EpicPulse fractions
         }
         
         /// <summary>
-        /// Gets the network fee in GAS fractions (smallest unit).
+        /// Gets the network fee in EpicPulse fractions (smallest unit).
         /// </summary>
         /// <returns>Network fee in fractions</returns>
         public long GetNetworkFeeFractions()
         {
             var feeDecimal = GetNetworkFeeDecimal();
-            return (long)(feeDecimal * 100_000_000); // Convert to GAS fractions
+            return (long)(feeDecimal * 100_000_000); // Convert to EpicPulse fractions
         }
         
         /// <summary>
-        /// Gets the total fee in GAS fractions (smallest unit).
+        /// Gets the total fee in EpicPulse fractions (smallest unit).
         /// </summary>
         /// <returns>Total fee in fractions</returns>
         public long GetTotalFeeFractions()
@@ -382,7 +382,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>Detailed string representation</returns>
         public string ToDetailedString()
         {
-            var result = $"NeoTransaction:\n";
+            var result = $"EpicChainTransaction:\n";
             result += $"  Hash: {Hash}\n";
             result += $"  Size: {Size} bytes\n";
             result += $"  Version: {Version}\n";
@@ -423,7 +423,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         public override string ToString()
         {
             var status = IsConfirmed ? $"{Confirmations} conf" : "pending";
-            return $"NeoTransaction({Hash}, {Size}B, {status})";
+            return $"EpicChainTransaction({Hash}, {Size}B, {status})";
         }
         
         #endregion

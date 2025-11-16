@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the transaction hash if the transaction was successfully submitted to the network.
     /// </summary>
     [System.Serializable]
-    public class NeoSendRawTransactionResponse : NeoResponse<NeoSendRawTransactionResponse.RawTransactionResult>
+    public class EpicChainSendRawTransactionResponse : EpicChainResponse<EpicChainSendRawTransactionResponse.RawTransactionResult>
     {
         /// <summary>
         /// Gets the raw transaction result from the response.
@@ -19,7 +19,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoSendRawTransactionResponse() : base()
+        public EpicChainSendRawTransactionResponse() : base()
         {
         }
 
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="rawTransactionResult">The raw transaction result</param>
         /// <param name="id">The request ID</param>
-        public NeoSendRawTransactionResponse(RawTransactionResult rawTransactionResult, int id = 1) : base(rawTransactionResult, id)
+        public EpicChainSendRawTransactionResponse(RawTransactionResult rawTransactionResult, int id = 1) : base(rawTransactionResult, id)
         {
         }
 
@@ -37,7 +37,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoSendRawTransactionResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainSendRawTransactionResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -117,7 +117,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 
             /// <summary>
             /// Validates that the transaction hash has the correct format.
-            /// Neo transaction hashes are 256-bit values represented as 64-character hexadecimal strings.
+            /// EpicChain transaction hashes are 256-bit values represented as 64-character hexadecimal strings.
             /// </summary>
             /// <returns>True if the hash format is valid</returns>
             public bool IsValidHashFormat()

@@ -206,7 +206,7 @@ namespace EpicChain.Unity.SDK.Tests.Crypto
         [Test]
         public void TestNetworkByte()
         {
-            // WIF for Neo should start with 0x80
+            // WIF for EpicChain should start with 0x80
             var privateKeyBytes = TestHelpers.GenerateRandomBytes(32);
             var wif = WIF.WifFromPrivateKey(privateKeyBytes);
             

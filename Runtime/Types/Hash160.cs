@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents a 160-bit hash used for Neo script hashes and addresses.
+    /// Represents a 160-bit hash used for EpicChain script hashes and addresses.
     /// Immutable value type with proper validation and conversion utilities.
     /// </summary>
     [System.Serializable]
     [JsonConverter(typeof(Hash160JsonConverter))]
-    public class Hash160 : IEquatable<Hash160>, INeoSerializable, IComparable<Hash160>
+    public class Hash160 : IEquatable<Hash160>, IEpicChainSerializable, IComparable<Hash160>
     {
         #region Constants
         
@@ -94,9 +94,9 @@ namespace EpicChain.Unity.SDK.Types
         #region Static Factory Methods
         
         /// <summary>
-        /// Creates a Hash160 from a Neo address.
+        /// Creates a Hash160 from a EpicChain address.
         /// </summary>
-        /// <param name="address">Valid Neo address</param>
+        /// <param name="address">Valid EpicChain address</param>
         /// <returns>Hash160 representation of the address</returns>
         /// <exception cref="ArgumentException">If address is invalid</exception>
         public static Hash160 FromAddress(string address)
@@ -105,7 +105,7 @@ namespace EpicChain.Unity.SDK.Types
                 throw new ArgumentException("Address cannot be null or empty", nameof(address));
             
             if (!address.IsValidAddress())
-                throw new ArgumentException("Invalid Neo address format", nameof(address));
+                throw new ArgumentException("Invalid EpicChain address format", nameof(address));
             
             var scriptHashBytes = address.AddressToScriptHash();
             return new Hash160(scriptHashBytes);
@@ -152,9 +152,9 @@ namespace EpicChain.Unity.SDK.Types
         #region Conversion Methods
         
         /// <summary>
-        /// Converts this Hash160 to a Neo address.
+        /// Converts this Hash160 to a EpicChain address.
         /// </summary>
-        /// <returns>Neo address string</returns>
+        /// <returns>EpicChain address string</returns>
         public string ToAddress()
         {
             return value.ScriptHashToAddress();
@@ -297,7 +297,7 @@ namespace EpicChain.Unity.SDK.Types
         
         #endregion
         
-        #region INeoSerializable Implementation
+        #region IEpicChainSerializable Implementation
         
         /// <summary>
         /// Serializes this Hash160 to a binary writer.

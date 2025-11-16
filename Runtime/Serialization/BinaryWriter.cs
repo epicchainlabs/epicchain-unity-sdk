@@ -8,7 +8,7 @@ using EpicChain.Unity.SDK.Crypto;
 namespace EpicChain.Unity.SDK.Serialization
 {
     /// <summary>
-    /// Binary writer for Neo protocol data structures.
+    /// Binary writer for EpicChain protocol data structures.
     /// Handles little-endian binary data writing with variable-length integer support.
     /// Unity-optimized implementation with proper memory management and validation.
     /// </summary>
@@ -303,7 +303,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// Writes a serializable object with variable-length byte encoding.
         /// </summary>
         /// <param name="value">The serializable object</param>
-        public void WriteSerializableVariableBytes(INeoSerializable value)
+        public void WriteSerializableVariableBytes(IEpicChainSerializable value)
         {
             EnsureNotDisposed();
             
@@ -319,7 +319,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// Writes a list of serializable objects with count prefix.
         /// </summary>
         /// <param name="values">The list of serializable objects</param>
-        public void WriteSerializableVariable<T>(List<T> values) where T : INeoSerializable
+        public void WriteSerializableVariable<T>(List<T> values) where T : IEpicChainSerializable
         {
             EnsureNotDisposed();
             
@@ -334,7 +334,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// Writes a list of serializable objects with variable-length byte encoding.
         /// </summary>
         /// <param name="values">The list of serializable objects</param>
-        public void WriteSerializableVariableBytes<T>(List<T> values) where T : INeoSerializable
+        public void WriteSerializableVariableBytes<T>(List<T> values) where T : IEpicChainSerializable
         {
             EnsureNotDisposed();
             
@@ -356,7 +356,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// Writes a serializable object in fixed format (no length prefix).
         /// </summary>
         /// <param name="value">The serializable object</param>
-        public void WriteSerializableFixed(INeoSerializable value)
+        public void WriteSerializableFixed(IEpicChainSerializable value)
         {
             EnsureNotDisposed();
             
@@ -370,7 +370,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// Writes a list of serializable objects in fixed format (no length prefix).
         /// </summary>
         /// <param name="values">The list of serializable objects</param>
-        public void WriteSerializableFixed<T>(List<T> values) where T : INeoSerializable
+        public void WriteSerializableFixed<T>(List<T> values) where T : IEpicChainSerializable
         {
             EnsureNotDisposed();
             

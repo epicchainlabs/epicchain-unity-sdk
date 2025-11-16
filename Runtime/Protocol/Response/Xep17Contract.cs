@@ -140,7 +140,7 @@ namespace EpicChainUnityProtocol.Response
         }
         
         /// <summary>
-        /// Gets whether this is a likely native token (NEO or GAS)
+        /// Gets whether this is a likely native token (EpicChain or GAS)
         /// </summary>
         public bool IsNativeToken()
         {
@@ -148,7 +148,7 @@ namespace EpicChainUnityProtocol.Response
                 return false;
                 
             var upperSymbol = _symbol.ToUpperInvariant();
-            return upperSymbol == "NEO" || upperSymbol == "GAS";
+            return upperSymbol == "XPR" || upperSymbol == "XPP";
         }
         
         /// <summary>

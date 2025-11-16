@@ -12,7 +12,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Contains sent and received XEP-17 token transfers for a specific address.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetXep17TransfersResponse : NeoResponse<Xep17Transfers>
+    public class EpicChainGetXep17TransfersResponse : EpicChainResponse<Xep17Transfers>
     {
         /// <summary>
         /// Gets the XEP-17 transfers from the response.
@@ -27,7 +27,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the XEP-17 transfers or throws if the response failed.
         /// </summary>
         /// <returns>XEP-17 transfers</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         public Xep17Transfers GetTransfersOrThrow()
         {
             return GetResult();

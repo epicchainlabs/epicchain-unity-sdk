@@ -6,8 +6,8 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents the types of plugins that can be installed on a Neo node.
-    /// These plugins extend the functionality of Neo nodes with additional features.
+    /// Represents the types of plugins that can be installed on a EpicChain node.
+    /// These plugins extend the functionality of EpicChain nodes with additional features.
     /// </summary>
     [Serializable]
     public enum NodePluginType
@@ -94,7 +94,7 @@ namespace EpicChain.Unity.SDK.Types
         /// Gets the string identifier for the node plugin type.
         /// </summary>
         /// <param name="pluginType">The node plugin type.</param>
-        /// <returns>The string identifier used by Neo nodes.</returns>
+        /// <returns>The string identifier used by EpicChain nodes.</returns>
         public static string GetIdentifier(this NodePluginType pluginType)
         {
             return pluginType switch

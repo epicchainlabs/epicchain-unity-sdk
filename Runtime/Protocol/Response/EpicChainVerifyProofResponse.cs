@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the verification result for a proof, typically containing the proven value.
     /// </summary>
     [System.Serializable]
-    public class NeoVerifyProofResponse : NeoResponse<string>
+    public class EpicChainVerifyProofResponse : EpicChainResponse<string>
     {
         /// <summary>
         /// Gets the verification result from the response.
@@ -19,7 +19,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoVerifyProofResponse() : base()
+        public EpicChainVerifyProofResponse() : base()
         {
         }
 
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="verificationResult">The verification result</param>
         /// <param name="id">The request ID</param>
-        public NeoVerifyProofResponse(string verificationResult, int id = 1) : base(verificationResult, id)
+        public EpicChainVerifyProofResponse(string verificationResult, int id = 1) : base(verificationResult, id)
         {
         }
 
@@ -37,7 +37,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoVerifyProofResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainVerifyProofResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -251,9 +251,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                 return base.ToString();
 
             if (!IsProofValid)
-                return "NeoVerifyProofResponse(Proof Invalid)";
+                return "EpicChainVerifyProofResponse(Proof Invalid)";
 
-            return $"NeoVerifyProofResponse(Valid: {IsProofValid}, Result: {GetShortVerificationResult()}, Size: {EstimatedSizeBytes} bytes)";
+            return $"EpicChainVerifyProofResponse(Valid: {IsProofValid}, Result: {GetShortVerificationResult()}, Size: {EstimatedSizeBytes} bytes)";
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="other">The other verify proof response to compare with</param>
         /// <returns>True if the verification results are equal</returns>
-        public bool VerificationEquals(NeoVerifyProofResponse other)
+        public bool VerificationEquals(EpicChainVerifyProofResponse other)
         {
             if (other == null)
                 return false;
@@ -310,10 +310,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Creates a copy of this response with a new verification result.
         /// </summary>
         /// <param name="newVerificationResult">The new verification result</param>
-        /// <returns>New NeoVerifyProofResponse instance</returns>
-        public NeoVerifyProofResponse WithVerificationResult(string newVerificationResult)
+        /// <returns>New EpicChainVerifyProofResponse instance</returns>
+        public EpicChainVerifyProofResponse WithVerificationResult(string newVerificationResult)
         {
-            return new NeoVerifyProofResponse(newVerificationResult, Id);
+            return new EpicChainVerifyProofResponse(newVerificationResult, Id);
         }
 
         /// <summary>

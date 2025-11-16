@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents DNS record types supported by Neo Name Service (NNS).
-    /// Used for domain name resolution and record management in Neo blockchain.
+    /// Represents DNS record types supported by EpicChain Name Service (XNS).
+    /// Used for domain name resolution and record management in EpicChain blockchain.
     /// </summary>
     [JsonConverter(typeof(RecordTypeConverter))]
     public enum RecordType : byte

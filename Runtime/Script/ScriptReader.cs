@@ -11,7 +11,7 @@ using EpicChainUnityUtils;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Reads and analyzes Neo VM scripts, converting bytecode to human-readable representations.
+    /// Reads and analyzes EpicChain VM scripts, converting bytecode to human-readable representations.
     /// Provides utilities for script inspection, debugging, and validation.
     /// </summary>
     public static class ScriptReader
@@ -46,7 +46,7 @@ namespace EpicChain.Unity.SDK.Script
         #region Script Conversion
         
         /// <summary>
-        /// Converts a Neo VM script from hex string to human-readable OpCode representation.
+        /// Converts a EpicChain VM script from hex string to human-readable OpCode representation.
         /// </summary>
         /// <param name="hexScript">The script in hexadecimal format</param>
         /// <returns>The OpCode representation of the script</returns>
@@ -68,7 +68,7 @@ namespace EpicChain.Unity.SDK.Script
         }
         
         /// <summary>
-        /// Converts a Neo VM script to human-readable OpCode representation.
+        /// Converts a EpicChain VM script to human-readable OpCode representation.
         /// </summary>
         /// <param name="script">The script bytes to convert</param>
         /// <returns>The OpCode representation of the script</returns>
@@ -453,7 +453,7 @@ namespace EpicChain.Unity.SDK.Script
             // OpCode variety factor
             score += Math.Min(analysis.OpCodeUsage.Count / 50.0f, 0.2f);
             
-            // GAS cost factor (normalized)
+            // EpicPulse cost factor (normalized)
             score += Math.Min(analysis.EstimatedGasCost / 1000000.0f, 0.2f);
             
             // Error penalty
@@ -482,7 +482,7 @@ namespace EpicChain.Unity.SDK.Script
         /// <summary>Gets or sets the number of instructions in the script.</summary>
         public int InstructionCount { get; set; }
         
-        /// <summary>Gets or sets the estimated GAS cost for execution.</summary>
+        /// <summary>Gets or sets the estimated EpicPulse cost for execution.</summary>
         public long EstimatedGasCost { get; set; }
         
         /// <summary>Gets or sets whether the script contains system calls.</summary>
@@ -540,7 +540,7 @@ namespace EpicChain.Unity.SDK.Script
     }
     
     /// <summary>
-    /// Represents a single instruction in a Neo VM script.
+    /// Represents a single instruction in a EpicChain VM script.
     /// </summary>
     public class ScriptInstruction
     {

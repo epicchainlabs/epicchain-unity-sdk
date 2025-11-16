@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// This is essentially the same as a regular invoke response but specifically for contract verification.
     /// </summary>
     [System.Serializable]
-    public class NeoInvokeContractVerifyResponse : NeoResponse<InvocationResult>
+    public class EpicChainInvokeContractVerifyResponse : EpicChainResponse<InvocationResult>
     {
         /// <summary>
         /// Gets the invocation result from the response.
@@ -20,7 +20,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoInvokeContractVerifyResponse() : base()
+        public EpicChainInvokeContractVerifyResponse() : base()
         {
         }
 
@@ -29,7 +29,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="invocationResult">The invocation result</param>
         /// <param name="id">The request ID</param>
-        public NeoInvokeContractVerifyResponse(InvocationResult invocationResult, int id = 1) : base(invocationResult, id)
+        public EpicChainInvokeContractVerifyResponse(InvocationResult invocationResult, int id = 1) : base(invocationResult, id)
         {
         }
 
@@ -38,7 +38,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoInvokeContractVerifyResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainInvokeContractVerifyResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -71,7 +71,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         public string VerificationState => InvocationResult?.State ?? "UNKNOWN";
 
         /// <summary>
-        /// Gets the GAS consumed by the contract verification.
+        /// Gets the EpicPulse consumed by the contract verification.
         /// </summary>
         [JsonIgnore]
         public string GasConsumed => InvocationResult?.GasConsumed ?? "0";
@@ -154,7 +154,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             {
                 if (typeof(T) == typeof(bool))
                 {
-                    // In Neo, verification methods typically return boolean values
+                    // In EpicChain, verification methods typically return boolean values
                     if (str == "1" || str.Equals("true", StringComparison.OrdinalIgnoreCase))
                         return (T)(object)true;
                     if (str == "0" || str.Equals("false", StringComparison.OrdinalIgnoreCase))
@@ -176,7 +176,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 
         /// <summary>
         /// Gets the verification result as a boolean (common for verify methods).
-        /// Neo contract verify methods typically return true/false.
+        /// EpicChain contract verify methods typically return true/false.
         /// </summary>
         [JsonIgnore]
         public bool? VerificationResultBoolean
@@ -202,7 +202,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             var gasInfo = !string.IsNullOrEmpty(GasConsumed) ? $", GAS: {GasConsumed}" : "";
             var stackInfo = HasStackResults ? $", Stack Items: {StackCount}" : "";
 
-            return $"NeoInvokeContractVerifyResponse(State: {VerificationState}{gasInfo}{stackInfo})";
+            return $"EpicChainInvokeContractVerifyResponse(State: {VerificationState}{gasInfo}{stackInfo})";
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             {
                 info += $"  Verification State: {VerificationState}\n" +
                        $"  Is Successful: {IsVerificationSuccessful}\n" +
-                       $"  GAS Consumed: {GasConsumed}\n" +
+                       $"  EpicPulse Consumed: {GasConsumed}\n" +
                        $"  Stack Items: {StackCount}\n";
 
                 if (HasVerificationException)
@@ -290,17 +290,17 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Creates a copy of this response with a new invocation result.
         /// </summary>
         /// <param name="newResult">The new invocation result</param>
-        /// <returns>New NeoInvokeContractVerifyResponse instance</returns>
-        public NeoInvokeContractVerifyResponse WithResult(InvocationResult newResult)
+        /// <returns>New EpicChainInvokeContractVerifyResponse instance</returns>
+        public EpicChainInvokeContractVerifyResponse WithResult(InvocationResult newResult)
         {
-            return new NeoInvokeContractVerifyResponse(newResult, Id);
+            return new EpicChainInvokeContractVerifyResponse(newResult, Id);
         }
 
         /// <summary>
-        /// Checks if the verification consumed more GAS than a specified limit.
+        /// Checks if the verification consumed more EpicPulse than a specified limit.
         /// </summary>
-        /// <param name="gasLimit">The GAS limit to check against</param>
-        /// <returns>True if GAS consumption exceeded the limit</returns>
+        /// <param name="gasLimit">The EpicPulse limit to check against</param>
+        /// <returns>True if EpicPulse consumption exceeded the limit</returns>
         public bool ExceededGasLimit(decimal gasLimit)
         {
             if (string.IsNullOrEmpty(GasConsumed))
@@ -346,7 +346,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="other">The other verification response to compare with</param>
         /// <returns>True if both have the same verification outcome</returns>
-        public bool VerificationEquals(NeoInvokeContractVerifyResponse other)
+        public bool VerificationEquals(EpicChainInvokeContractVerifyResponse other)
         {
             if (other == null)
                 return false;

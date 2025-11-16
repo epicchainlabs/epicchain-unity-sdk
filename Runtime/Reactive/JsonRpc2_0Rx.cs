@@ -15,17 +15,17 @@ namespace EpicChainUnityRuntime.Reactive
     /// </summary>
     public class JsonRpc2_0Rx
     {
-        private readonly INeo neoUnity;
+        private readonly IEpicChain epicchainUnity;
         private readonly CancellationToken defaultCancellationToken;
 
         /// <summary>
         /// Initializes a new instance of JsonRpc2_0Rx.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="cancellationToken">Default cancellation token for operations</param>
-        public JsonRpc2_0Rx(INeo neoUnity, CancellationToken cancellationToken = default)
+        public JsonRpc2_0Rx(IEpicChain epicchainUnity, CancellationToken cancellationToken = default)
         {
-            this.epicchainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            this.epicchainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
             this.defaultCancellationToken = cancellationToken;
         }
 
@@ -76,7 +76,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Async enumerable of blocks</returns>
-        public async IAsyncEnumerable<NeoBlock> GetBlockStream(
+        public async IAsyncEnumerable<EpicChainBlock> GetBlockStream(
             bool fullTransactionObjects = false,
             int pollingIntervalMs = 1000,
             [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -106,7 +106,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="ascending">Whether to replay in ascending order</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Async enumerable of blocks</returns>
-        public async IAsyncEnumerable<NeoBlock> ReplayBlocks(
+        public async IAsyncEnumerable<EpicChainBlock> ReplayBlocks(
             int startBlock,
             int endBlock,
             bool fullTransactionObjects = false,
@@ -146,7 +146,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval for new blocks</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Async enumerable of blocks</returns>
-        public async IAsyncEnumerable<NeoBlock> CatchUpToLatestAndSubscribeToNewBlocks(
+        public async IAsyncEnumerable<EpicChainBlock> CatchUpToLatestAndSubscribeToNewBlocks(
             int startBlock,
             bool fullTransactionObjects = false,
             int pollingIntervalMs = 1000,
@@ -200,8 +200,8 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Async enumerable of matching transactions</returns>
-        public async IAsyncEnumerable<NeoTransaction> GetTransactionStream(
-            Func<NeoTransaction, bool> transactionPredicate = null,
+        public async IAsyncEnumerable<EpicChainTransaction> GetTransactionStream(
+            Func<EpicChainTransaction, bool> transactionPredicate = null,
             int pollingIntervalMs = 1000,
             [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -227,7 +227,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// </summary>
         public class BlockNotificationHandler
         {
-            public event Action<NeoBlock> OnNewBlock;
+            public event Action<EpicChainBlock> OnNewBlock;
             public event Action<Exception> OnError;
             
             private CancellationTokenSource cancellationTokenSource;
@@ -287,19 +287,19 @@ namespace EpicChainUnityRuntime.Reactive
         [SerializeField] private bool startOnAwake = true;
 
         [Header("Events")]
-        public UnityEngine.Events.UnityEvent<NeoBlock> OnNewBlock;
+        public UnityEngine.Events.UnityEvent<EpicChainBlock> OnNewBlock;
         public UnityEngine.Events.UnityEvent<string> OnError;
 
         private JsonRpc2_0Rx.BlockNotificationHandler handler;
-        private INeo neoUnity;
+        private IEpicChain epicchainUnity;
 
         /// <summary>
         /// Initialize the monitor.
         /// </summary>
-        /// <param name="neoUnityInstance">NeoUnity instance to use</param>
-        public void Initialize(INeo neoUnityInstance)
+        /// <param name="epicchainUnityInstance">EpicChainUnity instance to use</param>
+        public void Initialize(IEpicChain epicchainUnityInstance)
         {
-            epicchainUnity = neoUnityInstance ?? throw new ArgumentNullException(nameof(neoUnityInstance));
+            epicchainUnity = epicchainUnityInstance ?? throw new ArgumentNullException(nameof(epicchainUnityInstance));
             
             handler = new JsonRpc2_0Rx.BlockNotificationHandler();
             handler.OnNewBlock += block => OnNewBlock?.Invoke(block);
@@ -308,7 +308,7 @@ namespace EpicChainUnityRuntime.Reactive
 
         private void Awake()
         {
-            if (startOnAwake && neoUnity != null)
+            if (startOnAwake && epicchainUnity != null)
             {
                 StartMonitoring();
             }
@@ -321,11 +321,11 @@ namespace EpicChainUnityRuntime.Reactive
         {
             if (epicchainUnity == null)
             {
-                Debug.LogError("[ReactiveBlockchainMonitor] NeoUnity instance not set. Call Initialize first.");
+                Debug.LogError("[ReactiveBlockchainMonitor] EpicChainUnity instance not set. Call Initialize first.");
                 return;
             }
 
-            var rx = new JsonRpc2_0Rx(neoUnity);
+            var rx = new JsonRpc2_0Rx(epicchainUnity);
             handler?.StartListening(rx, fullTransactionObjects, pollingIntervalMs);
         }
 

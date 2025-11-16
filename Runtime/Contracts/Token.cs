@@ -41,13 +41,13 @@ namespace EpicChain.Unity.SDK.Contracts
         /// Constructs a Token instance representing the token contract with the given script hash.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        protected Token(Hash160 scriptHash, NeoUnity neoUnity) : base(scriptHash, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        protected Token(Hash160 scriptHash, EpicChainUnity epicchainUnity) : base(scriptHash, epicchainUnity)
         {
         }
         
         /// <summary>
-        /// Constructs a Token instance using the singleton NeoUnity instance.
+        /// Constructs a Token instance using the singleton EpicChainUnity instance.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
         protected Token(Hash160 scriptHash) : base(scriptHash)
@@ -60,7 +60,7 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the total supply of this token in fractions.
-        /// The return value is retrieved from the neo-node only once and then cached.
+        /// The return value is retrieved from the epicchain-node only once and then cached.
         /// </summary>
         /// <returns>The total supply in token fractions</returns>
         public async Task<int> GetTotalSupply()
@@ -80,7 +80,7 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the number of fractions that one unit of this token can be divided into.
-        /// The return value is retrieved from the neo-node only once and then cached.
+        /// The return value is retrieved from the epicchain-node only once and then cached.
         /// </summary>
         /// <returns>The number of decimal places</returns>
         public async Task<int> GetDecimals()
@@ -100,7 +100,7 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the symbol of this token.
-        /// The return value is retrieved from the neo-node only once and then cached.
+        /// The return value is retrieved from the epicchain-node only once and then cached.
         /// </summary>
         /// <returns>The token symbol</returns>
         public async Task<string> GetSymbol()
@@ -125,7 +125,7 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Converts the token amount from a decimal point number to the amount in token fractions
         /// according to this token's number of decimals.
-        /// Use this method to convert e.g. 1.5 GAS to its fraction value 150_000_000.
+        /// Use this method to convert e.g. 1.5 EpicPulse to its fraction value 150_000_000.
         /// </summary>
         /// <param name="amount">The token amount in decimals</param>
         /// <returns>The token amount in fractions</returns>
@@ -173,7 +173,7 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Converts the token amount from token fractions to its decimal point value
         /// according to this token's number of decimals.
-        /// Use this method to convert e.g. 600_000 GAS fractions to its decimal value 0.006.
+        /// Use this method to convert e.g. 600_000 EpicPulse fractions to its decimal value 0.006.
         /// </summary>
         /// <param name="amount">The token amount in fractions</param>
         /// <returns>The token amount in decimals</returns>
@@ -210,25 +210,25 @@ namespace EpicChain.Unity.SDK.Contracts
         
         #endregion
         
-        #region Neo Name Service (NNS) Support
+        #region EpicChain Name Service (XNS) Support
         
         /// <summary>
-        /// Resolves a Neo Name Service (NNS) text record to a Hash160 address.
-        /// Used internally for NNS-based token operations.
+        /// Resolves a EpicChain Name Service (XNS) text record to a Hash160 address.
+        /// Used internally for XNS-based token operations.
         /// </summary>
-        /// <param name="name">The NNS name to resolve</param>
+        /// <param name="name">The XNS name to resolve</param>
         /// <returns>The resolved Hash160 address</returns>
-        protected async Task<Hash160> ResolveNNSTextRecord(NNSName name)
+        protected async Task<Hash160> ResolveXNSTextRecord(XNSName name)
         {
             try
             {
-                var nnsService = new NeoNameService(NeoUnity);
-                var resolvedAddress = await nnsService.Resolve(name, RecordType.TXT);
+                var xnsService = new EpicChainNameService(EpicChainUnity);
+                var resolvedAddress = await xnsService.Resolve(name, RecordType.TXT);
                 return Hash160.FromAddress(resolvedAddress);
             }
             catch (Exception ex)
             {
-                throw new ContractException($"Failed to resolve NNS name '{name}': {ex.Message}", ex);
+                throw new ContractException($"Failed to resolve XNS name '{name}': {ex.Message}", ex);
             }
         }
         
@@ -315,40 +315,40 @@ namespace EpicChain.Unity.SDK.Contracts
     }
     
     /// <summary>
-    /// Represents a Neo Name Service (NNS) name for use in token operations.
+    /// Represents a EpicChain Name Service (XNS) name for use in token operations.
     /// </summary>
     [System.Serializable]
-    public class NNSName
+    public class XNSName
     {
-        /// <summary>The NNS domain name</summary>
+        /// <summary>The XNS domain name</summary>
         [SerializeField]
         public string Name { get; set; }
         
         /// <summary>
-        /// Creates a new NNS name.
+        /// Creates a new XNS name.
         /// </summary>
         /// <param name="name">The domain name</param>
-        public NNSName(string name)
+        public XNSName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("NNS name cannot be null or empty.", nameof(name));
+                throw new ArgumentException("XNS name cannot be null or empty.", nameof(name));
             }
             
             Name = name;
         }
         
         /// <summary>
-        /// Implicit conversion from string to NNSName.
+        /// Implicit conversion from string to XNSName.
         /// </summary>
         /// <param name="name">The domain name</param>
-        public static implicit operator NNSName(string name)
+        public static implicit operator XNSName(string name)
         {
-            return new NNSName(name);
+            return new XNSName(name);
         }
         
         /// <summary>
-        /// String representation of the NNS name.
+        /// String representation of the XNS name.
         /// </summary>
         /// <returns>The domain name</returns>
         public override string ToString()
@@ -358,7 +358,7 @@ namespace EpicChain.Unity.SDK.Contracts
     }
     
     /// <summary>
-    /// DNS record types supported by Neo Name Service.
+    /// DNS record types supported by EpicChain Name Service.
     /// </summary>
     public enum RecordType
     {

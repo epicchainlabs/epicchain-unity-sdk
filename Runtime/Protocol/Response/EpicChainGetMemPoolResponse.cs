@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns information about the node's memory pool including verified and unverified transactions.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetMemPoolResponse : NeoResponse<EpicChainGetMemPoolResponse.MemPoolDetails>
+    public class EpicChainGetMemPoolResponse : EpicChainResponse<EpicChainGetMemPoolResponse.MemPoolDetails>
     {
         /// <summary>
         /// Gets the memory pool details from the response.

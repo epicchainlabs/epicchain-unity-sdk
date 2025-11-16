@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents a 256-bit hash used for Neo transaction hashes and block hashes.
+    /// Represents a 256-bit hash used for EpicChain transaction hashes and block hashes.
     /// Immutable value type with proper validation and conversion utilities.
     /// </summary>
     [System.Serializable]
     [JsonConverter(typeof(Hash256JsonConverter))]
-    public class Hash256 : IEquatable<Hash256>, INeoSerializable, IComparable<Hash256>
+    public class Hash256 : IEquatable<Hash256>, IEpicChainSerializable, IComparable<Hash256>
     {
         #region Constants
         
@@ -300,7 +300,7 @@ namespace EpicChain.Unity.SDK.Types
         
         #endregion
         
-        #region INeoSerializable Implementation
+        #region IEpicChainSerializable Implementation
         
         /// <summary>
         /// Serializes this Hash256 to a binary writer.

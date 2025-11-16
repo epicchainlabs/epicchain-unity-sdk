@@ -172,11 +172,11 @@ namespace EpicChain.Unity.SDK.Tests.Serialization
             ReadVarStringAndAssert(new byte[] { 0x05, 0x48, 0x65, 0x6c, 0x6c, 0x6f }, "Hello");
             
             // Test with UTF-8 encoding
-            var utf8Bytes = Encoding.UTF8.GetBytes("Neo币");
+            var utf8Bytes = Encoding.UTF8.GetBytes("EpicChain Coin");
             var varStringData = new byte[1 + utf8Bytes.Length];
             varStringData[0] = (byte)utf8Bytes.Length;
             Array.Copy(utf8Bytes, 0, varStringData, 1, utf8Bytes.Length);
-            ReadVarStringAndAssert(varStringData, "Neo币");
+            ReadVarStringAndAssert(varStringData, "EpicChain Coin");
         }
 
         [Test]
@@ -417,7 +417,7 @@ namespace EpicChain.Unity.SDK.Tests.Serialization
                 (long)123456789012345,
                 true,
                 false,
-                "Hello, Neo!"
+                "Hello, EpicChain!"
             };
 
             // Write data

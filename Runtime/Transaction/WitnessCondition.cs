@@ -13,7 +13,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// These conditions determine when a witness rule should be applied.
     /// </summary>
     [Serializable]
-    public abstract class WitnessCondition : INeoSerializable, IEquatable<WitnessCondition>
+    public abstract class WitnessCondition : IEpicChainSerializable, IEquatable<WitnessCondition>
     {
         public const int MAX_SUBITEMS = 16;
         public const int MAX_NESTING_DEPTH = 2;

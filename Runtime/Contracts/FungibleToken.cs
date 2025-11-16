@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Contracts
 {
     /// <summary>
     /// Represents a fungible token contract that is compliant with the XEP-17 standard
-    /// and provides methods to invoke it. XEP-17 is the Neo standard for fungible tokens
+    /// and provides methods to invoke it. XEP-17 is the EpicChain standard for fungible tokens
     /// similar to ERC-20 on Ethereum.
     /// </summary>
     [System.Serializable]
@@ -30,13 +30,13 @@ namespace EpicChain.Unity.SDK.Contracts
         /// Constructs a FungibleToken instance representing the XEP-17 token contract with the given script hash.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public FungibleToken(Hash160 scriptHash, NeoUnity neoUnity) : base(scriptHash, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public FungibleToken(Hash160 scriptHash, EpicChainUnity epicchainUnity) : base(scriptHash, epicchainUnity)
         {
         }
         
         /// <summary>
-        /// Constructs a FungibleToken instance using the singleton NeoUnity instance.
+        /// Constructs a FungibleToken instance using the singleton EpicChainUnity instance.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
         public FungibleToken(Hash160 scriptHash) : base(scriptHash)
@@ -49,8 +49,8 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the token balance for the given account.
-        /// The token amount is returned in token fractions. E.g., an amount of 1 GAS is returned as 1*10^8 GAS fractions.
-        /// The balance is not cached locally. Every time this method is called requests are sent to the Neo node.
+        /// The token amount is returned in token fractions. E.g., an amount of 1 EpicPulse is returned as 1*10^8 EpicPulse fractions.
+        /// The balance is not cached locally. Every time this method is called requests are sent to the EpicChain node.
         /// </summary>
         /// <param name="account">The account to fetch the balance for</param>
         /// <returns>The token balance in fractions</returns>
@@ -66,8 +66,8 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the token balance for the given account script hash.
-        /// The token amount is returned in token fractions. E.g., an amount of 1 GAS is returned as 1*10^8 GAS fractions.
-        /// The balance is not cached locally. Every time this method is called requests are sent to the Neo node.
+        /// The token amount is returned in token fractions. E.g., an amount of 1 EpicPulse is returned as 1*10^8 EpicPulse fractions.
+        /// The balance is not cached locally. Every time this method is called requests are sent to the EpicChain node.
         /// </summary>
         /// <param name="scriptHash">The script hash to fetch the balance for</param>
         /// <returns>The token balance in fractions</returns>
@@ -90,8 +90,8 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Gets the token balance for the given wallet, i.e., all accounts in the wallet combined.
-        /// The token amount is returned in token fractions. E.g., an amount of 1 GAS is returned as 1*10^8 GAS fractions.
-        /// The balance is not cached locally. Every time this method is called requests are sent to the Neo node.
+        /// The token amount is returned in token fractions. E.g., an amount of 1 EpicPulse is returned as 1*10^8 EpicPulse fractions.
+        /// The balance is not cached locally. Every time this method is called requests are sent to the EpicChain node.
         /// </summary>
         /// <param name="wallet">The wallet to fetch the balance for</param>
         /// <returns>The total token balance across all accounts in the wallet</returns>
@@ -177,7 +177,7 @@ namespace EpicChain.Unity.SDK.Contracts
             }
             
             var transferScript = await BuildTransferScript(from, to, amount, data);
-            return new TransactionBuilder(NeoUnity).SetScript(transferScript);
+            return new TransactionBuilder(EpicChainUnity).SetScript(transferScript);
         }
         
         /// <summary>
@@ -207,19 +207,19 @@ namespace EpicChain.Unity.SDK.Contracts
         
         #endregion
         
-        #region NNS Transfer Methods
+        #region XNS Transfer Methods
         
         /// <summary>
-        /// Creates a transfer transaction using Neo Name Service (NNS) domain name resolution.
-        /// Resolves the text record of the recipient's NNS domain name. The resolved value is expected to be a valid Neo address.
+        /// Creates a transfer transaction using EpicChain Name Service (XNS) domain name resolution.
+        /// Resolves the text record of the recipient's XNS domain name. The resolved value is expected to be a valid EpicChain address.
         /// The from account is set as a signer of the transaction.
         /// </summary>
         /// <param name="from">The sender account</param>
-        /// <param name="to">The NNS domain name to resolve</param>
+        /// <param name="to">The XNS domain name to resolve</param>
         /// <param name="amount">The amount to transfer in token fractions</param>
         /// <param name="data">The data that is passed to the onPayment method if the recipient is a contract</param>
         /// <returns>A transaction builder ready for signing</returns>
-        public async Task<TransactionBuilder> Transfer(Account from, NNSName to, long amount, ContractParameter data = null)
+        public async Task<TransactionBuilder> Transfer(Account from, XNSName to, long amount, ContractParameter data = null)
         {
             if (from == null)
             {
@@ -231,23 +231,23 @@ namespace EpicChain.Unity.SDK.Contracts
         }
         
         /// <summary>
-        /// Creates a transfer transaction using Neo Name Service (NNS) domain name resolution.
+        /// Creates a transfer transaction using EpicChain Name Service (XNS) domain name resolution.
         /// No signers are set on the returned transaction builder. It is up to you to set the correct ones,
         /// e.g., a ContractSigner in case the from address is a contract.
         /// </summary>
         /// <param name="from">The sender script hash</param>
-        /// <param name="to">The NNS domain name to resolve</param>
+        /// <param name="to">The XNS domain name to resolve</param>
         /// <param name="amount">The amount to transfer in token fractions</param>
         /// <param name="data">The data that is passed to the onPayment method if the recipient is a contract</param>
         /// <returns>A transaction builder ready for signing</returns>
-        public async Task<TransactionBuilder> Transfer(Hash160 from, NNSName to, long amount, ContractParameter data = null)
+        public async Task<TransactionBuilder> Transfer(Hash160 from, XNSName to, long amount, ContractParameter data = null)
         {
             if (to == null)
             {
                 throw new ArgumentNullException(nameof(to));
             }
             
-            var resolvedScriptHash = await ResolveNNSTextRecord(to);
+            var resolvedScriptHash = await ResolveXNSTextRecord(to);
             return await Transfer(from, resolvedScriptHash, amount, data);
         }
         
@@ -305,7 +305,7 @@ namespace EpicChain.Unity.SDK.Contracts
                 await scriptBuilder.Emit(transferScript);
             }
             
-            return new TransactionBuilder(NeoUnity).SetScript(await scriptBuilder.ToArray());
+            return new TransactionBuilder(EpicChainUnity).SetScript(await scriptBuilder.ToArray());
         }
         
         #endregion
@@ -342,13 +342,13 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <param name="from">The sender</param>
         /// <param name="to">The recipient</param>
         /// <param name="amount">The transfer amount</param>
-        /// <returns>Estimated total cost in GAS fractions</returns>
+        /// <returns>Estimated total cost in EpicPulse fractions</returns>
         public async Task<long> EstimateTransferCost(Hash160 from, Hash160 to, long amount)
         {
             try
             {
                 var transferScript = await BuildTransferScript(from, to, amount);
-                var transaction = new TransactionBuilder(NeoUnity).SetScript(transferScript);
+                var transaction = new TransactionBuilder(EpicChainUnity).SetScript(transferScript);
                 
                 // Build unsigned transaction to get actual fee calculation
                 var unsignedTransaction = await transaction.GetUnsignedTransaction();

@@ -13,7 +13,7 @@ using System.Numerics;
 namespace EpicChain.Unity.SDK.Wallet
 {
     /// <summary>
-    /// Represents a Neo account which can be a single-signature or multi-signature account.
+    /// Represents a EpicChain account which can be a single-signature or multi-signature account.
     /// Unity-optimized implementation with proper serialization and async support.
     /// </summary>
     [System.Serializable]
@@ -55,7 +55,7 @@ namespace EpicChain.Unity.SDK.Wallet
         /// <summary>This account's EC key pair if available. Null if the key pair is not available (e.g., encrypted).</summary>
         public ECKeyPair KeyPair => keyPair;
         
-        /// <summary>The Neo address of this account</summary>
+        /// <summary>The EpicChain address of this account</summary>
         public string Address => address;
         
         /// <summary>The label/name for this account</summary>
@@ -145,7 +145,7 @@ namespace EpicChain.Unity.SDK.Wallet
         /// <summary>
         /// Constructs an account with the given address and optional parameters.
         /// </summary>
-        /// <param name="address">The Neo address</param>
+        /// <param name="address">The EpicChain address</param>
         /// <param name="label">The label for the account</param>
         /// <param name="verificationScript">The verification script</param>
         /// <param name="signingThreshold">The signing threshold for multi-sig</param>
@@ -157,7 +157,7 @@ namespace EpicChain.Unity.SDK.Wallet
                 throw new ArgumentException("Address cannot be null or empty.", nameof(address));
             
             if (!address.IsValidAddress())
-                throw new ArgumentException("Invalid Neo address format.", nameof(address));
+                throw new ArgumentException("Invalid EpicChain address format.", nameof(address));
             
             this.address = address;
             this.label = label ?? address;
@@ -360,13 +360,13 @@ namespace EpicChain.Unity.SDK.Wallet
         /// <summary>
         /// Gets the balances of all XEP-17 tokens that this account owns.
         /// The token amounts are returned in token fractions.
-        /// Requires a Neo node with the RpcXep17Tracker plugin installed.
+        /// Requires a EpicChain node with the RpcXep17Tracker plugin installed.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for RPC calls</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for RPC calls</param>
         /// <returns>Dictionary mapping token script hashes to token amounts</returns>
-        public async Task<Dictionary<Hash160, long>> GetXep17Balances(NeoUnity epicchainUnity = null)
+        public async Task<Dictionary<Hash160, long>> GetXep17Balances(EpicChainUnity epicchainUnity = null)
         {
-            epicchainUnity = neoUnity ?? EpicChainUnityInstance;
+            epicchainUnity = epicchainUnity ?? EpicChainUnityInstance;
             
             try
             {
@@ -392,14 +392,14 @@ namespace EpicChain.Unity.SDK.Wallet
         /// Gets the balance of a specific XEP-17 token for this account.
         /// </summary>
         /// <param name="tokenHash">The token contract hash</param>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for RPC calls</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for RPC calls</param>
         /// <returns>The token balance in fractions</returns>
-        public async Task<long> GetTokenBalance(Hash160 tokenHash, NeoUnity epicchainUnity = null)
+        public async Task<long> GetTokenBalance(Hash160 tokenHash, EpicChainUnity epicchainUnity = null)
         {
             if (tokenHash == null)
                 throw new ArgumentNullException(nameof(tokenHash));
             
-            var balances = await GetXep17Balances(neoUnity);
+            var balances = await GetXep17Balances(epicchainUnity);
             return balances.TryGetValue(tokenHash, out var balance) ? balance : 0;
         }
         
@@ -586,7 +586,7 @@ namespace EpicChain.Unity.SDK.Wallet
         /// Creates an account from the given address.
         /// Note: An account created this way cannot be used for transaction signing.
         /// </summary>
-        /// <param name="address">The Neo address</param>
+        /// <param name="address">The EpicChain address</param>
         /// <returns>The account</returns>
         public static Account FromAddress(string address)
         {
@@ -594,7 +594,7 @@ namespace EpicChain.Unity.SDK.Wallet
                 throw new ArgumentException("Address cannot be null or empty.", nameof(address));
             
             if (!address.IsValidAddress())
-                throw new ArgumentException("Invalid Neo address format.", nameof(address));
+                throw new ArgumentException("Invalid EpicChain address format.", nameof(address));
             
             return new Account(address, address);
         }
@@ -653,7 +653,7 @@ namespace EpicChain.Unity.SDK.Wallet
     /// <summary>
     /// Exception thrown when wallet or account operations fail.
     /// </summary>
-    public class WalletException : NeoUnityException
+    public class WalletException : EpicChainUnityException
     {
         /// <summary>
         /// Creates a new wallet exception.

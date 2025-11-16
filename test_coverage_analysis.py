@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Comprehensive Test Coverage Analysis Tool
-Analyzes Swift vs C# test coverage for NeoUnity project
+Analyzes Swift vs C# test coverage for EpicChainUnity project
 """
 
 import os
@@ -155,7 +155,7 @@ class TestCoverageAnalyzer:
         
         report = []
         report.append("# 🧪 ULTIMATE TEST COMPLETENESS VERIFICATION REPORT")
-        report.append("## NeoUnity: Swift → C# Test Coverage Analysis")
+        report.append("## EpicChainUnity: Swift → C# Test Coverage Analysis")
         report.append("")
         
         # Summary statistics
@@ -281,18 +281,18 @@ def main():
     analyzer = TestCoverageAnalyzer()
     
     # Analyze Swift tests
-    swift_test_dir = "/home/neo/git/NeoUnity/NeoSwift/Tests/NeoSwiftTests/unit"
+    swift_test_dir = "/home/epicchain/git/EpicChainUnity/EpicChainSwift/Tests/EpicChainSwiftTests/unit"
     analyzer.analyze_swift_tests(swift_test_dir)
     
     # Analyze C# tests  
-    csharp_test_dir = "/home/neo/git/NeoUnity/Tests/Runtime"
+    csharp_test_dir = "/home/epicchain/git/EpicChainUnity/Tests/Runtime"
     analyzer.analyze_csharp_tests(csharp_test_dir)
     
     # Generate comprehensive report
     report = analyzer.generate_comprehensive_report()
     
     # Save and display report
-    with open("/home/neo/git/NeoUnity/TEST_COVERAGE_MATRIX.md", "w") as f:
+    with open("/home/epicchain/git/EpicChainUnity/TEST_COVERAGE_MATRIX.md", "w") as f:
         f.write(report)
     
     print(report)

@@ -7,14 +7,14 @@ namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
     /// Base58 and Base58Check encoding/decoding implementation.
-    /// Used for Neo addresses and other blockchain data encoding.
+    /// Used for EpicChain addresses and other blockchain data encoding.
     /// Production-ready implementation with proper validation and error handling.
     /// </summary>
     public static class Base58
     {
         #region Constants
         
-        /// <summary>Base58 alphabet used by Bitcoin and Neo</summary>
+        /// <summary>Base58 alphabet used by Bitcoin and EpicChain</summary>
         private const string ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
         
         /// <summary>Base58 radix</summary>

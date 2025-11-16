@@ -6,12 +6,12 @@ using EpicChain.Unity.SDK.Exceptions;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Base implementation of Neo RPC responses.
+    /// Base implementation of EpicChain RPC responses.
     /// Handles JSON-RPC 2.0 protocol compliance and error handling.
     /// </summary>
     /// <typeparam name="T">The result data type</typeparam>
     [System.Serializable]
-    public class NeoResponse<T> : IResponse<T>
+    public class EpicChainResponse<T> : IResponse<T>
     {
         #region Properties
         
@@ -50,7 +50,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoResponse()
+        public EpicChainResponse()
         {
             JsonRpc = "2.0";
         }
@@ -60,7 +60,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="result">The result data</param>
         /// <param name="id">The request ID</param>
-        public NeoResponse(T result, int id = 1)
+        public EpicChainResponse(T result, int id = 1)
         {
             JsonRpc = "2.0";
             Id = id;
@@ -73,7 +73,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoResponse(ResponseError error, int id = 1)
+        public EpicChainResponse(ResponseError error, int id = 1)
         {
             JsonRpc = "2.0";
             Id = id;
@@ -89,12 +89,12 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the result data or throws an exception if there was an error.
         /// </summary>
         /// <returns>The result data</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         public T GetResult()
         {
             if (HasError)
             {
-                throw new NeoRpcException($"RPC Error {Error.Code}: {Error.Message}", Error);
+                throw new EpicChainRpcException($"RPC Error {Error.Code}: {Error.Message}", Error);
             }
             
             return Result;
@@ -103,17 +103,17 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Validates that this response is successful and has a non-null result.
         /// </summary>
-        /// <exception cref="NeoRpcException">If the response has an error or null result</exception>
+        /// <exception cref="EpicChainRpcException">If the response has an error or null result</exception>
         public void ValidateResult()
         {
             if (HasError)
             {
-                throw new NeoRpcException($"RPC Error {Error.Code}: {Error.Message}", Error);
+                throw new EpicChainRpcException($"RPC Error {Error.Code}: {Error.Message}", Error);
             }
             
             if (Result == null)
             {
-                throw new NeoRpcException("Response result is null", null);
+                throw new EpicChainRpcException("Response result is null", null);
             }
         }
         
@@ -146,17 +146,17 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             if (HasError)
             {
-                return $"NeoResponse<{typeof(T).Name}>(Error: {Error.Code} - {Error.Message})";
+                return $"EpicChainResponse<{typeof(T).Name}>(Error: {Error.Code} - {Error.Message})";
             }
             
-            return $"NeoResponse<{typeof(T).Name}>(Success: {Result != null})";
+            return $"EpicChainResponse<{typeof(T).Name}>(Success: {Result != null})";
         }
         
         #endregion
     }
     
     /// <summary>
-    /// Represents an error in a Neo RPC response.
+    /// Represents an error in a EpicChain RPC response.
     /// </summary>
     [System.Serializable]
     public class ResponseError
@@ -209,30 +209,30 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     }
     
     /// <summary>
-    /// Exception thrown when Neo RPC operations fail.
+    /// Exception thrown when EpicChain RPC operations fail.
     /// </summary>
-    public class NeoRpcException : NeoUnityException
+    public class EpicChainRpcException : EpicChainUnityException
     {
         /// <summary>The associated error details</summary>
         public ResponseError Error { get; }
         
         /// <summary>
-        /// Creates a new Neo RPC exception.
+        /// Creates a new EpicChain RPC exception.
         /// </summary>
         /// <param name="message">The exception message</param>
         /// <param name="error">The associated error details</param>
-        public NeoRpcException(string message, ResponseError error) : base(message)
+        public EpicChainRpcException(string message, ResponseError error) : base(message)
         {
             Error = error;
         }
         
         /// <summary>
-        /// Creates a new Neo RPC exception with inner exception.
+        /// Creates a new EpicChain RPC exception with inner exception.
         /// </summary>
         /// <param name="message">The exception message</param>
         /// <param name="error">The associated error details</param>
         /// <param name="innerException">The inner exception</param>
-        public NeoRpcException(string message, ResponseError error, Exception innerException) : base(message, innerException)
+        public EpicChainRpcException(string message, ResponseError error, Exception innerException) : base(message, innerException)
         {
             Error = error;
         }

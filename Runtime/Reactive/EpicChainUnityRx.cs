@@ -11,20 +11,20 @@ namespace EpicChainUnityRuntime.Reactive
     /// Unity-compatible reactive blockchain client implementation.
     /// Provides async enumerable patterns for blockchain event streams without external dependencies.
     /// </summary>
-    public class NeoUnityRx : INeoUnityRx
+    public class EpicChainUnityRx : IEpicChainUnityRx
     {
         private readonly JsonRpc2_0Rx jsonRpcRx;
-        private readonly INeo neoUnity;
+        private readonly IEpicChain epicchainUnity;
 
         /// <summary>
-        /// Initializes a new instance of NeoUnityRx.
+        /// Initializes a new instance of EpicChainUnityRx.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <param name="cancellationToken">Default cancellation token</param>
-        public NeoUnityRx(INeo neoUnity, CancellationToken cancellationToken = default)
+        public EpicChainUnityRx(IEpicChain epicchainUnity, CancellationToken cancellationToken = default)
         {
-            this.epicchainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
-            this.jsonRpcRx = new JsonRpc2_0Rx(neoUnity, cancellationToken);
+            this.epicchainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
+            this.jsonRpcRx = new JsonRpc2_0Rx(epicchainUnity, cancellationToken);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable that emits all new blocks as they are added to the blockchain</returns>
-        public IAsyncEnumerable<NeoBlock> GetBlockStream(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainBlock> GetBlockStream(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.GetBlockStream(fullTransactionObjects, pollingIntervalMs, cancellationToken);
         }
@@ -47,7 +47,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="fullTransactionObjects">If true, provides transactions embedded in blocks, otherwise transaction hashes</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit these blocks</returns>
-        public IAsyncEnumerable<NeoBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.ReplayBlocks(startBlock, endBlock, fullTransactionObjects, true, cancellationToken);
         }
@@ -61,7 +61,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="ascending">If true, emits blocks in ascending order between range, otherwise, in descending order</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit these blocks</returns>
-        public IAsyncEnumerable<NeoBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects, bool ascending, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects, bool ascending, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.ReplayBlocks(startBlock, endBlock, fullTransactionObjects, ascending, cancellationToken);
         }
@@ -74,7 +74,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="fullTransactionObjects">If true, provides transactions embedded in blocks, otherwise transaction hashes</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all requested blocks</returns>
-        public async IAsyncEnumerable<NeoBlock> CatchUpToLatestBlocks(int startBlock, bool fullTransactionObjects = false, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<EpicChainBlock> CatchUpToLatestBlocks(int startBlock, bool fullTransactionObjects = false, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval for new blocks in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all requested blocks and future blocks</returns>
-        public IAsyncEnumerable<NeoBlock> CatchUpToLatestAndSubscribeToNewBlocks(int startBlock, bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainBlock> CatchUpToLatestAndSubscribeToNewBlocks(int startBlock, bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.CatchUpToLatestAndSubscribeToNewBlocks(startBlock, fullTransactionObjects, pollingIntervalMs, cancellationToken);
         }
@@ -114,7 +114,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all future blocks</returns>
-        public IAsyncEnumerable<NeoBlock> SubscribeToNewBlocks(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainBlock> SubscribeToNewBlocks(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.GetBlockStream(fullTransactionObjects, pollingIntervalMs, cancellationToken);
         }
@@ -126,7 +126,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable of matching transactions</returns>
-        public IAsyncEnumerable<NeoTransaction> GetTransactionStream(Func<NeoTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EpicChainTransaction> GetTransactionStream(Func<EpicChainTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default)
         {
             return jsonRpcRx.GetTransactionStream(transactionPredicate, pollingIntervalMs, cancellationToken);
         }
@@ -145,10 +145,10 @@ namespace EpicChainUnityRuntime.Reactive
         /// <summary>
         /// Creates a reactive wrapper with Unity-friendly event handlers.
         /// </summary>
-        /// <returns>A new ReactiveNeoUnityWrapper</returns>
-        public ReactiveNeoUnityWrapper CreateUnityWrapper()
+        /// <returns>A new ReactiveEpicChainUnityWrapper</returns>
+        public ReactiveEpicChainUnityWrapper CreateUnityWrapper()
         {
-            return new ReactiveNeoUnityWrapper(this);
+            return new ReactiveEpicChainUnityWrapper(this);
         }
     }
 
@@ -156,20 +156,20 @@ namespace EpicChainUnityRuntime.Reactive
     /// Unity-friendly wrapper for reactive blockchain operations.
     /// Provides event-based patterns more suitable for Unity's component system.
     /// </summary>
-    public class ReactiveNeoUnityWrapper
+    public class ReactiveEpicChainUnityWrapper
     {
-        private readonly NeoUnityRx neoUnityRx;
+        private readonly EpicChainUnityRx epicchainUnityRx;
         private CancellationTokenSource cancellationTokenSource;
 
         /// <summary>
         /// Event triggered when a new block is received.
         /// </summary>
-        public event Action<NeoBlock> OnNewBlock;
+        public event Action<EpicChainBlock> OnNewBlock;
 
         /// <summary>
         /// Event triggered when a new transaction is received.
         /// </summary>
-        public event Action<NeoTransaction> OnNewTransaction;
+        public event Action<EpicChainTransaction> OnNewTransaction;
 
         /// <summary>
         /// Event triggered when an error occurs.
@@ -192,12 +192,12 @@ namespace EpicChainUnityRuntime.Reactive
         public bool IsStreaming { get; private set; }
 
         /// <summary>
-        /// Initializes a new ReactiveNeoUnityWrapper.
+        /// Initializes a new ReactiveEpicChainUnityWrapper.
         /// </summary>
-        /// <param name="neoUnityRx">The NeoUnityRx instance</param>
-        public ReactiveNeoUnityWrapper(NeoUnityRx neoUnityRx)
+        /// <param name="epicchainUnityRx">The EpicChainUnityRx instance</param>
+        public ReactiveEpicChainUnityWrapper(EpicChainUnityRx epicchainUnityRx)
         {
-            this.neoUnityRx = neoUnityRx ?? throw new ArgumentNullException(nameof(neoUnityRx));
+            this.epicchainUnityRx = epicchainUnityRx ?? throw new ArgumentNullException(nameof(epicchainUnityRx));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace EpicChainUnityRuntime.Reactive
             {
                 try
                 {
-                    await foreach (var block in neoUnityRx.GetBlockStream(fullTransactionObjects, pollingIntervalMs, cancellationTokenSource.Token))
+                    await foreach (var block in epicchainUnityRx.GetBlockStream(fullTransactionObjects, pollingIntervalMs, cancellationTokenSource.Token))
                     {
                         OnNewBlock?.Invoke(block);
 
@@ -253,7 +253,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// </summary>
         /// <param name="transactionPredicate">Predicate to filter transactions</param>
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
-        public void StartTransactionStream(Func<NeoTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000)
+        public void StartTransactionStream(Func<EpicChainTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000)
         {
             if (IsStreaming)
                 return;
@@ -266,7 +266,7 @@ namespace EpicChainUnityRuntime.Reactive
             {
                 try
                 {
-                    await foreach (var transaction in neoUnityRx.GetTransactionStream(transactionPredicate, pollingIntervalMs, cancellationTokenSource.Token))
+                    await foreach (var transaction in epicchainUnityRx.GetTransactionStream(transactionPredicate, pollingIntervalMs, cancellationTokenSource.Token))
                     {
                         OnNewTransaction?.Invoke(transaction);
                     }

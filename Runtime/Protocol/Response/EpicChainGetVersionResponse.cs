@@ -5,17 +5,17 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Response for getting the version information of a Neo node.
+    /// Response for getting the version information of a EpicChain node.
     /// Contains node version, protocol parameters, and network configuration.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetVersionResponse : NeoResponse<NeoVersion>
+    public class EpicChainGetVersionResponse : EpicChainResponse<EpicChainVersion>
     {
         /// <summary>
         /// Gets the version information from the response.
         /// </summary>
         /// <returns>Version information or null if response failed</returns>
-        public NeoVersion GetVersion()
+        public EpicChainVersion GetVersion()
         {
             return IsSuccess ? Result : null;
         }
@@ -24,19 +24,19 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the version information or throws if the response failed.
         /// </summary>
         /// <returns>Version information</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
-        public NeoVersion GetVersionOrThrow()
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
+        public EpicChainVersion GetVersionOrThrow()
         {
             return GetResult();
         }
     }
     
     /// <summary>
-    /// Represents version and configuration information of a Neo node.
+    /// Represents version and configuration information of a EpicChain node.
     /// Contains network ports, protocol parameters, and node identification.
     /// </summary>
     [System.Serializable]
-    public class NeoVersion
+    public class EpicChainVersion
     {
         #region Properties
         
@@ -58,7 +58,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Protocol configuration parameters</summary>
         [JsonProperty("protocol")]
-        public NeoProtocol Protocol { get; set; }
+        public EpicChainProtocol Protocol { get; set; }
         
         #endregion
         
@@ -67,19 +67,19 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoVersion()
+        public EpicChainVersion()
         {
         }
         
         /// <summary>
-        /// Creates a new Neo version.
+        /// Creates a new EpicChain version.
         /// </summary>
         /// <param name="tcpPort">TCP port</param>
         /// <param name="wsPort">WebSocket port</param>
         /// <param name="nonce">Node nonce</param>
         /// <param name="userAgent">User agent</param>
         /// <param name="protocol">Protocol parameters</param>
-        public NeoVersion(int? tcpPort, int? wsPort, long nonce, string userAgent, NeoProtocol protocol)
+        public EpicChainVersion(int? tcpPort, int? wsPort, long nonce, string userAgent, EpicChainProtocol protocol)
         {
             TcpPort = tcpPort;
             WsPort = wsPort;
@@ -114,11 +114,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Whether this is a MainNet node</summary>
         [JsonIgnore]
-        public bool IsMainNet => Network == 860833102; // Neo MainNet magic number
+        public bool IsMainNet => Network == 860833102; // EpicChain MainNet magic number
         
         /// <summary>Whether this is a TestNet node</summary>
         [JsonIgnore]
-        public bool IsTestNet => Network == 894710606; // Neo TestNet magic number
+        public bool IsTestNet => Network == 894710606; // EpicChain TestNet magic number
         
         #endregion
         
@@ -133,7 +133,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             if (string.IsNullOrEmpty(UserAgent))
                 return "Unknown";
             
-            // Extract software name from user agent (e.g., "NEO-CLI/3.5.0")
+            // Extract software name from user agent (e.g., "EpicChain-CLI/1.0.0")
             var parts = UserAgent.Split('/');
             return parts.Length > 0 ? parts[0] : UserAgent;
         }
@@ -147,7 +147,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             if (string.IsNullOrEmpty(UserAgent))
                 return "Unknown";
             
-            // Extract version from user agent (e.g., "NEO-CLI/3.5.0")
+            // Extract version from user agent (e.g., "EpicChain-CLI/1.0.0")
             var parts = UserAgent.Split('/');
             return parts.Length > 1 ? parts[1] : "Unknown";
         }
@@ -221,7 +221,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>HTTP RPC endpoint URL</returns>
         public string GetHttpEndpoint(string host = "localhost", bool secure = false)
         {
-            // Neo nodes typically use standard HTTP ports for RPC
+            // EpicChain nodes typically use standard HTTP ports for RPC
             var port = secure ? 443 : 80;
             var protocol = secure ? "https" : "http";
             return $"{protocol}://{host}:{port}";
@@ -259,7 +259,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>Detailed string representation</returns>
         public string ToDetailedString()
         {
-            var result = $"Neo Node Version:\n";
+            var result = $"EpicChain Node Version:\n";
             result += $"  Software: {GetNodeSoftware()}\n";
             result += $"  Version: {GetNodeVersion()}\n";
             result += $"  Network: {GetNetworkName()}\n";
@@ -293,18 +293,18 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             var software = GetNodeSoftware();
             var version = GetNodeVersion();
             var network = GetNetworkName();
-            return $"NeoVersion({software} {version} on {network})";
+            return $"EpicChainVersion({software} {version} on {network})";
         }
         
         #endregion
     }
     
     /// <summary>
-    /// Represents Neo protocol configuration parameters.
+    /// Represents EpicChain protocol configuration parameters.
     /// Contains network constants and protocol limits.
     /// </summary>
     [System.Serializable]
-    public class NeoProtocol
+    public class EpicChainProtocol
     {
         #region Properties
         
@@ -340,7 +340,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         [JsonProperty("memorypoolmaxtransactions")]
         public int MemoryPoolMaxTransactions { get; set; }
         
-        /// <summary>Initial GAS distribution amount</summary>
+        /// <summary>Initial EpicPulse distribution amount</summary>
         [JsonProperty("initialgasdistribution")]
         public long InitialGasDistribution { get; set; }
         
@@ -351,7 +351,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoProtocol()
+        public EpicChainProtocol()
         {
         }
         
@@ -366,8 +366,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <param name="addressVersion">Address version</param>
         /// <param name="maxTransactionsPerBlock">Max transactions per block</param>
         /// <param name="memoryPoolMaxTransactions">Max memory pool transactions</param>
-        /// <param name="initialGasDistribution">Initial GAS distribution</param>
-        public NeoProtocol(long network, int? validatorsCount, int msPerBlock, int maxValidUntilBlockIncrement,
+        /// <param name="initialGasDistribution">Initial EpicPulse distribution</param>
+        public EpicChainProtocol(long network, int? validatorsCount, int msPerBlock, int maxValidUntilBlockIncrement,
                           int maxTraceableBlocks, int addressVersion, int maxTransactionsPerBlock,
                           int memoryPoolMaxTransactions, long initialGasDistribution)
         {
@@ -530,21 +530,21 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>String representation</returns>
         public override string ToString()
         {
-            return $"NeoProtocol(Network: {Network}, BlockTime: {MsPerBlock}ms, MaxTPS: ~{MaxTransactionsPerSecond:F1})";
+            return $"EpicChainProtocol(Network: {Network}, BlockTime: {MsPerBlock}ms, MaxTPS: ~{MaxTransactionsPerSecond:F1})";
         }
         
         #endregion
     }
     
     /// <summary>
-    /// Enumeration of Neo network types.
+    /// Enumeration of EpicChain network types.
     /// </summary>
     public enum NetworkType
     {
-        /// <summary>Neo Legacy MainNet</summary>
+        /// <summary>EpicChain Legacy MainNet</summary>
         MainNet,
         
-        /// <summary>Neo Legacy TestNet</summary>
+        /// <summary>EpicChain Legacy TestNet</summary>
         TestNet,
         
         /// <summary>EpicChain MainNet</summary>
@@ -558,7 +558,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     }
     
     /// <summary>
-    /// Contains performance statistics for Neo protocol.
+    /// Contains performance statistics for EpicChain protocol.
     /// </summary>
     [System.Serializable]
     public class ProtocolPerformance

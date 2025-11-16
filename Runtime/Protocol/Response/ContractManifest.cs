@@ -8,7 +8,7 @@ using EpicChain.Unity.SDK.Types;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a Neo contract manifest that describes a smart contract's interface, permissions, and metadata.
+    /// Represents a EpicChain contract manifest that describes a smart contract's interface, permissions, and metadata.
     /// Contains ABI information, supported standards, permissions, and trust relationships.
     /// </summary>
     [System.Serializable]

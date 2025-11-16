@@ -8,21 +8,21 @@ using EpicChain.Unity.SDK.Types;
 namespace EpicChain.Unity.SDK.Tests.Core
 {
     /// <summary>
-    /// Unit tests for the main NeoUnity SDK class.
+    /// Unit tests for the main EpicChainUnity SDK class.
     /// Tests initialization, configuration, and basic blockchain operations.
     /// </summary>
     [TestFixture]
-    public class NeoUnityTests
+    public class EpicChainUnityTests
     {
         private EpicChainUnityConfig testConfig;
-        private NeoUnity neoUnity;
+        private EpicChainUnity epicchainUnity;
         
         [SetUp]
         public void SetUp()
         {
             // Create test configuration
             testConfig = ScriptableObject.CreateInstance<EpicChainUnityConfig>();
-            testConfig.NodeUrl = "https://testnet1.neo.coz.io:443";
+            testConfig.NodeUrl = "https://testnet1-seed.epic-chain.org:20111";
             testConfig.SetNetworkMagic(894710606); // Testnet magic
             testConfig.EnableDebugLogging = false; // Reduce test noise
             
@@ -49,7 +49,7 @@ namespace EpicChain.Unity.SDK.Tests.Core
             
             // Assert
             Assert.IsTrue(result, "Initialization should succeed with valid config");
-            Assert.IsTrue(EpicChainUnityIsInitialized, "NeoUnity should be initialized");
+            Assert.IsTrue(EpicChainUnityIsInitialized, "EpicChainUnity should be initialized");
             Assert.IsNotNull(EpicChainUnityConfig, "Config should be set");
             Assert.AreEqual(testConfig.NodeUrl, EpicChainUnityConfig.NodeUrl, "Node URL should match");
         }
@@ -62,7 +62,7 @@ namespace EpicChain.Unity.SDK.Tests.Core
             
             // Assert
             Assert.IsTrue(result, "Initialization should succeed with default config");
-            Assert.IsTrue(EpicChainUnityIsInitialized, "NeoUnity should be initialized");
+            Assert.IsTrue(EpicChainUnityIsInitialized, "EpicChainUnity should be initialized");
             Assert.IsNotNull(EpicChainUnityConfig, "Config should be created automatically");
         }
         
@@ -107,7 +107,7 @@ namespace EpicChain.Unity.SDK.Tests.Core
             Assert.AreEqual(testConfig.BlockInterval, EpicChainUnityBlockInterval, "Block interval should match config");
             Assert.AreEqual(testConfig.PollingInterval, EpicChainUnityPollingInterval, "Polling interval should match config");
             Assert.AreEqual(testConfig.MaxValidUntilBlockIncrement, EpicChainUnityMaxValidUntilBlockIncrement, "Max valid until block should match config");
-            Assert.AreEqual(testConfig.NNSResolver, EpicChainUnityNNSResolver, "NNS resolver should match config");
+            Assert.AreEqual(testConfig.XNSResolver, EpicChainUnityXNSResolver, "XNS resolver should match config");
         }
         
         [Test]
@@ -130,17 +130,17 @@ namespace EpicChain.Unity.SDK.Tests.Core
         }
         
         [Test]
-        public async Task TestSetNNSResolver_ShouldUpdateConfig()
+        public async Task TestSetXNSResolver_ShouldUpdateConfig()
         {
             // Arrange
             await EpicChainUnityInitialize(testConfig);
             var newResolver = new Hash160("a46c1e9f936d2967adf5d8ee5c3e2b4b5a7fff3a");
             
             // Act
-            EpicChainUnitySetNNSResolver(newResolver);
+            EpicChainUnitySetXNSResolver(newResolver);
             
             // Assert
-            Assert.AreEqual(newResolver, EpicChainUnityNNSResolver, "NNS resolver should be updated");
+            Assert.AreEqual(newResolver, EpicChainUnityXNSResolver, "XNS resolver should be updated");
         }
         
         #endregion
@@ -237,7 +237,7 @@ namespace EpicChain.Unity.SDK.Tests.Core
         {
             // Arrange
             await EpicChainUnityInitialize(testConfig);
-            var epicchainTokenHash = new Hash160("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5"); // Neo token on testnet
+            var epicchainTokenHash = new Hash160("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5"); // EpicChain token on testnet
             
             // Act
             var response = await EpicChainUnityInvokeFunction(epicchainTokenHash, "symbol", new List<ContractParameter>()).SendAsync();
@@ -285,7 +285,7 @@ namespace EpicChain.Unity.SDK.Tests.Core
             var invalidHash = new Hash160("0000000000000000000000000000000000000000");
             
             // Act & Assert
-            var ex = Assert.ThrowsAsync<NeoUnityException>(async () =>
+            var ex = Assert.ThrowsAsync<EpicChainUnityException>(async () =>
             {
                 var response = await EpicChainUnityGetContractState(invalidHash).SendAsync();
                 response.GetResult();

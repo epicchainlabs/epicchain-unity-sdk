@@ -189,8 +189,8 @@ def generate_detailed_mapping_report():
     
     # Key file pairs to analyze in detail
     key_pairs = [
-        ('contract/GasTokenTests.swift', 'Contract/GasTokenTests.cs'),
-        ('contract/NeoTokenTests.swift', 'Contract/NeoTokenTests.cs'), 
+        ('contract/EpicPulseTests.swift', 'Contract/EpicPulseTests.cs'),
+        ('contract/EpicChainTests.swift', 'Contract/EpicChainTests.cs'), 
         ('contract/NefFileTests.swift', 'Contract/NefFileTests.cs'),
         ('crypto/ECKeyPairTests.swift', 'Crypto/ECKeyPairTests.cs'),
         ('crypto/XEP2Tests.swift', 'Crypto/XEP2Tests.cs'),
@@ -200,8 +200,8 @@ def generate_detailed_mapping_report():
         ('serialization/BinaryReaderTests.swift', 'Serialization/BinaryReaderTests.cs')
     ]
     
-    swift_base = "/home/neo/git/NeoUnity/NeoSwift/Tests/NeoSwiftTests/unit"
-    csharp_base = "/home/neo/git/NeoUnity/Tests/Runtime"
+    swift_base = "/home/epicchain/git/EpicChainUnity/EpicChainSwift/Tests/EpicChainSwiftTests/unit"
+    csharp_base = "/home/epicchain/git/EpicChainUnity/Tests/Runtime"
     
     report = []
     report.append("# 🔍 DETAILED TEST METHOD MAPPING ANALYSIS")
@@ -302,7 +302,7 @@ def generate_detailed_mapping_report():
 if __name__ == "__main__":
     detailed_report = generate_detailed_mapping_report()
     
-    with open("/home/neo/git/NeoUnity/DETAILED_METHOD_MAPPING.md", "w") as f:
+    with open("/home/epicchain/git/EpicChainUnity/DETAILED_METHOD_MAPPING.md", "w") as f:
         f.write(detailed_report)
     
     print(detailed_report)

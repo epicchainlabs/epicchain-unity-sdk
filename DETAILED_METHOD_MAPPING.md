@@ -1,8 +1,8 @@
 # 🔍 DETAILED TEST METHOD MAPPING ANALYSIS
 ## Method-by-Method Swift → C# Test Comparison
 
-## ✅ GasTokenTests
-**Files**: `GasTokenTests.swift` → `GasTokenTests.cs`
+## ✅ EpicPulseTests
+**Files**: `EpicPulseTests.swift` → `EpicPulseTests.cs`
 
 ### 📊 Coverage Statistics
 - **Swift Methods**: 4
@@ -32,7 +32,7 @@
 - `TestGetTotalSupply` (async) - 16 lines
 - `TestGetBalance` (async) - 17 lines
 - `TestTransfer` (async) - 35 lines
-- `TestMemoryUsage_CreateGasToken` - 13 lines
+- `TestMemoryUsage_CreateEpicPulseToken` - 13 lines
 - `TestUnityCoroutineCompatibility` (Unity) - 26 lines
 - `TestSerializationCompatibility` - 28 lines
 - `TestErrorHandling_InvalidAddress` (async) - 18 lines
@@ -42,8 +42,8 @@
 
 ---
 
-## ✅ NeoTokenTests
-**Files**: `NeoTokenTests.swift` → `NeoTokenTests.cs`
+## ✅ EpicChainTokenTests
+**Files**: `EpicChainTokenTests.swift` → `EpicChainTokenTests.cs`
 
 ### 📊 Coverage Statistics
 - **Swift Methods**: 18
@@ -112,7 +112,7 @@
   - C#: TestGetAccountState_NoBalance (L478, 18 lines)
 
 ### 🚀 C# Enhancement Methods
-- `TestMemoryUsage_CreateNeoToken` - 14 lines
+- `TestMemoryUsage_CreateEpicChainToken` - 14 lines
 - `TestSerializationCompatibility` - 12 lines
 
 ---
@@ -166,7 +166,7 @@
   - C#: TestGetSize (L212, 10 lines)
 
 ### ❌ Missing C# Methods
-- `testDeserializeNeoTokenNefFile` - 9 lines
+- `testDeserializeEpicChainTokenNefFile` - 9 lines
 - `testDeserializeNefFileFromStackItem` - 10 lines
 - `testSerializeDeserializeNefFileWithSourceUrl` - 12 lines
 - `testFailDeserializationWithTooLongSourceUrl` (error test) - 14 lines
@@ -433,8 +433,8 @@
   - Swift: testSendInvokeFunction (L321, 19 lines)
   - C#: TestSendInvokeFunction (L471, 35 lines)
 - 🎯 **Exact Match**
-  - Swift: testTransferNeoFromNormalAccount (L341, 17 lines)
-  - C#: TestTransferNeoFromNormalAccount (L507, 34 lines)
+  - Swift: testTransferEpicChainFromNormalAccount (L341, 17 lines)
+  - C#: TestTransferEpicChainFromNormalAccount (L507, 34 lines)
 - 🎯 **Exact Match**
   - Swift: testExtendScript (L359, 15 lines)
   - C#: TestExtendScript (L542, 36 lines)

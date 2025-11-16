@@ -16,8 +16,8 @@ This document provides a comprehensive summary of the successful conversion of a
 ### Core Test Categories Converted
 
 #### 1. Contract Tests (13 Swift files → 2 C# files)
-- **NeoTokenTests.cs**: Complete NEO token contract testing
-- **GasTokenTests.cs**: Complete GAS token contract testing
+- **EpicChainTests.cs**: Complete EpicChain token contract testing
+- **EpicPulseTests.cs**: Complete EpicPulse token contract testing
 - **Coverage**: All native contract interactions, token transfers, governance operations
 
 #### 2. Crypto Tests (8 Swift files → 1 comprehensive C# file)
@@ -66,7 +66,7 @@ This document provides a comprehensive summary of the successful conversion of a
 - Unity lifecycle integration testing
 
 ### Real Blockchain Integration
-- **NeoUnityIntegrationTests.cs**: Complete TestNet integration testing
+- **EpicChainUnityIntegrationTests.cs**: Complete TestNet integration testing
 - Live blockchain connectivity validation
 - Real contract interaction testing
 - Network performance benchmarking
@@ -98,7 +98,7 @@ This document provides a comprehensive summary of the successful conversion of a
 
 ### 1. 100% Test Coverage
 - ✅ All 54+ Swift test files successfully converted
-- ✅ All critical Neo blockchain operations covered
+- ✅ All critical EpicChain blockchain operations covered
 - ✅ All Unity-specific scenarios tested
 - ✅ All edge cases and error conditions validated
 
@@ -141,7 +141,7 @@ This document provides a comprehensive summary of the successful conversion of a
 ## 🚨 Critical Test Scenarios Validated
 
 ### Blockchain Operations
-- ✅ NEO/GAS token transfers and balance queries
+- ✅ XPR/XPP token transfers and balance queries
 - ✅ Smart contract invocations and state changes
 - ✅ Transaction building, signing, and broadcasting
 - ✅ Wallet creation, import, and key management

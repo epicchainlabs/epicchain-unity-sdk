@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents the state of a Neo Name Service (NNS) domain name.
+    /// Represents the state of a EpicChain Name Service (XNS) domain name.
     /// Contains information about domain registration, ownership, and expiration.
     /// </summary>
     [System.Serializable]

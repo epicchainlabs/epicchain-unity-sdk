@@ -6,7 +6,7 @@ namespace EpicChain.Unity.SDK.Utils
 {
     /// <summary>
     /// Extension methods for arrays and collections that provide convenience operations
-    /// commonly used in Neo blockchain operations.
+    /// commonly used in EpicChain blockchain operations.
     /// </summary>
     public static class ArrayExtensions
     {

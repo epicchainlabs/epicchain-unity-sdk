@@ -3,8 +3,8 @@ using System;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Represents Neo VM operation codes (opcodes) for script building and execution.
-    /// Each opcode corresponds to a specific instruction that the Neo VM can execute.
+    /// Represents EpicChain VM operation codes (opcodes) for script building and execution.
+    /// Each opcode corresponds to a specific instruction that the EpicChain VM can execute.
     /// </summary>
     public enum OpCode : byte
     {
@@ -472,15 +472,15 @@ namespace EpicChain.Unity.SDK.Script
         }
         
         /// <summary>
-        /// Gets the GAS price for executing this opcode.
+        /// Gets the EpicPulse price for executing this opcode.
         /// </summary>
         /// <param name="opCode">The opcode</param>
-        /// <returns>The GAS price in fractions</returns>
+        /// <returns>The EpicPulse price in fractions</returns>
         public static long GetPrice(this OpCode opCode)
         {
             return opCode switch
             {
-                // 1 GAS fraction
+                // 1 EpicPulse fraction
                 OpCode.PUSHINT8 or OpCode.PUSHINT16 or OpCode.PUSHINT32 or OpCode.PUSHINT64 or
                 OpCode.PUSHNULL or OpCode.PUSHM1 or OpCode.PUSH0 or OpCode.PUSH1 or OpCode.PUSH2 or
                 OpCode.PUSH3 or OpCode.PUSH4 or OpCode.PUSH5 or OpCode.PUSH6 or OpCode.PUSH7 or
@@ -488,56 +488,56 @@ namespace EpicChain.Unity.SDK.Script
                 OpCode.PUSH13 or OpCode.PUSH14 or OpCode.PUSH15 or OpCode.PUSH16 or OpCode.NOP or
                 OpCode.ASSERT => 1,
                 
-                // 4 GAS fractions (1 << 2)
+                // 4 EpicPulse fractions (1 << 2)
                 OpCode.PUSHINT128 or OpCode.PUSHINT256 or OpCode.PUSHA or OpCode.TRY or
                 OpCode.ENDTRY or OpCode.ENDTRY_L or OpCode.ENDFINALLY or OpCode.INVERT or
                 OpCode.SIGN or OpCode.ABS or OpCode.NEGATE or OpCode.INC or OpCode.DEC or
                 OpCode.NOT or OpCode.NZ or OpCode.SIZE => 1 << 2,
                 
-                // 8 GAS fractions (1 << 3)
+                // 8 EpicPulse fractions (1 << 3)
                 OpCode.PUSHDATA1 or OpCode.AND or OpCode.OR or OpCode.XOR or OpCode.ADD or
                 OpCode.SUB or OpCode.MUL or OpCode.DIV or OpCode.MOD or OpCode.SHL or
                 OpCode.SHR or OpCode.BOOLAND or OpCode.BOOLOR or OpCode.NUMEQUAL or
                 OpCode.NUMNOTEQUAL or OpCode.LT or OpCode.LE or OpCode.GT or OpCode.GE or
                 OpCode.MIN or OpCode.MAX or OpCode.WITHIN or OpCode.NEWMAP => 1 << 3,
                 
-                // 16 GAS fractions (1 << 4)
+                // 16 EpicPulse fractions (1 << 4)
                 OpCode.XDROP or OpCode.CLEAR or OpCode.ROLL or OpCode.REVERSEN or OpCode.INITSSLOT or
                 OpCode.NEWARRAY0 or OpCode.NEWSTRUCT0 or OpCode.KEYS or OpCode.REMOVE or
                 OpCode.CLEARITEMS => 1 << 4,
                 
-                // 32 GAS fractions (1 << 5)
+                // 32 EpicPulse fractions (1 << 5)
                 OpCode.EQUAL or OpCode.NOTEQUAL or OpCode.MODMUL => 1 << 5,
                 
-                // 64 GAS fractions (1 << 6)
+                // 64 EpicPulse fractions (1 << 6)
                 OpCode.INITSLOT or OpCode.POW or OpCode.HASKEY or OpCode.PICKITEM => 1 << 6,
                 
-                // 256 GAS fractions (1 << 8)
+                // 256 EpicPulse fractions (1 << 8)
                 OpCode.NEWBUFFER => 1 << 8,
                 
-                // 512 GAS fractions (1 << 9)
+                // 512 EpicPulse fractions (1 << 9)
                 OpCode.PUSHDATA2 or OpCode.CALL or OpCode.CALL_L or OpCode.CALLA or OpCode.THROW or
                 OpCode.NEWARRAY or OpCode.NEWARRAY_T or OpCode.NEWSTRUCT => 1 << 9,
                 
-                // 2048 GAS fractions (1 << 11)
+                // 2048 EpicPulse fractions (1 << 11)
                 OpCode.MEMCPY or OpCode.CAT or OpCode.SUBSTR or OpCode.LEFT or OpCode.RIGHT or
                 OpCode.SQRT or OpCode.MODPOW or OpCode.PACKMAP or OpCode.PACKSTRUCT or
                 OpCode.PACK or OpCode.UNPACK => 1 << 11,
                 
-                // 4096 GAS fractions (1 << 12)
+                // 4096 EpicPulse fractions (1 << 12)
                 OpCode.PUSHDATA4 => 1 << 12,
                 
-                // 8192 GAS fractions (1 << 13)
+                // 8192 EpicPulse fractions (1 << 13)
                 OpCode.VALUES or OpCode.APPEND or OpCode.SETITEM or OpCode.REVERSEITEMS or
                 OpCode.CONVERT => 1 << 13,
                 
-                // 32768 GAS fractions (1 << 15)
+                // 32768 EpicPulse fractions (1 << 15)
                 OpCode.CALLT => 1 << 15,
                 
                 // Free operations
                 OpCode.ABORT or OpCode.RET or OpCode.SYSCALL => 0,
                 
-                // Default: 2 GAS fractions (1 << 1)
+                // Default: 2 EpicPulse fractions (1 << 1)
                 _ => 1 << 1
             };
         }

@@ -5,10 +5,10 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Serialization
 {
     /// <summary>
-    /// Interface for objects that can be serialized to and from Neo protocol binary format.
+    /// Interface for objects that can be serialized to and from EpicChain protocol binary format.
     /// Provides standardized serialization for blockchain data structures.
     /// </summary>
-    public interface INeoSerializable
+    public interface IEpicChainSerializable
     {
         /// <summary>
         /// Gets the size in bytes when serialized.
@@ -29,33 +29,33 @@ namespace EpicChain.Unity.SDK.Serialization
     }
     
     /// <summary>
-    /// Static extension methods for INeoSerializable operations.
+    /// Static extension methods for IEpicChainSerializable operations.
     /// </summary>
-    public static class NeoSerializableExtensions
+    public static class EpicChainSerializableExtensions
     {
         /// <summary>
         /// Deserializes an object from a binary reader.
         /// </summary>
-        /// <typeparam name="T">The type implementing INeoSerializable</typeparam>
+        /// <typeparam name="T">The type implementing IEpicChainSerializable</typeparam>
         /// <param name="reader">The binary reader to read from</param>
         /// <returns>The deserialized object</returns>
-        public static T Deserialize<T>(BinaryReader reader) where T : INeoSerializable, new()
+        public static T Deserialize<T>(BinaryReader reader) where T : IEpicChainSerializable, new()
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
             
             // Generic deserialization is not supported - each type must implement its own deserialization
             // This ensures type safety and proper handling of complex serialization formats
-            throw new NotSupportedException($"Type {typeof(T).Name} must implement its own static Deserialize method. Generic deserialization is not supported for Neo blockchain data structures.");
+            throw new NotSupportedException($"Type {typeof(T).Name} must implement its own static Deserialize method. Generic deserialization is not supported for EpicChain blockchain data structures.");
         }
         
         /// <summary>
         /// Creates an object from a byte array.
         /// </summary>
-        /// <typeparam name="T">The type implementing INeoSerializable</typeparam>
+        /// <typeparam name="T">The type implementing IEpicChainSerializable</typeparam>
         /// <param name="bytes">The byte array to deserialize from</param>
         /// <returns>The deserialized object</returns>
-        public static T FromBytes<T>(byte[] bytes) where T : INeoSerializable, new()
+        public static T FromBytes<T>(byte[] bytes) where T : IEpicChainSerializable, new()
         {
             if (bytes == null)
                 throw new ArgumentNullException(nameof(bytes));
@@ -70,7 +70,7 @@ namespace EpicChain.Unity.SDK.Serialization
         /// </summary>
         /// <param name="list">The list of serializable objects</param>
         /// <returns>The total variable-length size</returns>
-        public static int GetVarSize<T>(this List<T> list) where T : INeoSerializable
+        public static int GetVarSize<T>(this List<T> list) where T : IEpicChainSerializable
         {
             if (list == null)
                 return 1; // Empty list VarInt size
@@ -133,10 +133,10 @@ namespace EpicChain.Unity.SDK.Serialization
     }
     
     /// <summary>
-    /// Base implementation helper for INeoSerializable objects.
+    /// Base implementation helper for IEpicChainSerializable objects.
     /// Provides common serialization functionality.
     /// </summary>
-    public abstract class NeoSerializableBase : INeoSerializable
+    public abstract class EpicChainSerializableBase : IEpicChainSerializable
     {
         /// <summary>
         /// Gets the size in bytes when serialized.

@@ -19,7 +19,7 @@ namespace EpicChain.Unity.SDK.Tests.Crypto
         // Test constants from TestProperties.swift
         private const string DEFAULT_ACCOUNT_PRIVATE_KEY = "84180ac9d6eb6fba207ea4ef9d2200102d1ebeb4b9c07e2c6a738a42742e27a5";
         private const string DEFAULT_ACCOUNT_ENCRYPTED_PRIVATE_KEY = "6PYM7jHL4GmS8Aw2iEFpuaHTCUKjhT4mwVqdoozGU6sUE25BjV4ePXDdLz";
-        private const string DEFAULT_ACCOUNT_PASSWORD = "neo";
+        private const string DEFAULT_ACCOUNT_PASSWORD = "epicchain";
 
         [Test]
         public void TestDecryptWithDefaultScryptParams()

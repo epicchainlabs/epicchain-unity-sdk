@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Wallet
 {
     /// <summary>
     /// Represents a XEP-6 wallet file format for standard compatibility.
-    /// XEP-6 is the standard format for Neo wallet files used across the ecosystem.
+    /// XEP-6 is the standard format for EpicChain wallet files used across the ecosystem.
     /// </summary>
     [System.Serializable]
     public class XEP6Wallet
@@ -131,7 +131,7 @@ namespace EpicChain.Unity.SDK.Wallet
     {
         #region Properties
         
-        /// <summary>The Neo address of this account</summary>
+        /// <summary>The EpicChain address of this account</summary>
         [JsonProperty("address")]
         public string Address { get; set; }
         
@@ -166,7 +166,7 @@ namespace EpicChain.Unity.SDK.Wallet
         /// <summary>
         /// Creates a new XEP-6 account.
         /// </summary>
-        /// <param name="address">The Neo address</param>
+        /// <param name="address">The EpicChain address</param>
         /// <param name="label">The account label</param>
         /// <param name="isDefault">Whether this is the default account</param>
         /// <param name="lock">Whether the account is locked</param>

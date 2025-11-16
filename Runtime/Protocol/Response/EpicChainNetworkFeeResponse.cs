@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the calculated network fee required for a transaction.
     /// </summary>
     [System.Serializable]
-    public class NeoNetworkFeeResponse : NeoResponse<NeoNetworkFeeResponse.NetworkFeeInfo>
+    public class EpicChainNetworkFeeResponse : EpicChainResponse<EpicChainNetworkFeeResponse.NetworkFeeInfo>
     {
         /// <summary>
         /// Gets the network fee information from the response.
@@ -19,7 +19,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoNetworkFeeResponse() : base()
+        public EpicChainNetworkFeeResponse() : base()
         {
         }
 
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="networkFeeInfo">The network fee information</param>
         /// <param name="id">The request ID</param>
-        public NeoNetworkFeeResponse(NetworkFeeInfo networkFeeInfo, int id = 1) : base(networkFeeInfo, id)
+        public EpicChainNetworkFeeResponse(NetworkFeeInfo networkFeeInfo, int id = 1) : base(networkFeeInfo, id)
         {
         }
 
@@ -37,7 +37,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoNetworkFeeResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainNetworkFeeResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -95,8 +95,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Gets the network fee as a decimal value in GAS units.
-            /// Note: Neo GAS uses 8 decimal places (1 GAS = 100,000,000 smallest units).
+            /// Gets the network fee as a decimal value in EpicPulse units.
+            /// Note: EpicChain EpicPulse uses 8 decimal places (1 EpicPulse = 100,000,000 smallest units).
             /// </summary>
             [JsonIgnore]
             public decimal NetworkFeeGas
@@ -105,7 +105,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                 {
                     try
                     {
-                        return NetworkFeeLong / 100_000_000m; // Convert to GAS units
+                        return NetworkFeeLong / 100_000_000m; // Convert to EpicPulse units
                     }
                     catch
                     {
@@ -115,7 +115,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Gets the network fee as a double value in GAS units.
+            /// Gets the network fee as a double value in EpicPulse units.
             /// Note: May lose precision for very small amounts.
             /// </summary>
             [JsonIgnore]
@@ -125,7 +125,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                 {
                     try
                     {
-                        return NetworkFeeLong / 100_000_000.0; // Convert to GAS units
+                        return NetworkFeeLong / 100_000_000.0; // Convert to EpicPulse units
                     }
                     catch
                     {
@@ -188,7 +188,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             /// <summary>
             /// Checks if this network fee is sufficient for a minimum required fee in GAS.
             /// </summary>
-            /// <param name="minimumFeeGas">The minimum required fee in GAS units</param>
+            /// <param name="minimumFeeGas">The minimum required fee in EpicPulse units</param>
             /// <returns>True if this fee meets the minimum requirement</returns>
             public bool IsSufficientForGas(decimal minimumFeeGas)
             {
@@ -233,7 +233,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             /// <summary>
             /// Creates a copy of this network fee info with a new fee amount in GAS.
             /// </summary>
-            /// <param name="newFeeGas">The new fee amount in GAS units</param>
+            /// <param name="newFeeGas">The new fee amount in EpicPulse units</param>
             /// <returns>New NetworkFeeInfo instance</returns>
             public NetworkFeeInfo WithFeeGas(decimal newFeeGas)
             {

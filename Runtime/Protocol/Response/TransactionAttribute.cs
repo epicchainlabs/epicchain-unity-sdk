@@ -7,7 +7,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
     /// Represents a transaction attribute that provides additional metadata or constraints.
-    /// Neo supports different types of attributes like HighPriority and OracleResponse.
+    /// EpicChain supports different types of attributes like HighPriority and OracleResponse.
     /// </summary>
     [System.Serializable]
     [JsonConverter(typeof(TransactionAttributeConverter))]

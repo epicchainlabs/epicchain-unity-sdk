@@ -8,11 +8,11 @@ using EpicChain.Unity.SDK.Types;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a Neo blockchain block with all its transactions and metadata.
+    /// Represents a EpicChain blockchain block with all its transactions and metadata.
     /// Contains block header information, consensus data, and transaction list.
     /// </summary>
     [System.Serializable]
-    public class NeoBlock
+    public class EpicChainBlock
     {
         #region Properties
         
@@ -54,11 +54,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>The witness data for block consensus</summary>
         [JsonProperty("witnesses")]
-        public List<NeoWitness> Witnesses { get; set; }
+        public List<EpicChainWitness> Witnesses { get; set; }
         
         /// <summary>The transactions included in this block</summary>
         [JsonProperty("tx")]
-        public List<NeoTransaction> Transactions { get; set; }
+        public List<EpicChainTransaction> Transactions { get; set; }
         
         /// <summary>The number of confirmations this block has</summary>
         [JsonProperty("confirmations")]
@@ -75,14 +75,14 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoBlock()
+        public EpicChainBlock()
         {
-            Witnesses = new List<NeoWitness>();
-            Transactions = new List<NeoTransaction>();
+            Witnesses = new List<EpicChainWitness>();
+            Transactions = new List<EpicChainTransaction>();
         }
         
         /// <summary>
-        /// Creates a new Neo block.
+        /// Creates a new EpicChain block.
         /// </summary>
         /// <param name="hash">Block hash</param>
         /// <param name="size">Block size</param>
@@ -97,9 +97,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <param name="transactions">Block transactions</param>
         /// <param name="primary">Primary consensus node</param>
         /// <param name="nextBlockHash">Next block hash</param>
-        public NeoBlock(Hash256 hash, int size, int version, Hash256 previousBlockHash, Hash256 merkleRootHash, 
+        public EpicChainBlock(Hash256 hash, int size, int version, Hash256 previousBlockHash, Hash256 merkleRootHash, 
                        long time, long index, string nextConsensus, int confirmations,
-                       List<NeoWitness> witnesses = null, List<NeoTransaction> transactions = null, 
+                       List<EpicChainWitness> witnesses = null, List<EpicChainTransaction> transactions = null, 
                        int? primary = null, Hash256 nextBlockHash = null)
         {
             Hash = hash;
@@ -111,8 +111,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             Index = index;
             NextConsensus = nextConsensus;
             Confirmations = confirmations;
-            Witnesses = witnesses ?? new List<NeoWitness>();
-            Transactions = transactions ?? new List<NeoTransaction>();
+            Witnesses = witnesses ?? new List<EpicChainWitness>();
+            Transactions = transactions ?? new List<EpicChainTransaction>();
             Primary = primary;
             NextBlockHash = nextBlockHash;
         }
@@ -204,7 +204,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="transactionHash">The transaction hash</param>
         /// <returns>The transaction or null if not found</returns>
-        public NeoTransaction GetTransaction(Hash256 transactionHash)
+        public EpicChainTransaction GetTransaction(Hash256 transactionHash)
         {
             if (transactionHash == null || !HasTransactions)
                 return null;
@@ -217,7 +217,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="transactionHashString">The transaction hash as string</param>
         /// <returns>The transaction or null if not found</returns>
-        public NeoTransaction GetTransaction(string transactionHashString)
+        public EpicChainTransaction GetTransaction(string transactionHashString)
         {
             if (string.IsNullOrEmpty(transactionHashString) || !HasTransactions)
                 return null;
@@ -250,10 +250,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="senderAddress">The sender address</param>
         /// <returns>List of transactions from the sender</returns>
-        public List<NeoTransaction> GetTransactionsFromSender(string senderAddress)
+        public List<EpicChainTransaction> GetTransactionsFromSender(string senderAddress)
         {
             if (string.IsNullOrEmpty(senderAddress) || !HasTransactions)
-                return new List<NeoTransaction>();
+                return new List<EpicChainTransaction>();
             
             return Transactions.Where(tx => tx.Sender == senderAddress).ToList();
         }
@@ -262,10 +262,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets all successful transactions (state = HALT).
         /// </summary>
         /// <returns>List of successful transactions</returns>
-        public List<NeoTransaction> GetSuccessfulTransactions()
+        public List<EpicChainTransaction> GetSuccessfulTransactions()
         {
             if (!HasTransactions)
-                return new List<NeoTransaction>();
+                return new List<EpicChainTransaction>();
             
             return Transactions.Where(tx => tx.IsSuccessful).ToList();
         }
@@ -274,10 +274,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets all failed transactions (state = FAULT).
         /// </summary>
         /// <returns>List of failed transactions</returns>
-        public List<NeoTransaction> GetFailedTransactions()
+        public List<EpicChainTransaction> GetFailedTransactions()
         {
             if (!HasTransactions)
-                return new List<NeoTransaction>();
+                return new List<EpicChainTransaction>();
             
             return Transactions.Where(tx => tx.HasFaulted).ToList();
         }
@@ -358,7 +358,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>Detailed string representation</returns>
         public string ToDetailedString()
         {
-            var result = $"NeoBlock:\n";
+            var result = $"EpicChainBlock:\n";
             result += $"  Hash: {Hash}\n";
             result += $"  Index: {Index}\n";
             result += $"  Size: {Size} bytes\n";
@@ -398,7 +398,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <returns>String representation</returns>
         public override string ToString()
         {
-            return $"NeoBlock(#{Index}, {Hash}, {TransactionCount} txs, {Size}B)";
+            return $"EpicChainBlock(#{Index}, {Hash}, {TransactionCount} txs, {Size}B)";
         }
         
         #endregion

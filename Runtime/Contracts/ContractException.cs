@@ -5,7 +5,7 @@ using System.Linq;
 namespace EpicChain.Unity.SDK.Contracts
 {
     /// <summary>
-    /// Exception types specific to Neo smart contract operations.
+    /// Exception types specific to EpicChain smart contract operations.
     /// Provides detailed error information for various contract-related failures.
     /// </summary>
     public class ContractException : Exception
@@ -48,29 +48,29 @@ namespace EpicChain.Unity.SDK.Contracts
         #region Static Factory Methods
         
         /// <summary>
-        /// Creates an exception for invalid Neo Name Service (NNS) names.
+        /// Creates an exception for invalid EpicChain Name Service (XNS) names.
         /// </summary>
-        /// <param name="name">The invalid NNS name</param>
+        /// <param name="name">The invalid XNS name</param>
         /// <returns>A ContractException instance</returns>
-        public static ContractException InvalidNeoName(string name)
+        public static ContractException InvalidEpicChainName(string name)
         {
             return new ContractException(
-                ContractErrorType.InvalidNeoName,
-                $"'{name}' is not a valid NNS name.",
+                ContractErrorType.InvalidEpicChainName,
+                $"'{name}' is not a valid XNS name.",
                 name
             );
         }
         
         /// <summary>
-        /// Creates an exception for invalid Neo Name Service roots.
+        /// Creates an exception for invalid EpicChain Name Service roots.
         /// </summary>
-        /// <param name="root">The invalid NNS root</param>
+        /// <param name="root">The invalid XNS root</param>
         /// <returns>A ContractException instance</returns>
-        public static ContractException InvalidNeoNameServiceRoot(string root)
+        public static ContractException InvalidEpicChainNameServiceRoot(string root)
         {
             return new ContractException(
-                ContractErrorType.InvalidNeoNameServiceRoot,
-                $"'{root}' is not a valid NNS root.",
+                ContractErrorType.InvalidEpicChainNameServiceRoot,
+                $"'{root}' is not a valid XNS root.",
                 root
             );
         }
@@ -240,14 +240,14 @@ namespace EpicChain.Unity.SDK.Contracts
         General,
         
         /// <summary>
-        /// Invalid Neo Name Service (NNS) name.
+        /// Invalid EpicChain Name Service (XNS) name.
         /// </summary>
-        InvalidNeoName,
+        InvalidEpicChainName,
         
         /// <summary>
-        /// Invalid Neo Name Service root.
+        /// Invalid EpicChain Name Service root.
         /// </summary>
-        InvalidNeoNameServiceRoot,
+        InvalidEpicChainNameServiceRoot,
         
         /// <summary>
         /// Unexpected return type from contract invocation.

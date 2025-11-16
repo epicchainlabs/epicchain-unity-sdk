@@ -5,22 +5,22 @@ using EpicChain.Unity.SDK.Crypto;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Type aliases that provide compatibility with Neo naming conventions
+    /// Type aliases that provide compatibility with EpicChain naming conventions
     /// and simplify common type usage throughout the SDK.
     /// </summary>
     public static class TypeAliases
     {
         // Note: These are provided as static readonly fields rather than type aliases
         // because C# doesn't support Swift-style typealias declarations.
-        // Use these types for consistency with Neo conventions.
+        // Use these types for consistency with EpicChain conventions.
     }
 
     /// <summary>
-    /// Represents a single byte value in Neo operations.
+    /// Represents a single byte value in EpicChain operations.
     /// Equivalent to Swift's UInt8/Byte type.
     /// </summary>
     [Serializable]
-    public struct NeoByte : IEquatable<NeoByte>, IComparable<NeoByte>
+    public struct EpicChainByte : IEquatable<EpicChainByte>, IComparable<EpicChainByte>
     {
         [SerializeField]
         private byte _value;
@@ -31,53 +31,53 @@ namespace EpicChain.Unity.SDK.Types
         public byte Value => _value;
 
         /// <summary>
-        /// Initializes a new instance of the NeoByte struct.
+        /// Initializes a new instance of the EpicChainByte struct.
         /// </summary>
         /// <param name="value">The byte value.</param>
-        public NeoByte(byte value)
+        public EpicChainByte(byte value)
         {
             _value = value;
         }
 
         /// <summary>
-        /// Implicit conversion from byte to NeoByte.
+        /// Implicit conversion from byte to EpicChainByte.
         /// </summary>
         /// <param name="value">The byte value.</param>
-        /// <returns>A new NeoByte instance.</returns>
-        public static implicit operator NeoByte(byte value) => new(value);
+        /// <returns>A new EpicChainByte instance.</returns>
+        public static implicit operator EpicChainByte(byte value) => new(value);
 
         /// <summary>
-        /// Implicit conversion from NeoByte to byte.
+        /// Implicit conversion from EpicChainByte to byte.
         /// </summary>
-        /// <param name="neoByte">The NeoByte instance.</param>
+        /// <param name="epicchainByte">The EpicChainByte instance.</param>
         /// <returns>The underlying byte value.</returns>
-        public static implicit operator byte(NeoByte neoByte) => neoByte._value;
+        public static implicit operator byte(EpicChainByte epicchainByte) => epicchainByte._value;
 
         /// <summary>
-        /// Converts the NeoByte to its hexadecimal string representation.
+        /// Converts the EpicChainByte to its hexadecimal string representation.
         /// </summary>
         /// <returns>A hexadecimal string representation.</returns>
         public override string ToString() => $"0x{_value:X2}";
 
-        public bool Equals(NeoByte other) => _value == other._value;
-        public override bool Equals(object obj) => obj is NeoByte other && Equals(other);
+        public bool Equals(EpicChainByte other) => _value == other._value;
+        public override bool Equals(object obj) => obj is EpicChainByte other && Equals(other);
         public override int GetHashCode() => _value.GetHashCode();
-        public int CompareTo(NeoByte other) => _value.CompareTo(other._value);
+        public int CompareTo(EpicChainByte other) => _value.CompareTo(other._value);
 
-        public static bool operator ==(NeoByte left, NeoByte right) => left.Equals(right);
-        public static bool operator !=(NeoByte left, NeoByte right) => !left.Equals(right);
-        public static bool operator <(NeoByte left, NeoByte right) => left.CompareTo(right) < 0;
-        public static bool operator >(NeoByte left, NeoByte right) => left.CompareTo(right) > 0;
-        public static bool operator <=(NeoByte left, NeoByte right) => left.CompareTo(right) <= 0;
-        public static bool operator >=(NeoByte left, NeoByte right) => left.CompareTo(right) >= 0;
+        public static bool operator ==(EpicChainByte left, EpicChainByte right) => left.Equals(right);
+        public static bool operator !=(EpicChainByte left, EpicChainByte right) => !left.Equals(right);
+        public static bool operator <(EpicChainByte left, EpicChainByte right) => left.CompareTo(right) < 0;
+        public static bool operator >(EpicChainByte left, EpicChainByte right) => left.CompareTo(right) > 0;
+        public static bool operator <=(EpicChainByte left, EpicChainByte right) => left.CompareTo(right) <= 0;
+        public static bool operator >=(EpicChainByte left, EpicChainByte right) => left.CompareTo(right) >= 0;
     }
 
     /// <summary>
-    /// Represents a collection of bytes in Neo operations.
+    /// Represents a collection of bytes in EpicChain operations.
     /// Equivalent to Swift's [UInt8]/Bytes type.
     /// </summary>
     [Serializable]
-    public class NeoBytes : IEquatable<NeoBytes>
+    public class EpicChainBytes : IEquatable<EpicChainBytes>
     {
         [SerializeField]
         private byte[] _bytes;
@@ -104,23 +104,23 @@ namespace EpicChain.Unity.SDK.Types
         }
 
         /// <summary>
-        /// Initializes a new instance of the NeoBytes class.
+        /// Initializes a new instance of the EpicChainBytes class.
         /// </summary>
         /// <param name="bytes">The byte array.</param>
-        public NeoBytes(byte[] bytes = null)
+        public EpicChainBytes(byte[] bytes = null)
         {
             _bytes = bytes?.ToArray() ?? Array.Empty<byte>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NeoBytes class from a hex string.
+        /// Initializes a new instance of the EpicChainBytes class from a hex string.
         /// </summary>
         /// <param name="hexString">The hexadecimal string (with or without 0x prefix).</param>
-        /// <returns>A new NeoBytes instance.</returns>
-        public static NeoBytes FromHex(string hexString)
+        /// <returns>A new EpicChainBytes instance.</returns>
+        public static EpicChainBytes FromHex(string hexString)
         {
             if (string.IsNullOrEmpty(hexString))
-                return new NeoBytes();
+                return new EpicChainBytes();
 
             // Remove 0x prefix if present
             if (hexString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
@@ -136,25 +136,25 @@ namespace EpicChain.Unity.SDK.Types
                 bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
             }
 
-            return new NeoBytes(bytes);
+            return new EpicChainBytes(bytes);
         }
 
         /// <summary>
-        /// Implicit conversion from byte array to NeoBytes.
+        /// Implicit conversion from byte array to EpicChainBytes.
         /// </summary>
         /// <param name="bytes">The byte array.</param>
-        /// <returns>A new NeoBytes instance.</returns>
-        public static implicit operator NeoBytes(byte[] bytes) => new(bytes);
+        /// <returns>A new EpicChainBytes instance.</returns>
+        public static implicit operator EpicChainBytes(byte[] bytes) => new(bytes);
 
         /// <summary>
-        /// Implicit conversion from NeoBytes to byte array.
+        /// Implicit conversion from EpicChainBytes to byte array.
         /// </summary>
-        /// <param name="neoBytes">The NeoBytes instance.</param>
+        /// <param name="epicchainBytes">The EpicChainBytes instance.</param>
         /// <returns>The underlying byte array.</returns>
-        public static implicit operator byte[](NeoBytes neoBytes) => neoBytes.Value;
+        public static implicit operator byte[](EpicChainBytes epicchainBytes) => epicchainBytes.Value;
 
         /// <summary>
-        /// Converts the NeoBytes to its hexadecimal string representation.
+        /// Converts the EpicChainBytes to its hexadecimal string representation.
         /// </summary>
         /// <param name="prefix">Whether to include the 0x prefix.</param>
         /// <returns>A hexadecimal string representation.</returns>
@@ -168,23 +168,23 @@ namespace EpicChain.Unity.SDK.Types
         }
 
         /// <summary>
-        /// Converts the NeoBytes to its hexadecimal string representation with 0x prefix.
+        /// Converts the EpicChainBytes to its hexadecimal string representation with 0x prefix.
         /// </summary>
         /// <returns>A hexadecimal string representation.</returns>
         public override string ToString() => ToHex();
 
         /// <summary>
-        /// Creates a copy of the NeoBytes.
+        /// Creates a copy of the EpicChainBytes.
         /// </summary>
-        /// <returns>A new NeoBytes instance with the same byte values.</returns>
-        public NeoBytes Copy() => new(_bytes);
+        /// <returns>A new EpicChainBytes instance with the same byte values.</returns>
+        public EpicChainBytes Copy() => new(_bytes);
 
         /// <summary>
-        /// Concatenates this NeoBytes with another.
+        /// Concatenates this EpicChainBytes with another.
         /// </summary>
-        /// <param name="other">The other NeoBytes to concatenate.</param>
-        /// <returns>A new NeoBytes containing the concatenated bytes.</returns>
-        public NeoBytes Concat(NeoBytes other)
+        /// <param name="other">The other EpicChainBytes to concatenate.</param>
+        /// <returns>A new EpicChainBytes containing the concatenated bytes.</returns>
+        public EpicChainBytes Concat(EpicChainBytes other)
         {
             if (other == null || other.Length == 0)
                 return Copy();
@@ -192,27 +192,27 @@ namespace EpicChain.Unity.SDK.Types
             var result = new byte[Length + other.Length];
             Array.Copy(_bytes, 0, result, 0, Length);
             Array.Copy(other._bytes, 0, result, Length, other.Length);
-            return new NeoBytes(result);
+            return new EpicChainBytes(result);
         }
 
         /// <summary>
-        /// Gets a slice of the NeoBytes.
+        /// Gets a slice of the EpicChainBytes.
         /// </summary>
         /// <param name="start">The starting index.</param>
         /// <param name="length">The length of the slice.</param>
-        /// <returns>A new NeoBytes containing the sliced bytes.</returns>
-        public NeoBytes Slice(int start, int length)
+        /// <returns>A new EpicChainBytes containing the sliced bytes.</returns>
+        public EpicChainBytes Slice(int start, int length)
         {
             if (start < 0 || start >= Length || length <= 0)
-                return new NeoBytes();
+                return new EpicChainBytes();
 
             length = Math.Min(length, Length - start);
             var result = new byte[length];
             Array.Copy(_bytes, start, result, 0, length);
-            return new NeoBytes(result);
+            return new EpicChainBytes(result);
         }
 
-        public bool Equals(NeoBytes other)
+        public bool Equals(EpicChainBytes other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -230,7 +230,7 @@ namespace EpicChain.Unity.SDK.Types
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || (obj is NeoBytes other && Equals(other));
+            return ReferenceEquals(this, obj) || (obj is EpicChainBytes other && Equals(other));
         }
 
         public override int GetHashCode()
@@ -245,9 +245,9 @@ namespace EpicChain.Unity.SDK.Types
             return hash;
         }
 
-        public static bool operator ==(NeoBytes left, NeoBytes right) => 
+        public static bool operator ==(EpicChainBytes left, EpicChainBytes right) => 
             ReferenceEquals(left, right) || (left?.Equals(right) == true);
         
-        public static bool operator !=(NeoBytes left, NeoBytes right) => !(left == right);
+        public static bool operator !=(EpicChainBytes left, EpicChainBytes right) => !(left == right);
     }
 }

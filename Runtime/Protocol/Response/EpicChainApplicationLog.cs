@@ -9,16 +9,16 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
     /// Response for getting application execution logs for a transaction.
-    /// Contains execution results, gas consumption, and emitted notifications.
+    /// Contains execution results, epicpulse consumption, and emitted notifications.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetApplicationLogResponse : NeoResponse<NeoApplicationLog>
+    public class EpicChainGetApplicationLogResponse : EpicChainResponse<EpicChainApplicationLog>
     {
         /// <summary>
         /// Gets the application log from the response.
         /// </summary>
         /// <returns>Application log or null if response failed</returns>
-        public NeoApplicationLog GetApplicationLog()
+        public EpicChainApplicationLog GetApplicationLog()
         {
             return IsSuccess ? Result : null;
         }
@@ -27,19 +27,19 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the application log or throws if the response failed.
         /// </summary>
         /// <returns>Application log</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
-        public NeoApplicationLog GetApplicationLogOrThrow()
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
+        public EpicChainApplicationLog GetApplicationLogOrThrow()
         {
             return GetResult();
         }
     }
     
     /// <summary>
-    /// Represents an application execution log for a Neo transaction.
+    /// Represents an application execution log for a EpicChain transaction.
     /// Contains detailed information about contract executions and their results.
     /// </summary>
     [System.Serializable]
-    public class NeoApplicationLog
+    public class EpicChainApplicationLog
     {
         #region Properties
         
@@ -58,7 +58,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoApplicationLog()
+        public EpicChainApplicationLog()
         {
             Executions = new List<Execution>();
         }
@@ -68,7 +68,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="transactionId">The transaction ID</param>
         /// <param name="executions">The executions</param>
-        public NeoApplicationLog(Hash256 transactionId, List<Execution> executions = null)
+        public EpicChainApplicationLog(Hash256 transactionId, List<Execution> executions = null)
         {
             TransactionId = transactionId;
             Executions = executions ?? new List<Execution>();
@@ -167,12 +167,12 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         #endregion
         
-        #region Gas Calculation
+        #region EpicPulse Calculation
         
         /// <summary>
-        /// Calculates the total gas consumed across all executions.
+        /// Calculates the total epicpulse consumed across all executions.
         /// </summary>
-        /// <returns>Total gas consumed as decimal</returns>
+        /// <returns>Total epicpulse consumed as decimal</returns>
         public decimal GetTotalGasConsumed()
         {
             if (!HasExecutions)
@@ -182,7 +182,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         }
         
         /// <summary>
-        /// Gets the gas consumed by successful executions only.
+        /// Gets the epicpulse consumed by successful executions only.
         /// </summary>
         /// <returns>Gas consumed by successful executions</returns>
         public decimal GetSuccessfulGasConsumed()
@@ -191,7 +191,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         }
         
         /// <summary>
-        /// Gets the gas wasted by faulted executions.
+        /// Gets the epicpulse wasted by faulted executions.
         /// </summary>
         /// <returns>Gas wasted by faulted executions</returns>
         public decimal GetWastedGas()
@@ -398,7 +398,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         public override string ToString()
         {
             var status = AllExecutionsSuccessful ? "Success" : HasFaultedExecution ? "Fault" : "Mixed";
-            return $"NeoApplicationLog({TransactionId}, {ExecutionCount} executions, {status})";
+            return $"EpicChainApplicationLog({TransactionId}, {ExecutionCount} executions, {status})";
         }
         
         #endregion
@@ -406,7 +406,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     
     /// <summary>
     /// Represents a single execution within an application log.
-    /// Contains execution state, gas consumption, results, and notifications.
+    /// Contains execution state, epicpulse consumption, results, and notifications.
     /// </summary>
     [System.Serializable]
     public class Execution
@@ -419,7 +419,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>The VM state after execution</summary>
         [JsonProperty("vmstate")]
-        public NeoVMStateType State { get; set; }
+        public EpicChainVMStateType State { get; set; }
         
         /// <summary>Exception message if execution faulted</summary>
         [JsonProperty("exception")]
@@ -459,7 +459,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <param name="gasConsumed">Gas consumed</param>
         /// <param name="stack">VM stack</param>
         /// <param name="notifications">Notifications</param>
-        public Execution(string trigger, NeoVMStateType state, string exception, string gasConsumed,
+        public Execution(string trigger, EpicChainVMStateType state, string exception, string gasConsumed,
                         List<StackItem> stack = null, List<Notification> notifications = null)
         {
             Trigger = trigger;
@@ -476,11 +476,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Whether this execution was successful</summary>
         [JsonIgnore]
-        public bool IsSuccessful => State == NeoVMStateType.Halt;
+        public bool IsSuccessful => State == EpicChainVMStateType.Halt;
         
         /// <summary>Whether this execution faulted</summary>
         [JsonIgnore]
-        public bool HasFaulted => State == NeoVMStateType.Fault;
+        public bool HasFaulted => State == EpicChainVMStateType.Fault;
         
         /// <summary>Whether this execution has an exception</summary>
         [JsonIgnore]
@@ -504,31 +504,31 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         #endregion
         
-        #region Gas Methods
+        #region EpicPulse Methods
         
         /// <summary>
-        /// Gets the gas consumed as a decimal.
+        /// Gets the epicpulse consumed as a decimal.
         /// </summary>
-        /// <returns>Gas consumed as decimal</returns>
+        /// <returns>EpicPulse consumed as decimal</returns>
         public decimal GetGasConsumedDecimal()
         {
             if (string.IsNullOrEmpty(GasConsumed))
                 return 0;
             
-            if (decimal.TryParse(GasConsumed, out var gas))
-                return gas;
+            if (decimal.TryParse(GasConsumed, out var epicpulse))
+                return epicpulse;
             
             return 0;
         }
         
         /// <summary>
-        /// Gets the gas consumed in fractions (smallest unit).
+        /// Gets the epicpulse consumed in fractions (smallest unit).
         /// </summary>
         /// <returns>Gas consumed in fractions</returns>
         public long GetGasConsumedFractions()
         {
             var gasDecimal = GetGasConsumedDecimal();
-            return (long)(gasDecimal * 100_000_000); // Convert to GAS fractions
+            return (long)(gasDecimal * 100_000_000); // Convert to EpicPulse fractions
         }
         
         #endregion
@@ -591,11 +591,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                 throw new InvalidOperationException("Execution trigger cannot be null or empty.");
             
             if (string.IsNullOrEmpty(GasConsumed))
-                throw new InvalidOperationException("Execution gas consumed cannot be null or empty.");
+                throw new InvalidOperationException("Execution epicpulse consumed cannot be null or empty.");
             
-            // Validate gas consumed is a valid number
+            // Validate epicpulse consumed is a valid number
             if (!decimal.TryParse(GasConsumed, out _))
-                throw new InvalidOperationException($"Execution gas consumed is not a valid number: {GasConsumed}");
+                throw new InvalidOperationException($"Execution epicpulse consumed is not a valid number: {GasConsumed}");
             
             if (Notifications != null)
             {
@@ -630,7 +630,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             var result = $"Execution ({Trigger}):\n";
             result += $"  State: {State}\n";
-            result += $"  Gas Consumed: {GasConsumed}\n";
+            result += $"  EpicPulse Consumed: {GasConsumed}\n";
             result += $"  Stack Items: {StackItemCount}\n";
             result += $"  Notifications: {NotificationCount}\n";
             
@@ -681,7 +681,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>Total number of notifications</summary>
         public int TotalNotifications { get; set; }
         
-        /// <summary>Total gas consumed</summary>
+        /// <summary>Total epicpulse consumed</summary>
         public decimal TotalGasConsumed { get; set; }
         
         /// <summary>Gas consumed by successful executions</summary>

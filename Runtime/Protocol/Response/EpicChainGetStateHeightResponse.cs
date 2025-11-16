@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the current state height information including local and validated root indices.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetStateHeightResponse : NeoResponse<EpicChainGetStateHeightResponse.StateHeight>
+    public class EpicChainGetStateHeightResponse : EpicChainResponse<EpicChainGetStateHeightResponse.StateHeight>
     {
         /// <summary>
         /// Gets the state height information from the response.

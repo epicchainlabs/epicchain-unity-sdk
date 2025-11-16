@@ -4,7 +4,7 @@ namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
     /// RIPEMD-160 hash algorithm implementation.
-    /// Used for Neo Hash160 calculations (RIPEMD-160 of SHA-256).
+    /// Used for EpicChain Hash160 calculations (RIPEMD-160 of SHA-256).
     /// Production-ready implementation following the RIPEMD-160 specification.
     /// </summary>
     public static class RIPEMD160

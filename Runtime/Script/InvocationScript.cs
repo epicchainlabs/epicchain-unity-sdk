@@ -11,12 +11,12 @@ using EpicChainUnityUtils;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Represents an invocation script used in Neo transactions.
+    /// Represents an invocation script used in EpicChain transactions.
     /// Invocation scripts typically contain input data (like signatures) that are consumed by verification scripts.
     /// This is the counterpart to VerificationScript and together they form a complete witness.
     /// </summary>
     [System.Serializable]
-    public class InvocationScript : IEquatable<InvocationScript>, IDisposable, INeoSerializable
+    public class InvocationScript : IEquatable<InvocationScript>, IDisposable, IEpicChainSerializable
     {
         #region Fields
         
@@ -116,8 +116,8 @@ namespace EpicChain.Unity.SDK.Script
                 using var builder = new ScriptBuilder();
                 var signatureBytes = signature.ToByteArray();
                 
-                if (signatureBytes.Length != NeoConstants.SIGNATURE_SIZE)
-                    throw new ArgumentException($"Signature must be {NeoConstants.SIGNATURE_SIZE} bytes");
+                if (signatureBytes.Length != EpicChainConstants.SIGNATURE_SIZE)
+                    throw new ArgumentException($"Signature must be {EpicChainConstants.SIGNATURE_SIZE} bytes");
                 
                 builder.PushData(signatureBytes);
                 var result = new InvocationScript(builder.ToArray());
@@ -142,8 +142,8 @@ namespace EpicChain.Unity.SDK.Script
             if (signatureBytes == null)
                 throw new ArgumentNullException(nameof(signatureBytes));
             
-            if (signatureBytes.Length != NeoConstants.SIGNATURE_SIZE)
-                throw new ArgumentException($"Signature must be {NeoConstants.SIGNATURE_SIZE} bytes");
+            if (signatureBytes.Length != EpicChainConstants.SIGNATURE_SIZE)
+                throw new ArgumentException($"Signature must be {EpicChainConstants.SIGNATURE_SIZE} bytes");
             
             try
             {
@@ -210,15 +210,15 @@ namespace EpicChain.Unity.SDK.Script
             if (signatures.Length == 0)
                 return new InvocationScript();
             
-            if (signatures.Length > NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
-                throw new ArgumentException($"Too many signatures (max {NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
+            if (signatures.Length > EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
+                throw new ArgumentException($"Too many signatures (max {EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
             
             try
             {
                 using var builder = new ScriptBuilder();
                 
                 // Push signatures in reverse order (last signature gets pushed first)
-                // This matches Neo's expected stack order for multi-sig verification
+                // This matches EpicChain's expected stack order for multi-sig verification
                 for (int i = signatures.Length - 1; i >= 0; i--)
                 {
                     if (signatures[i] != null)
@@ -317,7 +317,7 @@ namespace EpicChain.Unity.SDK.Script
                     if (opCode == OpCode.PUSHDATA1)
                     {
                         var length = reader.ReadByte();
-                        if (length == NeoConstants.SIGNATURE_SIZE && reader.Available >= length)
+                        if (length == EpicChainConstants.SIGNATURE_SIZE && reader.Available >= length)
                         {
                             var signatureBytes = reader.ReadBytes(length);
                             try

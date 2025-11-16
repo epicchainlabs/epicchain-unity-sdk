@@ -14,7 +14,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns information about validators who will validate the next block.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetNextBlockValidatorsResponse : NeoResponse<List<EpicChainGetNextBlockValidatorsResponse.Validator>>
+    public class EpicChainGetNextBlockValidatorsResponse : EpicChainResponse<List<EpicChainGetNextBlockValidatorsResponse.Validator>>
     {
         /// <summary>
         /// Information about a validator for the next block.
@@ -54,9 +54,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
             
             /// <summary>
-            /// Gets the validator's Neo address.
+            /// Gets the validator's EpicChain address.
             /// </summary>
-            /// <returns>Neo address string</returns>
+            /// <returns>EpicChain address string</returns>
             public string GetAddress()
             {
                 var pubKey = GetECPublicKey();

@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
     /// XEP-2 implementation for encrypting and decrypting private keys with passwords.
-    /// Follows the XEP-2 standard for encrypted private key format used across Neo ecosystem.
+    /// Follows the XEP-2 standard for encrypted private key format used across EpicChain ecosystem.
     /// Production-ready implementation with proper scrypt parameters and AES encryption.
     /// </summary>
     public static class XEP2

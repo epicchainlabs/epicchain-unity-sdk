@@ -6,11 +6,11 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents the execution state of the Neo Virtual Machine.
-    /// Corresponds to the VM state values used in Neo blockchain operations.
+    /// Represents the execution state of the EpicChain Virtual Machine.
+    /// Corresponds to the VM state values used in EpicChain blockchain operations.
     /// </summary>
     [Serializable]
-    public enum NeoVMStateType : byte
+    public enum EpicChainVMStateType : byte
     {
         /// <summary>
         /// No state or uninitialized state.
@@ -38,23 +38,23 @@ namespace EpicChain.Unity.SDK.Types
     }
 
     /// <summary>
-    /// Extension methods for NeoVMStateType enum operations.
+    /// Extension methods for EpicChainVMStateType enum operations.
     /// </summary>
-    public static class NeoVMStateTypeExtensions
+    public static class EpicChainVMStateTypeExtensions
     {
         /// <summary>
         /// Gets the JSON string representation of the VM state.
         /// </summary>
         /// <param name="state">The VM state.</param>
         /// <returns>The JSON-compatible string representation.</returns>
-        public static string GetJsonValue(this NeoVMStateType state)
+        public static string GetJsonValue(this EpicChainVMStateType state)
         {
             return state switch
             {
-                NeoVMStateType.None => "NONE",
-                NeoVMStateType.Halt => "HALT",
-                NeoVMStateType.Fault => "FAULT",
-                NeoVMStateType.Break => "BREAK",
+                EpicChainVMStateType.None => "NONE",
+                EpicChainVMStateType.Halt => "HALT",
+                EpicChainVMStateType.Fault => "FAULT",
+                EpicChainVMStateType.Break => "BREAK",
                 _ => throw new ArgumentOutOfRangeException(nameof(state), state, "Invalid VM state type")
             };
         }
@@ -64,7 +64,7 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="state">The VM state.</param>
         /// <returns>The integer value of the state.</returns>
-        public static int GetIntValue(this NeoVMStateType state)
+        public static int GetIntValue(this EpicChainVMStateType state)
         {
             return (int)state;
         }
@@ -74,18 +74,18 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="jsonValue">The JSON string value.</param>
         /// <returns>The corresponding VM state, or None if parsing fails.</returns>
-        public static NeoVMStateType FromJsonValue(string jsonValue)
+        public static EpicChainVMStateType FromJsonValue(string jsonValue)
         {
             if (string.IsNullOrEmpty(jsonValue))
-                return NeoVMStateType.None;
+                return EpicChainVMStateType.None;
 
             return jsonValue.ToUpperInvariant() switch
             {
-                "NONE" => NeoVMStateType.None,
-                "HALT" => NeoVMStateType.Halt,
-                "FAULT" => NeoVMStateType.Fault,
-                "BREAK" => NeoVMStateType.Break,
-                _ => NeoVMStateType.None
+                "NONE" => EpicChainVMStateType.None,
+                "HALT" => EpicChainVMStateType.Halt,
+                "FAULT" => EpicChainVMStateType.Fault,
+                "BREAK" => EpicChainVMStateType.Break,
+                _ => EpicChainVMStateType.None
             };
         }
 
@@ -94,15 +94,15 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="intValue">The integer value.</param>
         /// <returns>The corresponding VM state, or None if parsing fails.</returns>
-        public static NeoVMStateType FromIntValue(int intValue)
+        public static EpicChainVMStateType FromIntValue(int intValue)
         {
             return intValue switch
             {
-                0 => NeoVMStateType.None,
-                1 => NeoVMStateType.Halt,
-                2 => NeoVMStateType.Fault,
-                4 => NeoVMStateType.Break,
-                _ => NeoVMStateType.None
+                0 => EpicChainVMStateType.None,
+                1 => EpicChainVMStateType.Halt,
+                2 => EpicChainVMStateType.Fault,
+                4 => EpicChainVMStateType.Break,
+                _ => EpicChainVMStateType.None
             };
         }
 
@@ -111,9 +111,9 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="state">The VM state.</param>
         /// <returns>True if the state represents success, false otherwise.</returns>
-        public static bool IsSuccess(this NeoVMStateType state)
+        public static bool IsSuccess(this EpicChainVMStateType state)
         {
-            return state == NeoVMStateType.Halt;
+            return state == EpicChainVMStateType.Halt;
         }
 
         /// <summary>
@@ -121,33 +121,33 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="state">The VM state.</param>
         /// <returns>True if the state represents an error, false otherwise.</returns>
-        public static bool IsError(this NeoVMStateType state)
+        public static bool IsError(this EpicChainVMStateType state)
         {
-            return state == NeoVMStateType.Fault;
+            return state == EpicChainVMStateType.Fault;
         }
     }
 
     /// <summary>
-    /// JSON converter for NeoVMStateType that handles both string and integer representations.
+    /// JSON converter for EpicChainVMStateType that handles both string and integer representations.
     /// </summary>
-    public class NeoVMStateTypeJsonConverter : JsonConverter<NeoVMStateType>
+    public class EpicChainVMStateTypeJsonConverter : JsonConverter<EpicChainVMStateType>
     {
-        public override void WriteJson(JsonWriter writer, NeoVMStateType value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, EpicChainVMStateType value, JsonSerializer serializer)
         {
             writer.WriteValue(value.GetJsonValue());
         }
 
-        public override NeoVMStateType ReadJson(JsonReader reader, Type objectType, NeoVMStateType existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override EpicChainVMStateType ReadJson(JsonReader reader, Type objectType, EpicChainVMStateType existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             if (reader.Value == null)
-                return NeoVMStateType.None;
+                return EpicChainVMStateType.None;
 
             return reader.Value switch
             {
-                string stringValue => NeoVMStateTypeExtensions.FromJsonValue(stringValue),
-                long longValue => NeoVMStateTypeExtensions.FromIntValue((int)longValue),
-                int intValue => NeoVMStateTypeExtensions.FromIntValue(intValue),
-                _ => NeoVMStateType.None
+                string stringValue => EpicChainVMStateTypeExtensions.FromJsonValue(stringValue),
+                long longValue => EpicChainVMStateTypeExtensions.FromIntValue((int)longValue),
+                int intValue => EpicChainVMStateTypeExtensions.FromIntValue(intValue),
+                _ => EpicChainVMStateType.None
             };
         }
     }

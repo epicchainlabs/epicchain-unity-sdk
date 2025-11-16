@@ -50,7 +50,7 @@ namespace EpicChainUnityProtocol.Response
         }
         
         /// <summary>
-        /// Creates a RecordState from a Neo stack item array
+        /// Creates a RecordState from a EpicChain stack item array
         /// </summary>
         /// <param name="stackItemArray">Stack item containing [name, type, data]</param>
         /// <returns>RecordState instance</returns>

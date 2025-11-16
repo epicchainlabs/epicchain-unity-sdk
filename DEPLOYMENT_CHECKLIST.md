@@ -70,7 +70,7 @@
 │   ├── Contracts/                  # Smart contract classes
 │   ├── Crypto/                     # Cryptographic operations
 │   ├── Protocol/                   # RPC protocol classes
-│   ├── Script/                     # Neo VM script system
+│   ├── Script/                     # EpicChain VM script system
 │   ├── Serialization/              # Binary data handling
 │   ├── Transaction/                # Transaction system
 │   ├── Types/                      # Core data types
@@ -136,9 +136,9 @@
 - [x] **Code of conduct** for community interactions
 
 ### 📢 **Community Outreach**
-- [x] **Neo community** announcement and documentation
+- [x] **EpicChain community** announcement and documentation
 - [x] **Unity forums** publication and support threads
-- [x] **Developer documentation** on Neo official docs
+- [x] **Developer documentation** on EpicChain official docs
 - [x] **Tutorial videos** and educational content
 - [x] **Sample projects** published for community use
 
@@ -186,7 +186,7 @@
 **Deployment Targets**:
 1. **✅ Unity Asset Store** - Submit for review and publication
 2. **✅ GitHub Release** - Tag v1.0.0 and publish
-3. **✅ Neo Community** - Announce on official channels
+3. **✅ EpicChain Community** - Announce on official channels
 4. **✅ Unity Community** - Share with Unity developers
 5. **✅ Package Manager** - Enable UPM installation
 

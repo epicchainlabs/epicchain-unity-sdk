@@ -8,7 +8,7 @@ using EpicChain.Unity.SDK.Transaction;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents a signer in a Neo transaction.
+    /// Represents a signer in a EpicChain transaction.
     /// Contains account information and witness scope restrictions.
     /// </summary>
     [System.Serializable]

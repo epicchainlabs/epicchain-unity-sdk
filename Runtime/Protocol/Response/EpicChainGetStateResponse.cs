@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the state value for a specific key in the state tree.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetStateResponse : NeoResponse<string>
+    public class EpicChainGetStateResponse : EpicChainResponse<string>
     {
         /// <summary>
         /// Gets the state value from the response.
@@ -232,7 +232,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                     byte[] paddedBytes = new byte[8];
                     Array.Copy(bytes, 0, paddedBytes, 0, bytes.Length);
                     
-                    // Neo uses little-endian format
+                    // EpicChain uses little-endian format
                     if (BitConverter.IsLittleEndian)
                         return BitConverter.ToInt64(paddedBytes, 0);
                     else

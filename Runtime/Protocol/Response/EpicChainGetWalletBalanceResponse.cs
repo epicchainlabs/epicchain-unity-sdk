@@ -8,7 +8,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for XPR getwalletbalance RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetWalletBalanceResponse : NeoResponse<EpicChainGetWalletBalanceResponse.WalletBalance>
+    public class EpicChainGetWalletBalanceResponse : EpicChainResponse<EpicChainGetWalletBalanceResponse.WalletBalance>
     {
         /// <summary>
         /// Gets the wallet balance result

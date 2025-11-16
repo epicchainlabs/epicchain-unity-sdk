@@ -11,7 +11,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getting token balances for an address
     /// </summary>
     [Serializable]
-    public class EpicChainGetTokenBalancesResponse : NeoResponse<EpicChainGetTokenBalancesResponse.TokenBalances>
+    public class EpicChainGetTokenBalancesResponse : EpicChainResponse<EpicChainGetTokenBalancesResponse.TokenBalances>
     {
         /// <summary>
         /// Gets the token balances result

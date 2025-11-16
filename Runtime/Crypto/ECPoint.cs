@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Crypto
     /// Production-ready implementation following elliptic curve mathematics.
     /// </summary>
     [System.Serializable]
-    public class ECPoint : IEquatable<ECPoint>, INeoSerializable
+    public class ECPoint : IEquatable<ECPoint>, IEpicChainSerializable
     {
         #region Constants
         
@@ -417,7 +417,7 @@ namespace EpicChain.Unity.SDK.Crypto
         
         #endregion
         
-        #region INeoSerializable Implementation
+        #region IEpicChainSerializable Implementation
         
         /// <summary>
         /// Serializes this ECPoint to a binary writer.

@@ -6,7 +6,7 @@ using EpicChain.Unity.SDK.Types;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents the complete state of a deployed smart contract on the Neo blockchain.
+    /// Represents the complete state of a deployed smart contract on the EpicChain blockchain.
     /// Contains contract metadata, NEF file, manifest, and update information.
     /// </summary>
     [System.Serializable]
@@ -26,7 +26,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         [JsonProperty("hash")]
         public Hash160 Hash { get; set; }
         
-        /// <summary>The NEF (Neo Executable Format) file containing the contract bytecode</summary>
+        /// <summary>The NEF (EpicChain Executable Format) file containing the contract bytecode</summary>
         [JsonProperty("nef")]
         public ContractNef Nef { get; set; }
         

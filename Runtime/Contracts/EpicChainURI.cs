@@ -34,9 +34,9 @@ namespace EpicChain.Unity.SDK.Contracts
         public Uri Uri { get; private set; }
         
         /// <summary>
-        /// The NeoUnity instance for blockchain operations.
+        /// The EpicChainUnity instance for blockchain operations.
         /// </summary>
-        public INeo NeoUnity { get; private set; }
+        public IEpicChain EpicChainUnity { get; private set; }
         
         /// <summary>
         /// The script hash of the recipient address.
@@ -59,12 +59,12 @@ namespace EpicChain.Unity.SDK.Contracts
         public string UriString => Uri?.ToString();
         
         /// <summary>
-        /// The recipient address as a Neo address string.
+        /// The recipient address as a EpicChain address string.
         /// </summary>
         public string RecipientAddress => Recipient?.ToAddress();
         
         /// <summary>
-        /// The token as a string (returns 'neo', 'gas', or script hash).
+        /// The token as a string (returns 'epicchain', 'epicpulse', or script hash).
         /// </summary>
         public string TokenString
         {
@@ -72,8 +72,8 @@ namespace EpicChain.Unity.SDK.Contracts
             {
                 if (Token == null) return null;
                 
-                if (Token == NeoToken.SCRIPT_HASH) return NEO_TOKEN_STRING;
-                if (Token == GasToken.SCRIPT_HASH) return GAS_TOKEN_STRING;
+                if (Token == EpicChainTokenSCRIPT_HASH) return EPICCHAIN_TOKEN_STRING;
+                if (Token == EpicPulseToken.SCRIPT_HASH) return EPICPULSE_TOKEN_STRING;
                 return Token.ToString();
             }
         }
@@ -100,12 +100,12 @@ namespace EpicChain.Unity.SDK.Contracts
         }
         
         /// <summary>
-        /// Creates a new EpicChainURI instance with a NeoUnity reference.
+        /// Creates a new EpicChainURI instance with a EpicChainUnity reference.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance for blockchain operations</param>
-        public EpicChainURI(INeo neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance for blockchain operations</param>
+        public EpicChainURI(IEpicChain epicchainUnity)
         {
-            EpicChainUnity = neoUnity;
+            EpicChainUnity = epicchainUnity;
         }
         
         #endregion
@@ -129,7 +129,7 @@ namespace EpicChain.Unity.SDK.Contracts
             var baseAndQuery = uriString.Split('?');
             var schemeParts = baseAndQuery[0].Split(':');
             
-            if (schemeParts.Length != 2 || schemeParts[0] != NEO_SCHEME)
+            if (schemeParts.Length != 2 || schemeParts[0] != EPICCHAIN_SCHEME)
                 throw new ArgumentException("The provided string does not conform to the XEP-9 standard.", nameof(uriString));
             
             var epicchainURI = new EpicChainURI().To(Hash160.FromAddress(schemeParts[1]));
@@ -187,9 +187,9 @@ namespace EpicChain.Unity.SDK.Contracts
         }
         
         /// <summary>
-        /// Sets the token from a string (script hash, 'neo', or 'gas').
+        /// Sets the token from a string (script hash, 'epicchain', or 'epicpulse').
         /// </summary>
-        /// <param name="token">The token hash, 'neo' or 'gas'</param>
+        /// <param name="token">The token hash, 'epicchain' or 'epicpulse'</param>
         /// <returns>This EpicChainURI object for method chaining</returns>
         /// <exception cref="ArgumentException">Thrown when the token string is invalid</exception>
         public EpicChainURI SetToken(string token)
@@ -199,11 +199,11 @@ namespace EpicChain.Unity.SDK.Contracts
             
             switch (token.ToLowerInvariant())
             {
-                case NEO_TOKEN_STRING:
-                    Token = NeoToken.SCRIPT_HASH;
+                case EPICCHAIN_TOKEN_STRING:
+                    Token = EpicChainTokenSCRIPT_HASH;
                     break;
                 case GAS_TOKEN_STRING:
-                    Token = GasToken.SCRIPT_HASH;
+                    Token = EpicPulseToken.SCRIPT_HASH;
                     break;
                 default:
                     Token = new Hash160(token);
@@ -215,7 +215,7 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Sets the transfer amount.
-        /// Make sure to use decimals and not token fractions. E.g. for GAS use 1.5 instead of 150_000_000.
+        /// Make sure to use decimals and not token fractions. E.g. for EpicPulse use 1.5 instead of 150_000_000.
         /// </summary>
         /// <param name="amount">The amount in token units (not fractions)</param>
         /// <returns>This EpicChainURI object for method chaining</returns>
@@ -229,13 +229,13 @@ namespace EpicChain.Unity.SDK.Contracts
         }
         
         /// <summary>
-        /// Sets the NeoUnity instance for blockchain operations.
+        /// Sets the EpicChainUnity instance for blockchain operations.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
         /// <returns>This EpicChainURI object for method chaining</returns>
-        public EpicChainURI SetNeoUnity(INeo neoUnity)
+        public EpicChainURI SetEpicChainUnity(IEpicChain epicchainUnity)
         {
-            EpicChainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            EpicChainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
             return this;
         }
         
@@ -253,7 +253,7 @@ namespace EpicChain.Unity.SDK.Contracts
             if (Recipient == null)
                 throw new InvalidOperationException("Could not create a XEP-9 URI without a recipient address.");
             
-            var baseUri = $"{NEO_SCHEME}:{Recipient.ToAddress()}";
+            var baseUri = $"{EPICCHAIN_SCHEME}:{Recipient.ToAddress()}";
             var queryPart = BuildQueryPart();
             var fullUri = baseUri + (string.IsNullOrEmpty(queryPart) ? "" : $"?{queryPart}");
             
@@ -270,9 +270,9 @@ namespace EpicChain.Unity.SDK.Contracts
             
             if (Token != null)
             {
-                if (Token == NeoToken.SCRIPT_HASH)
-                    queryParams.Add($"asset={NEO_TOKEN_STRING}");
-                else if (Token == GasToken.SCRIPT_HASH)
+                if (Token == EpicChainTokenSCRIPT_HASH)
+                    queryParams.Add($"asset={EPICCHAIN_TOKEN_STRING}");
+                else if (Token == EpicPulseToken.SCRIPT_HASH)
                     queryParams.Add($"asset={GAS_TOKEN_STRING}");
                 else
                     queryParams.Add($"asset={Token}");
@@ -299,7 +299,7 @@ namespace EpicChain.Unity.SDK.Contracts
         public async Task<TransactionBuilder> BuildTransferFromAsync(Account sender)
         {
             if (epicchainUnity == null)
-                throw new InvalidOperationException("NeoUnity instance is not set.");
+                throw new InvalidOperationException("EpicChainUnity instance is not set.");
             if (Recipient == null)
                 throw new InvalidOperationException("Recipient is not set.");
             if (!Amount.HasValue)
@@ -307,19 +307,19 @@ namespace EpicChain.Unity.SDK.Contracts
             if (Token == null)
                 throw new InvalidOperationException("Token is not set.");
             
-            var token = new FungibleToken(Token, NeoUnity);
+            var token = new FungibleToken(Token, EpicChainUnity);
             
             // Validate decimal places for known tokens
             var decimalPlaces = GetDecimalPlaces(Amount.Value);
             
-            if (IsNeoToken(Token) && decimalPlaces > NeoToken.DECIMALS)
+            if (IsEpicChainToken(Token) && decimalPlaces > EpicChainTokenDECIMALS)
                 throw new ArgumentException("The XPR token does not support any decimal places.");
             
-            if (IsGasToken(Token) && decimalPlaces > GasToken.DECIMALS)
-                throw new ArgumentException($"The XPP token does not support more than {GasToken.DECIMALS} decimal places.");
+            if (IsEpicPulseToken(Token) && decimalPlaces > EpicPulseToken.DECIMALS)
+                throw new ArgumentException($"The XPP token does not support more than {EpicPulseToken.DECIMALS} decimal places.");
             
             // For other tokens, check their actual decimals
-            if (!IsNeoToken(Token) && !IsGasToken(Token))
+            if (!IsEpicChainToken(Token) && !IsEpicPulseToken(Token))
             {
                 var tokenDecimals = await token.GetDecimalsAsync();
                 if (decimalPlaces > tokenDecimals)
@@ -340,14 +340,14 @@ namespace EpicChain.Unity.SDK.Contracts
             return (bits[3] >> 16) & 0xFF;
         }
         
-        private bool IsNeoToken(Hash160 tokenHash)
+        private bool IsEpicChainToken(Hash160 tokenHash)
         {
-            return tokenHash == NeoToken.SCRIPT_HASH;
+            return tokenHash == EpicChainTokenSCRIPT_HASH;
         }
         
-        private bool IsGasToken(Hash160 tokenHash)
+        private bool IsEpicPulseToken(Hash160 tokenHash)
         {
-            return tokenHash == GasToken.SCRIPT_HASH;
+            return tokenHash == EpicPulseToken.SCRIPT_HASH;
         }
         
         #endregion

@@ -15,7 +15,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// that together prove that the signer has witnessed the signed data.
     /// </summary>
     [Serializable]
-    public struct Witness : INeoSerializable, IEquatable<Witness>
+    public struct Witness : IEpicChainSerializable, IEquatable<Witness>
     {
         [SerializeField]
         private InvocationScript _invocationScript;

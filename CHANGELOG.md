@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SmartContract base class for contract interactions
 - XEP-17 fungible token standard implementation
 - XEP-11 NFT standard with enumerable support
-- Native contract wrappers (EpicChainToken, GasToken, PolicyContract)
+- Native contract wrappers (EpicChainToken, EpicPulseToken, PolicyContract)
 - Contract deployment and management tools
 - Transaction building with script support
 

@@ -24,11 +24,11 @@
 - **✅ Complete Contract Interaction**: Deploy, invoke, and manage smart contracts
 - **✅ XEP-17 Token Support**: Full fungible token operations (transfers, balances, multi-transfers)
 - **✅ XEP-11 NFT Support**: Complete non-fungible token functionality with metadata
-- **✅ Native Contract Integration**: NEO, GAS, Policy, ContractManagement, RoleManagement
+- **✅ Native Contract Integration**: XPR, XPP, Policy, ContractManagement, RoleManagement
 - **✅ Iterator Support**: Efficient large data set traversal with session management
 
 #### **💰 Wallet & Account Management**
-- **✅ XEP-6 Wallet Format**: Standard Neo wallet file compatibility
+- **✅ XEP-6 Wallet Format**: Standard EpicChain wallet file compatibility
 - **✅ HD Wallet Support**: BIP-32 hierarchical deterministic key derivation
 - **✅ BIP-39 Mnemonics**: Mnemonic phrase generation and recovery
 - **✅ Multi-Signature Accounts**: Enterprise-grade multi-sig support
@@ -42,7 +42,7 @@
 - **✅ Transaction Validation**: Comprehensive pre-broadcast validation
 
 #### **🎯 Unity Game Integration**
-- **✅ Drag-and-Drop Components**: NeoBlockchainManager and EpicChainWalletComponent
+- **✅ Drag-and-Drop Components**: EpicChainBlockchainManager and EpicChainWalletComponent
 - **✅ Inspector Configuration**: Visual configuration without coding required
 - **✅ Event System**: Unity-native blockchain event monitoring
 - **✅ Coroutine Support**: Unity async patterns with proper main-thread handling
@@ -115,7 +115,7 @@ Comprehensive wallet showcase:
 #### **Complete EpicChain Integration**
 - **Latest Protocol**: Full EpicChain blockchain support
 - **All Token Standards**: XEP-17 fungible and XEP-11 non-fungible tokens
-- **Governance Integration**: Neo voting and committee participation
+- **Governance Integration**: EpicChain voting and committee participation
 - **Oracle Support**: External data integration for games
 - **Name Service**: Human-readable domain name support
 
@@ -145,7 +145,7 @@ Comprehensive wallet showcase:
 
 **Network Requirements**:
 - Internet connection for blockchain communication
-- Neo RPC node access (mainnet/testnet/private)
+- EpicChain RPC node access (mainnet/testnet/private)
 
 ### ⚡ **Performance Specifications**
 
@@ -253,7 +253,7 @@ Comprehensive wallet showcase:
 - Performance improvements and optimizations
 
 **v1.2.0 (Q1 2025)**:
-- Neo X sidechain integration
+- EpicChain X sidechain integration
 - Advanced DeFi protocol support
 - Multi-chain compatibility
 - Enhanced mobile optimizations
@@ -292,21 +292,21 @@ Comprehensive wallet showcase:
 
 **Development Team**:
 - **GitHub**: https://github.com/epicchainlabs/epicchain-unity-sdk
-- **Discord**: https://discord.gg/neo-unity-sdk
-- **Email**: unity-sdk@neo.org
-- **Website**: https://neo.org/unity
+- **Discord**: https://discord.gg/epicchainlabs
+- **Email**: devs@epic-chain.org
+- **Website**: https://epic-chain.org/
 
 **Community**:
-- **Unity Forums**: https://forum.unity.com/threads/neo-unity-sdk
-- **Reddit**: r/NeoBlockchain
-- **Twitter**: @neo_blockchain
-- **YouTube**: Neo Developer Channel
+- **Unity Forums**: https://forum.unity.com/threads/epicchain-unity-sdk
+- **Reddit**: r/epicchainfam
+- **Twitter**: @epicchainlabs
+- **YouTube**: EpicChain Developer Channel
 
 **Professional Support**:
-- **Enterprise Licensing**: enterprise@neo.org
-- **Custom Development**: consulting@neo.org
-- **Partnership Opportunities**: partnerships@neo.org
-- **Press Inquiries**: press@neo.org
+- **Enterprise Licensing**: enterprise@epic-chain.org
+- **Custom Development**: consulting@epic-chain.org
+- **Partnership Opportunities**: partnerships@epic-chain.org
+- **Press Inquiries**: press@epic-chain.org
 
 ---
 
@@ -315,7 +315,7 @@ Comprehensive wallet showcase:
 ### 💝 **Special Thanks**
 
 **To the Community**:
-Thank you to the Neo community, Unity developers, and blockchain gaming pioneers who made this SDK possible. Your feedback, testing, and support have been invaluable.
+Thank you to the EpicChain community, Unity developers, and blockchain gaming pioneers who made this SDK possible. Your feedback, testing, and support have been invaluable.
 
 **To Our Contributors**:
 Special recognition to all developers, testers, and documentation contributors who helped make the EpicChain Unity SDK a reality.

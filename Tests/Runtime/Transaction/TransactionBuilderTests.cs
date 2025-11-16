@@ -20,15 +20,15 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
     [TestFixture]
     public class TransactionBuilderTests
     {
-        private readonly Hash160 NEO_TOKEN_SCRIPT_HASH = Hash160.Parse("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5");
+        private readonly Hash160 EPICCHAIN_TOKEN_SCRIPT_HASH = Hash160.Parse("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5");
         private readonly Hash160 GAS_TOKEN_SCRIPT_HASH = Hash160.Parse("d2a4cff31913016155e38e474a2c06d08be276cf");
         private const string XEP17_TRANSFER = "transfer";
 
         private Account account1;
         private Account account2;
         private Hash160 recipient;
-        private MockNeoSwift mockNeoSwift;
-        private byte[] scriptInvokeFunctionNeoSymbolBytes;
+        private MockEpicChainSwift mockEpicChainSwift;
+        private byte[] scriptInvokeFunctionEpicChainSymbolBytes;
 
         [SetUp]
         public void SetUp()
@@ -36,25 +36,25 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
             account1 = TestHelpers.CreateTestAccount("e6e919577dd7b8e97805151c05ae07ff4f752654d6d8797597aca989c02c4cb3");
             account2 = TestHelpers.CreateTestAccount("b4b2b579cac270125259f08a5f414e9235817e7637b9a66cfeb3b77d90c8e7f9");
             recipient = Hash160.Parse("969a77db482f74ce27105f760efa139223431394");
-            mockNeoSwift = new MockNeoSwift();
+            mockEpicChainSwift = new MockEpicChainSwift();
 
-            // Build script for NEO symbol function call
+            // Build script for EpicChain symbol function call
             var scriptBuilder = new ScriptBuilder();
-            scriptBuilder.ContractCall(NEO_TOKEN_SCRIPT_HASH, "symbol", new ContractParameter[0]);
-            scriptInvokeFunctionNeoSymbolBytes = scriptBuilder.ToArray();
+            scriptBuilder.ContractCall(EPICCHAIN_TOKEN_SCRIPT_HASH, "symbol", new ContractParameter[0]);
+            scriptInvokeFunctionEpicChainSymbolBytes = scriptBuilder.ToArray();
         }
 
         [TearDown]
         public void TearDown()
         {
-            mockNeoSwift?.Dispose();
+            mockEpicChainSwift?.Dispose();
         }
 
         [Test]
         public async Task TestBuildTransactionWithCorrectNonce()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_necessary_mock"),
@@ -128,7 +128,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAutomaticallySetNonce()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_necessary_mock"),
@@ -191,10 +191,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAttributesHighPriority()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee"),
                     ["getcommittee"] = TestHelpers.LoadJsonResource("getcommittee"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
@@ -202,7 +202,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Attributes(new TransactionAttribute[] { TransactionAttribute.HighPriority() })
                 .Signers(new AccountSigner[] { AccountSigner.None(account1) })
                 .GetUnsignedTransactionAsync();
@@ -215,10 +215,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAttributesHighPriorityCommittee()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee"),
                     ["getcommittee"] = TestHelpers.LoadJsonResource("getcommittee"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
@@ -229,7 +229,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Attributes(new TransactionAttribute[] { TransactionAttribute.HighPriority() })
                 .Signers(new AccountSigner[] { AccountSigner.None(multiSigAccount) })
                 .GetUnsignedTransactionAsync();
@@ -242,7 +242,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAttributesHighPriorityNotCommitteeMember()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["getcommittee"] = TestHelpers.LoadJsonResource("getcommittee"),
@@ -250,7 +250,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 });
 
             var builder = new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Attributes(new TransactionAttribute[] { TransactionAttribute.HighPriority() })
                 .Signers(new AccountSigner[] { AccountSigner.None(account2) });
 
@@ -267,10 +267,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAttributesHighPriorityOnlyAddedOnce()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee"),
                     ["getcommittee"] = TestHelpers.LoadJsonResource("getcommittee"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
@@ -278,7 +278,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Attributes(new TransactionAttribute[] { TransactionAttribute.HighPriority() })
                 .Attributes(new TransactionAttribute[] { TransactionAttribute.HighPriority() })
                 .Signers(new AccountSigner[] { AccountSigner.None(account1) })
@@ -293,7 +293,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         {
             // Arrange
             var attrs = new TransactionAttribute[EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES + 1];
-            for (int i = 0; i <= NeoConstants.MAX_TRANSACTION_ATTRIBUTES; i++)
+            for (int i = 0; i <= EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES; i++)
             {
                 attrs[i] = TransactionAttribute.HighPriority();
             }
@@ -318,7 +318,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
             });
 
             var attrs = new TransactionAttribute[EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES - 2];
-            for (int i = 0; i < NeoConstants.MAX_TRANSACTION_ATTRIBUTES - 2; i++)
+            for (int i = 0; i < EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES - 2; i++)
             {
                 attrs[i] = TransactionAttribute.HighPriority();
             }
@@ -334,17 +334,17 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAutomaticSettingOfValidUntilBlockVariable()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
                 });
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(Account.Create()) })
                 .GetUnsignedTransactionAsync();
 
@@ -357,16 +357,16 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAutomaticSettingOfSystemFeeAndNetworkFee()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(Account.Create()) })
                 .ValidUntilBlock(1000)
                 .GetUnsignedTransactionAsync();
@@ -380,15 +380,15 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestFailTryingToSignTransactionWithAccountMissingAPrivateKey()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
 
             var builder = new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(Account.FromAddress(account1.Address)) })
                 .ValidUntilBlock(1000);
 
@@ -405,10 +405,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestFailAutomaticallySigningWithMultiSigAccountSigner()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000")
                 });
@@ -417,7 +417,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 new ECPublicKey[] { account1.KeyPair.PublicKey }, 1);
 
             var builder = new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(multiSigAccount) });
 
             // Act & Assert
@@ -433,16 +433,16 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestSignTransactionWithAdditionalSigners()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] 
                 { 
                     AccountSigner.CalledByEntry(account1), 
@@ -472,7 +472,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestSendInvokeFunction()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_transfer_with_fixed_sysfee"),
@@ -482,7 +482,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 });
 
             var script = new ScriptBuilder()
-                .ContractCall(NEO_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
+                .ContractCall(EPICCHAIN_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Hash160(recipient),
@@ -505,10 +505,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         }
 
         [Test]
-        public async Task TestTransferNeoFromNormalAccount()
+        public async Task TestTransferEpicChainFromNormalAccount()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
                     ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_transfer_with_fixed_sysfee"),
@@ -517,7 +517,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             var expectedVerificationScript = account1.GetVerificationScript().Script;
             var script = new ScriptBuilder()
-                .ContractCall(NEO_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
+                .ContractCall(EPICCHAIN_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Hash160(recipient),
@@ -544,7 +544,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         {
             // Arrange
             var script1 = new ScriptBuilder()
-                .ContractCall(NEO_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
+                .ContractCall(EPICCHAIN_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Hash160(recipient),
@@ -554,7 +554,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 .ToArray();
 
             var script2 = new ScriptBuilder()
-                .ContractCall(NEO_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
+                .ContractCall(EPICCHAIN_TOKEN_SCRIPT_HASH, XEP17_TRANSFER, new ContractParameter[]
                 {
                     ContractParameter.Hash160(account1.GetScriptHash()),
                     ContractParameter.Hash160(account2.GetScriptHash()),
@@ -580,17 +580,17 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestGetUnsignedTransaction()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) })
                 .GetUnsignedTransactionAsync();
 
@@ -604,10 +604,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestVersion()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
@@ -615,7 +615,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
                 .Version(1)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) })
                 .GetUnsignedTransactionAsync();
 
@@ -627,10 +627,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAdditionalNetworkFee()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
@@ -639,12 +639,12 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var tx1 = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(Account.Create()) })
                 .GetUnsignedTransactionAsync();
 
             var tx2 = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(Account.Create()) })
                 .AdditionalNetworkFee(2000)
                 .GetUnsignedTransactionAsync();
@@ -658,10 +658,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestAdditionalSystemFee()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
@@ -670,12 +670,12 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var tx1 = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(Account.Create()) })
                 .GetUnsignedTransactionAsync();
 
             var tx2 = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.None(Account.Create()) })
                 .AdditionalSystemFee(3000)
                 .GetUnsignedTransactionAsync();
@@ -692,10 +692,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public void TestPerformance_TransactionBuilding()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
@@ -708,7 +708,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 for (int i = 0; i < iterations; i++)
                 {
                     var builder = new TransactionBuilder(mockEpicChainSwift)
-                        .Script(scriptInvokeFunctionNeoSymbolBytes)
+                        .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                         .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(Account.Create()) });
                     
                     var task = builder.GetUnsignedTransactionAsync();
@@ -734,7 +734,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                 for (int i = 0; i < iterations; i++)
                 {
                     builders[i] = new TransactionBuilder(mockEpicChainSwift)
-                        .Script(scriptInvokeFunctionNeoSymbolBytes)
+                        .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                         .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(Account.Create()) });
                 }
                 GC.KeepAlive(builders);
@@ -749,10 +749,10 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public IEnumerator TestUnityCoroutineCompatibility()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
@@ -762,7 +762,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
 
             // Act
             var builder = new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) });
 
             builder.GetUnsignedTransactionAsync().ContinueWith(task =>
@@ -784,13 +784,13 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         {
             // Test that TransactionBuilder can work with Unity serialization
             var builder = new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .ValidUntilBlock(1000);
 
             // Create serializable wrapper for Unity Inspector
             var serializableBuilder = new SerializableTransactionBuilderInfo
             {
-                scriptHex = TestHelpers.BytesToHex(scriptInvokeFunctionNeoSymbolBytes),
+                scriptHex = TestHelpers.BytesToHex(scriptInvokeFunctionEpicChainSymbolBytes),
                 validUntilBlock = 1000,
                 version = 0
             };
@@ -829,7 +829,7 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
                         {
                             int resultIndex = threadIndex * operationsPerThread + i;
                             results[resultIndex] = new TransactionBuilder(mockEpicChainSwift)
-                                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                                 .ValidUntilBlock((uint)(1000 + resultIndex));
                         }
                     }
@@ -887,17 +887,17 @@ namespace EpicChain.Unity.SDK.Tests.Transaction
         public async Task TestTransactionSerialization()
         {
             // Arrange
-            mockNeoSwift
+            mockEpicChainSwift
                 .WithMockResponses(new Dictionary<string, string>
                 {
-                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_neo"),
+                    ["invokescript"] = TestHelpers.LoadJsonResource("invokescript_symbol_epicchain"),
                     ["getblockcount"] = TestHelpers.LoadJsonResource("getblockcount_1000"),
                     ["calculatenetworkfee"] = TestHelpers.LoadJsonResource("calculatenetworkfee")
                 });
 
             // Act
             var tx = await new TransactionBuilder(mockEpicChainSwift)
-                .Script(scriptInvokeFunctionNeoSymbolBytes)
+                .Script(scriptInvokeFunctionEpicChainSymbolBytes)
                 .Signers(new AccountSigner[] { AccountSigner.CalledByEntry(account1) })
                 .GetUnsignedTransactionAsync();
 

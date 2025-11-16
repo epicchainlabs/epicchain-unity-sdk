@@ -10,7 +10,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for XPR getunspents RPC method (legacy method for XPR 2.x)
     /// </summary>
     [Serializable]
-    public class EpicChainGetUnspentsResponse : NeoResponse<EpicChainGetUnspentsResponse.Unspents>
+    public class EpicChainGetUnspentsResponse : EpicChainResponse<EpicChainGetUnspentsResponse.Unspents>
     {
         /// <summary>
         /// Gets the unspents result

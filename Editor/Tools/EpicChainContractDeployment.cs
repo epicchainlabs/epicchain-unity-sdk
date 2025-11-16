@@ -11,17 +11,17 @@ using EpicChain.Unity.SDK.Wallet;
 namespace EpicChain.Unity.SDK.Editor.Tools
 {
     /// <summary>
-    /// Unity Editor window for deploying smart contracts to the Neo blockchain.
+    /// Unity Editor window for deploying smart contracts to the EpicChain blockchain.
     /// Provides a user-friendly interface for contract deployment and management.
     /// </summary>
-    public class NeoContractDeployment : EditorWindow
+    public class EpicChainContractDeployment : EditorWindow
     {
         #region Window Management
         
         [MenuItem("Window/EpicChain Unity SDK/Contract Deployment")]
         public static void ShowWindow()
         {
-            var window = GetWindow<NeoContractDeployment>("Neo Contract Deployment");
+            var window = GetWindow<EpicChainContractDeployment>("EpicChain Contract Deployment");
             window.minSize = new Vector2(450, 500);
             window.Show();
         }
@@ -57,8 +57,8 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             EditorGUILayout.Space(10);
             
             // Header
-            EditorGUILayout.LabelField("Neo Smart Contract Deployment", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("Deploy compiled smart contracts to the Neo blockchain", EditorStyles.helpBox);
+            EditorGUILayout.LabelField("EpicChain Smart Contract Deployment", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Deploy compiled smart contracts to the EpicChain blockchain", EditorStyles.helpBox);
             
             EditorGUILayout.Space(10);
             
@@ -125,7 +125,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
         {
             var config = isMainnet ? EpicChainUnityConfig.CreateMainnetConfig() : EpicChainUnityConfig.CreateTestnetConfig();
             var networkName = isMainnet ? "Mainnet" : "Testnet";
-            var assetPath = $"Assets/Neo{networkName}Config.asset";
+            var assetPath = $"Assets/EpicChain{networkName}Config.asset";
             
             AssetDatabase.CreateAsset(config, assetPath);
             AssetDatabase.SaveAssets();
@@ -226,7 +226,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                 EditorUtility.DisplayDialog("Wallet Created",
                     $"Deployment wallet created!\n" +
                     $"Address: {deploymentWallet.DefaultAccount.Address}\n\n" +
-                    $"Make sure to fund this wallet with GAS for deployment fees.", "OK");
+                    $"Make sure to fund this wallet with EpicPulse for deployment fees.", "OK");
             }
             catch (Exception ex)
             {
@@ -275,14 +275,14 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                     await EpicChainUnityInstance.Initialize(deploymentConfig);
                 }
                 
-                var gasBalance = await deploymentWallet.DefaultAccount.GetTokenBalance(TransactionBuilder.GAS_TOKEN_HASH);
-                var gasToken = new Contracts.FungibleToken(TransactionBuilder.GAS_TOKEN_HASH);
-                var formattedBalance = await gasToken.FormatAmount(gasBalance);
+                var epicpulseBalance = await deploymentWallet.DefaultAccount.GetTokenBalance(TransactionBuilder.GAS_TOKEN_HASH);
+                var epicpulseToken = new Contracts.FungibleToken(TransactionBuilder.GAS_TOKEN_HASH);
+                var formattedBalance = await epicpulseToken.FormatAmount(gasBalance);
                 
                 EditorUtility.DisplayDialog("Wallet Balance",
-                    $"GAS Balance: {formattedBalance}\n\n" +
-                    $"Note: Contract deployment requires GAS for fees.\n" +
-                    $"Typical deployment cost: 10-20 GAS", "OK");
+                    $"XPP Balance: {formattedBalance}\n\n" +
+                    $"Note: Contract deployment requires XPP for fees.\n" +
+                    $"Typical deployment cost: 10-20 XPP", "OK");
             }
             catch (Exception ex)
             {
@@ -369,7 +369,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             {
                 if (EditorUtility.DisplayDialog("Confirm Deployment",
                     $"Deploy contract to {deploymentConfig.NodeUrl}?\n\n" +
-                    $"This will consume GAS for deployment fees.\n" +
+                    $"This will consume EpicPulse for deployment fees.\n" +
                     $"Contract: {contractName}\n" +
                     $"Deployer: {deploymentWallet.DefaultAccount?.Address}", "Deploy", "Cancel"))
                 {
@@ -449,21 +449,21 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                 var nefBytes = await File.ReadAllBytesAsync(nefFilePath);
                 var manifestJson = await File.ReadAllTextAsync(manifestFilePath);
                 
-                // Calculate deployment fees based on actual Neo protocol rules
-                var baseSystemFee = 1000_0000; // 10 GAS base deployment fee
+                // Calculate deployment fees based on actual EpicChain protocol rules
+                var baseSystemFee = 1000_0000; // 10 EpicPulse base deployment fee
                 var storageFee = manifestJson.Length * 500; // Storage cost for manifest
                 var executionFee = nefBytes.Length * 200; // Execution cost for bytecode
-                var networkFee = 100_0000; // ~1 GAS network fee
+                var networkFee = 100_0000; // ~1 EpicPulse network fee
                 var totalEstimatedFee = baseSystemFee + storageFee + executionFee + networkFee;
                 
-                var gasToken = new Contracts.FungibleToken(TransactionBuilder.GAS_TOKEN_HASH);
-                var formattedFee = await gasToken.FormatAmount(totalEstimatedFee);
+                var epicpulseToken = new Contracts.FungibleToken(TransactionBuilder.GAS_TOKEN_HASH);
+                var formattedFee = await epicpulseToken.FormatAmount(totalEstimatedFee);
                 
                 EditorUtility.DisplayDialog("Fee Estimation",
                     $"Estimated deployment cost:\n\n" +
-                    $"Base System Fee: 10 GAS\n" +
-                    $"Size-based Fee: {sizeBasedFee / 100_000_000.0:F4} GAS\n" +
-                    $"Network Fee: ~0.1 GAS\n\n" +
+                    $"Base System Fee: 10 XPR\n" +
+                    $"Size-based Fee: {sizeBasedFee / 1_000_000_000.0:F4} XPR\n" +
+                    $"Network Fee: ~0.1 XPR\n\n" +
                     $"Total Estimated: {formattedFee}\n\n" +
                     $"Note: Actual fees may vary based on network conditions.", "OK");
             }
@@ -528,8 +528,8 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                 EditorUtility.DisplayDialog("Wallet Created",
                     $"Deployment wallet created!\n\n" +
                     $"Address: {deploymentWallet.DefaultAccount.Address}\n\n" +
-                    $"Important: Fund this wallet with GAS before deploying contracts.\n" +
-                    $"Recommended: 20+ GAS for deployment fees.", "OK");
+                    $"Important: Fund this wallet with EpicPulse before deploying contracts.\n" +
+                    $"Recommended: 20+ EpicPulse for deployment fees.", "OK");
             }
             catch (Exception ex)
             {
@@ -578,20 +578,20 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                     await EpicChainUnityInstance.Initialize(deploymentConfig);
                 }
                 
-                var gasBalance = await deploymentWallet.DefaultAccount.GetTokenBalance(TransactionBuilder.GAS_TOKEN_HASH);
-                var gasToken = new Contracts.FungibleToken(TransactionBuilder.GAS_TOKEN_HASH);
-                var formattedBalance = await gasToken.FormatAmount(gasBalance);
+                var epicpulseBalance = await deploymentWallet.DefaultAccount.GetTokenBalance(TransactionBuilder.GAS_TOKEN_HASH);
+                var epicpusleToken = new Contracts.FungibleToken(TransactionBuilder.EPICPULSE_TOKEN_HASH);
+                var formattedBalance = await epicpulseToken.FormatAmount(gasBalance);
                 
                 var message = $"Deployment Wallet Balance:\n\n" +
-                             $"GAS: {formattedBalance}\n\n";
+                             $"XPR: {formattedBalance}\n\n";
                 
-                if (gasBalance < 1000_0000) // Less than 10 GAS
+                if (gasBalance < 1000_0000) // Less than 10 XPR
                 {
-                    message += "⚠️ Low GAS balance. Contract deployment requires 10-20 GAS.";
+                    message += "⚠️ Low EpicPulse balance. Contract deployment requires 10-20 GAS.";
                 }
                 else
                 {
-                    message += "✓ Sufficient GAS for contract deployment.";
+                    message += "✓ Sufficient EpicPulse for contract deployment.";
                 }
                 
                 EditorUtility.DisplayDialog("Wallet Balance", message, "OK");

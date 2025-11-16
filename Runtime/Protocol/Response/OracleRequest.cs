@@ -51,7 +51,7 @@ namespace EpicChainUnityProtocol.Response
         public Hash256 OriginalTransactionHash => new Hash256(_originalTransactionHash);
         
         /// <summary>
-        /// Gets the GAS allocated for the response
+        /// Gets the EpicPulse allocated for the response
         /// </summary>
         public long GasForResponse => _gasForResponse;
         
@@ -86,7 +86,7 @@ namespace EpicChainUnityProtocol.Response
         public string UserData => _userData;
         
         /// <summary>
-        /// Gets the GAS for response as decimal
+        /// Gets the EpicPulse for response as decimal
         /// </summary>
         public decimal GasForResponseDecimal => _gasForResponse / 100_000_000m;
         
@@ -160,10 +160,10 @@ namespace EpicChainUnityProtocol.Response
         /// <summary>
         /// Gets the estimated cost for this oracle request
         /// </summary>
-        /// <returns>Estimated cost based on URL length and gas allocated</returns>
+        /// <returns>Estimated cost based on URL length and epicpulse allocated</returns>
         public decimal GetEstimatedCost()
         {
-            // Base cost + URL length factor + gas for response
+            // Base cost + URL length factor + epicpulse for response
             var baseCost = 0.01m; // Base oracle fee
             var urlCost = (_url?.Length ?? 0) * 0.001m;
             return baseCost + urlCost + GasForResponseDecimal;

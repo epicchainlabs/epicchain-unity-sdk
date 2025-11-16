@@ -37,15 +37,15 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Constructor
 
         /// <summary>
-        /// Constructs a new ContractManagement instance that uses the given NeoUnity instance for invocations.
+        /// Constructs a new ContractManagement instance that uses the given EpicChainUnity instance for invocations.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public ContractManagement(NeoUnity neoUnity) : base(SCRIPT_HASH, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public ContractManagement(EpicChainUnity epicchainUnity) : base(SCRIPT_HASH, epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a new ContractManagement instance using the singleton NeoUnity instance.
+        /// Constructs a new ContractManagement instance using the singleton EpicChainUnity instance.
         /// </summary>
         public ContractManagement() : base(SCRIPT_HASH)
         {
@@ -58,14 +58,14 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>
         /// Gets the minimum fee required for contract deployment.
         /// </summary>
-        /// <returns>The minimum required fee for contract deployment in GAS fractions</returns>
+        /// <returns>The minimum required fee for contract deployment in EpicPulse fractions</returns>
         public async Task<long> GetMinimumDeploymentFee()
         {
             var result = await CallFunctionReturningInt(GET_MINIMUM_DEPLOYMENT_FEE);
             
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[ContractManagement] Minimum deployment fee: {result} GAS fractions");
+                Debug.Log($"[ContractManagement] Minimum deployment fee: {result} EpicPulse fractions");
             }
             
             return result;
@@ -75,7 +75,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to set the minimum deployment fee and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee, i.e., the transaction has to be signed by the committee members.
         /// </summary>
-        /// <param name="minimumFee">The minimum deployment fee in GAS fractions</param>
+        /// <param name="minimumFee">The minimum deployment fee in EpicPulse fractions</param>
         /// <returns>A transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> SetMinimumDeploymentFee(long minimumFee)
         {
@@ -86,7 +86,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[ContractManagement] Setting minimum deployment fee to: {minimumFee} GAS fractions");
+                Debug.Log($"[ContractManagement] Setting minimum deployment fee to: {minimumFee} EpicPulse fractions");
             }
 
             return await InvokeFunction(SET_MINIMUM_DEPLOYMENT_FEE, ContractParameter.Integer(minimumFee));
@@ -188,7 +188,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Gets all non-native contract hashes and IDs without using sessions.
-        /// Use this method if sessions are disabled on the Neo node.
+        /// Use this method if sessions are disabled on the EpicChain node.
         /// This method returns at most DEFAULT_ITERATOR_COUNT values.
         /// </summary>
         /// <returns>List of contract identifiers</returns>
@@ -420,13 +420,13 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// </summary>
         /// <param name="nefSize">The size of the NEF file in bytes</param>
         /// <param name="manifestSize">The size of the manifest in bytes</param>
-        /// <returns>The estimated deployment cost in GAS fractions</returns>
+        /// <returns>The estimated deployment cost in EpicPulse fractions</returns>
         public async Task<long> EstimateDeploymentCost(int nefSize, int manifestSize)
         {
             var minimumFee = await GetMinimumDeploymentFee();
             
             // Add policy contract storage costs and execution costs
-            var policyContract = new PolicyContract(NeoUnity);
+            var policyContract = new PolicyContract(EpicChainUnity);
             var storagePrice = await policyContract.GetStoragePrice();
             
             // Rough estimate: storage for NEF + manifest + deployment overhead
@@ -437,7 +437,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[ContractManagement] Estimated deployment cost: {totalCost} GAS fractions " +
+                Debug.Log($"[ContractManagement] Estimated deployment cost: {totalCost} EpicPulse fractions " +
                          $"(MinFee: {minimumFee}, Storage: {storageCost})");
             }
 
@@ -466,14 +466,14 @@ namespace EpicChain.Unity.SDK.Contracts.Native
                 var estimatedCost = await EstimateDeploymentCost(nefSize, manifestSize);
                 validation.EstimatedCost = estimatedCost;
 
-                // Check GAS balance
-                var gasToken = new GasToken(NeoUnity);
-                var gasBalance = await gasToken.GetBalanceOf(senderAccount);
+                // Check EpicPulse balance
+                var epicpulseToken = new EpicPulseToken(EpicChainUnity);
+                var epicpulseBalance = await epicpulseToken.GetBalanceOf(senderAccount);
                 validation.HasSufficientGas = gasBalance >= estimatedCost;
                 validation.GasBalance = gasBalance;
 
                 // Check account is not blocked
-                var policyContract = new PolicyContract(NeoUnity);
+                var policyContract = new PolicyContract(EpicChainUnity);
                 var isBlocked = await policyContract.IsBlocked(senderAccount);
                 validation.IsAccountBlocked = isBlocked;
 
@@ -526,7 +526,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
     }
 
     /// <summary>
-    /// Represents a NEF (Neo Executable Format) file.
+    /// Represents a NEF (EpicChain Executable Format) file.
     /// </summary>
     [System.Serializable]
     public class NefFile
@@ -567,7 +567,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <returns>The NEF file as byte array</returns>
         public byte[] ToByteArray()
         {
-            // NEF (Neo Executable Format) serialization following Neo protocol specification
+            // NEF (EpicChain Executable Format) serialization following EpicChain protocol specification
             var result = new List<byte>();
             
             // Add magic
@@ -611,31 +611,31 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>Whether the manifest size is valid</summary>
         public bool IsManifestSizeValid { get; set; }
 
-        /// <summary>The estimated deployment cost in GAS fractions</summary>
+        /// <summary>The estimated deployment cost in EpicPulse fractions</summary>
         public long EstimatedCost { get; set; }
 
-        /// <summary>The account's GAS balance in fractions</summary>
+        /// <summary>The account's EpicPulse balance in fractions</summary>
         public long GasBalance { get; set; }
 
         /// <summary>Any validation error message</summary>
         public string ValidationError { get; set; }
 
         /// <summary>
-        /// Gets the estimated cost in decimal GAS format.
+        /// Gets the estimated cost in decimal EpicPulse format.
         /// </summary>
         /// <returns>Estimated cost in decimal GAS</returns>
         public decimal GetEstimatedCostGas()
         {
-            return GasToken.FromGasFractions(EstimatedCost);
+            return EpicPulseToken.FromGasFractions(EstimatedCost);
         }
 
         /// <summary>
-        /// Gets the GAS balance in decimal format.
+        /// Gets the EpicPulse balance in decimal format.
         /// </summary>
         /// <returns>GAS balance in decimal GAS</returns>
         public decimal GetGasBalanceDecimal()
         {
-            return GasToken.FromGasFractions(GasBalance);
+            return EpicPulseToken.FromGasFractions(GasBalance);
         }
 
         /// <summary>

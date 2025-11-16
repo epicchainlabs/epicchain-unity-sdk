@@ -277,9 +277,9 @@ namespace EpicChain.Unity.SDK.Crypto
         #region Format Conversion
         
         /// <summary>
-        /// Gets the Neo address for this key pair.
+        /// Gets the EpicChain address for this key pair.
         /// </summary>
-        /// <returns>Neo address string</returns>
+        /// <returns>EpicChain address string</returns>
         public string GetAddress()
         {
             EnsureNotDisposed();

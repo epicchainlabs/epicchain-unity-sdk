@@ -56,7 +56,7 @@ namespace EpicChain.Unity.SDK.Tests.Types
         [Test]
         public void TestBytesFromString()
         {
-            var p = ContractParameter.CreateByteArrayFromString("Neo");
+            var p = ContractParameter.CreateByteArrayFromString("EpicChain");
             var expected = new byte[] { 0x4e, 0x65, 0x6f };
             AssertContractParameter(p, expected, ContractParameterType.ByteArray);
         }
@@ -98,7 +98,7 @@ namespace EpicChain.Unity.SDK.Tests.Types
             var p2 = "0x0101";
             var p3 = new BigInteger(420);
             var p4_1 = 1024;
-            var p4_2 = "neow3j:)";
+            var p4_2 = "epicchain-jdk:)";
             var p4_3_1 = BigInteger.Parse("10");
             var p4_3 = new List<object> { p4_3_1 };
             var p4 = new List<object> { p4_1, p4_2, p4_3 };

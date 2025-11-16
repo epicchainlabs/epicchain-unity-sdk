@@ -12,7 +12,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns XEP-11 (NFT) transfer history for a specific address.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetXep11TransfersResponse : NeoResponse<EpicChainGetXep11TransfersResponse.Xep11Transfers>
+    public class EpicChainGetXep11TransfersResponse : EpicChainResponse<EpicChainGetXep11TransfersResponse.Xep11Transfers>
     {
         /// <summary>
         /// XEP-11 transfers data structure containing transfer history for an address.

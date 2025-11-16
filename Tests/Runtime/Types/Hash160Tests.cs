@@ -86,7 +86,7 @@ namespace EpicChain.Unity.SDK.Tests.Types
         [Test]
         public void TestFromInvalidAddress()
         {
-            AssertErrorMessage("Not a valid NEO address.", () =>
+            AssertErrorMessage("Not a valid EpicChain address.", () =>
                 Hash160.FromAddress("NLnyLtep7jwyq1qhNPkwXbJpurC4jUT8keas"));
         }
 

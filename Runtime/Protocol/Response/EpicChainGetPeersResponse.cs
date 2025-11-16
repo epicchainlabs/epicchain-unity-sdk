@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Response for getting the peer information of a Neo node.
+    /// Response for getting the peer information of a EpicChain node.
     /// Contains lists of connected, unconnected, and bad peers.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetPeersResponse : NeoResponse<Peers>
+    public class EpicChainGetPeersResponse : EpicChainResponse<Peers>
     {
         /// <summary>
         /// Gets the peer information from the response.
@@ -26,7 +26,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the peer information or throws if the response failed.
         /// </summary>
         /// <returns>Peer information</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         public Peers GetPeersOrThrow()
         {
             return GetResult();
@@ -34,7 +34,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     }
     
     /// <summary>
-    /// Represents the peer information of a Neo node.
+    /// Represents the peer information of a EpicChain node.
     /// Contains categorized lists of network peers and their connection status.
     /// </summary>
     [System.Serializable]
@@ -360,7 +360,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         public string ToDetailedString()
         {
             var health = GetNetworkHealth();
-            var result = $"Neo Node Peers:\n";
+            var result = $"EpicChain Node Peers:\n";
             result += $"  Connected: {ConnectedCount}\n";
             result += $"  Unconnected: {UnconnectedCount}\n";
             result += $"  Bad: {BadCount}\n";

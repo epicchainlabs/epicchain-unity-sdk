@@ -58,9 +58,9 @@
 
 #### **🌐 Protocol System (100% Complete)**
 - ✅ **EpicChainSwiftswift** → **EpicChainUnitycs** (main SDK interface)
-- ✅ **NeoSwiftConfig.swift** → **EpicChainUnityConfig.cs** (configuration)
-- ✅ **Service.swift** → **INeoUnityService.cs** (service abstraction)
-- ✅ **HttpService.swift** → **NeoUnityHttpService.cs** (HTTP implementation)
+- ✅ **EpicChainSwiftConfig.swift** → **EpicChainUnityConfig.cs** (configuration)
+- ✅ **Service.swift** → **IEpicChainUnityService.cs** (service abstraction)
+- ✅ **HttpService.swift** → **EpicChainUnityHttpService.cs** (HTTP implementation)
 - ✅ **Request.swift** → **Request.cs** (RPC requests)
 - ✅ **Response.swift** → **Response.cs** (RPC responses)
 - ✅ **ProtocolError.swift** → **ProtocolException.cs** (protocol errors)
@@ -72,17 +72,17 @@
 - ✅ **Token.swift** → **Token.cs** (token base class)
 - ✅ **FungibleToken.swift** → **FungibleToken.cs** (XEP-17 tokens)
 - ✅ **NonFungibleToken.swift** → **NonFungibleToken.cs** (XEP-11 NFTs)
-- ✅ **NeoToken.swift** → **NeoToken.cs** (NEO governance token)
-- ✅ **GasToken.swift** → **GasToken.cs** (GAS utility token)
+- ✅ **EpicChainswift** → **EpicChain.cs** (XPR governance token)
+- ✅ **EpicPulse.swift** → **EpicChain.cs** (XPP utility token)
 - ✅ **PolicyContract.swift** → **PolicyContract.cs** (network policy)
 - ✅ **ContractManagement.swift** → **ContractManagement.cs** (contract lifecycle)
 - ✅ **RoleManagement.swift** → **RoleManagement.cs** (role assignments)
-- ✅ **NeoNameService.swift** → **NeoNameService.cs** (domain names)
+- ✅ **EpicChainNameService.swift** → **EpicChainNameService.cs** (domain names)
 - ✅ **Iterator.swift** → **Iterator.cs** (data traversal)
-- ✅ **NefFile.swift** → **NefFile.cs** (executable format)
+- ✅ **XefFile.swift** → **NefFile.cs** (executable format)
 - ✅ **EpicChainURI.swift** → **EpicChainURI.cs** (URI parsing)
 - ✅ **ContractError.swift** → **ContractException.cs** (contract errors)
-- ✅ **NNSName.swift** → **NNSName support** (domain name wrapper)
+- ✅ **XNSName.swift** → **XNSName support** (domain name wrapper)
 
 #### **💸 Transaction System (100% Complete)**
 - ✅ **TransactionBuilder.swift** → **TransactionBuilder.cs** (transaction construction)
@@ -94,7 +94,7 @@
 - ✅ **WitnessRule.swift** → **WitnessRule.cs** (witness rules)
 - ✅ **WitnessCondition.swift** → **WitnessCondition.cs** (rule conditions)
 - ✅ **WitnessAction.swift** → **WitnessAction.cs** (rule actions)
-- ✅ **NeoTransaction.swift** → **NeoTransaction.cs** (transaction structure)
+- ✅ **EpicChainTransaction.swift** → **EpicChainTransaction.cs** (transaction structure)
 - ✅ **TransactionError.swift** → **TransactionException.cs** (transaction errors)
 - ✅ **ContractParametersContext.swift** → **ContractParametersContext.cs** (signing context)
 
@@ -149,12 +149,12 @@ The C# implementations **exceed** the original Swift functionality with:
 | Swift File | C# Implementation | Status | Notes |
 |------------|------------------|--------|-------|
 | `EpicChainSwiftswift` | `EpicChainUnitycs` | ✅ COMPLETE | Enhanced with Unity singleton |
-| `NeoSwiftConfig.swift` | `EpicChainUnityConfig.cs` | ✅ COMPLETE | Unity ScriptableObject |
-| `NeoSwiftService.swift` | `INeoUnityService.cs` | ✅ COMPLETE | Interface abstraction |
-| `Service.swift` | `NeoUnityHttpService.cs` | ✅ COMPLETE | UnityWebRequest implementation |
-| `Neo.swift` | `INeo.cs` | ✅ COMPLETE | Protocol interface |
-| `NeoConstants.swift` | `NeoConstants.cs` | ✅ COMPLETE | All constants preserved |
-| `NeoSwiftError.swift` | `NeoUnityException.cs` | ✅ COMPLETE | Exception hierarchy |
+| `EpicChainSwiftConfig.swift` | `EpicChainUnityConfig.cs` | ✅ COMPLETE | Unity ScriptableObject |
+| `EpicChainSwiftService.swift` | `IEpicChainUnityService.cs` | ✅ COMPLETE | Interface abstraction |
+| `Service.swift` | `EpicChainUnityHttpService.cs` | ✅ COMPLETE | UnityWebRequest implementation |
+| `EpicChain.swift` | `IEpicChain.cs` | ✅ COMPLETE | Protocol interface |
+| `EpicChainConstants.swift` | `EpicChainConstants.cs` | ✅ COMPLETE | All constants preserved |
+| `EpicChainSwiftError.swift` | `EpicChainUnityException.cs` | ✅ COMPLETE | Exception hierarchy |
 | `ProtocolError.swift` | `ProtocolException.cs` | ✅ COMPLETE | Protocol-specific errors |
 
 ### 🔐 **Cryptography Components**
@@ -183,17 +183,17 @@ The C# implementations **exceed** the original Swift functionality with:
 | `Token.swift` | `Token.cs` | ✅ COMPLETE | Unity caching support |
 | `FungibleToken.swift` | `FungibleToken.cs` | ✅ COMPLETE | XEP-17 full support |
 | `NonFungibleToken.swift` | `NonFungibleToken.cs` | ✅ COMPLETE | XEP-11 implementation |
-| `NeoToken.swift` | `NeoToken.cs` | ✅ COMPLETE | Governance operations |
-| `GasToken.swift` | `GasToken.cs` | ✅ COMPLETE | Utility token ops |
+| `EpicChainswift` | `EpicChain.cs` | ✅ COMPLETE | Governance operations |
+| `EpicPulse.swift` | `EpicChain.cs` | ✅ COMPLETE | Utility token ops |
 | `PolicyContract.swift` | `PolicyContract.cs` | ✅ COMPLETE | Network policy |
 | `ContractManagement.swift` | `ContractManagement.cs` | ✅ COMPLETE | Contract lifecycle |
 | `RoleManagement.swift` | `RoleManagement.cs` | ✅ COMPLETE | Role assignments |
-| `NeoNameService.swift` | `NeoNameService.cs` | ✅ COMPLETE | Domain service |
+| `EpicChainNameService.swift` | `EpicChainNameService.cs` | ✅ COMPLETE | Domain service |
 | `Iterator.swift` | `Iterator.cs` | ✅ COMPLETE | Data traversal |
 | `NefFile.swift` | `NefFile.cs` | ✅ COMPLETE | Executable format |
 | `EpicChainURI.swift` | `EpicChainURI.cs` | ✅ COMPLETE | URI parsing |
 | `ContractError.swift` | `ContractException.cs` | ✅ COMPLETE | Error handling |
-| `NNSName.swift` | `NNSName support` | ✅ COMPLETE | Domain names |
+| `XNSName.swift` | `XNSName support` | ✅ COMPLETE | Domain names |
 
 ### 💸 **Transaction Components**
 
@@ -205,7 +205,7 @@ The C# implementations **exceed** the original Swift functionality with:
 | `ContractSigner.swift` | `ContractSigner.cs` | ✅ COMPLETE | Contract signers |
 | `Witness.swift` | `Witness.cs` | ✅ COMPLETE | Transaction witnesses |
 | `WitnessScope.swift` | `WitnessScope.cs` | ✅ COMPLETE | Witness scopes |
-| `NeoTransaction.swift` | `NeoTransaction.cs` | ✅ COMPLETE | Transaction structure |
+| `EpicChainTransaction.swift` | `EpicChainTransaction.cs` | ✅ COMPLETE | Transaction structure |
 | `TransactionError.swift` | `TransactionException.cs` | ✅ COMPLETE | Transaction errors |
 | `ContractParametersContext.swift` | `ContractParametersContext.cs` | ✅ COMPLETE | Signing context |
 
@@ -226,16 +226,16 @@ The C# implementations **exceed** the original Swift functionality with:
 |------------|------------------|--------|-------|
 | `BinaryReader.swift` | `BinaryReader.cs` | ✅ COMPLETE | Binary deserialization |
 | `BinaryWriter.swift` | `BinaryWriter.cs` | ✅ COMPLETE | Binary serialization |
-| `NeoSerializable.swift` | `INeoSerializable.cs` | ✅ COMPLETE | Serializable interface |
+| `EpicChainSerializable.swift` | `IEpicChainSerializable.cs` | ✅ COMPLETE | Serializable interface |
 
 ### 🎮 **Unity Enhancement Components**
 
 | Component | Implementation | Status | Notes |
 |-----------|----------------|--------|-------|
-| **MonoBehaviour Integration** | `NeoBlockchainManager.cs` | ✅ COMPLETE | Drag-and-drop blockchain |
+| **MonoBehaviour Integration** | `EpicChainBlockchainManager.cs` | ✅ COMPLETE | Drag-and-drop blockchain |
 | **Wallet Component** | `EpicChainWalletComponent.cs` | ✅ COMPLETE | Game wallet integration |
-| **Editor Tools** | `NeoUnityWindow.cs` | ✅ COMPLETE | Developer utilities |
-| **Contract Deployment** | `NeoContractDeployment.cs` | ✅ COMPLETE | Deployment interface |
+| **Editor Tools** | `EpicChainUnityWindow.cs` | ✅ COMPLETE | Developer utilities |
+| **Contract Deployment** | `EpicChainContractDeployment.cs` | ✅ COMPLETE | Deployment interface |
 | **Example Applications** | `3 Sample Projects` | ✅ COMPLETE | Production-ready examples |
 
 ---
@@ -330,7 +330,7 @@ The C# implementations **exceed** the original Swift functionality with:
 
 The Swift → Unity C# conversion represents **more than a simple port** - it's a **revolutionary enhancement** that:
 
-1. **Preserves**: 100% of original Swift NeoSwift functionality
+1. **Preserves**: 100% of original Swift EpicChainSwift functionality
 2. **Enhances**: Adds 200+ Unity-specific improvements
 3. **Optimizes**: Performance improvements across all operations
 4. **Secures**: Enterprise-grade cryptographic implementation
@@ -352,7 +352,7 @@ The Swift → Unity C# conversion represents **more than a simple port** - it's 
 
 **ALL SWIFT SDK FILES HAVE BEEN SUCCESSFULLY CONVERTED AND ENHANCED FOR UNITY**
 
-The **EpicChain Unity SDK** now represents the **most comprehensive and advanced** Neo blockchain SDK available for game development, with:
+The **EpicChain Unity SDK** now represents the **most comprehensive and advanced** EpicChain blockchain SDK available for game development, with:
 
 - **Complete Swift Parity**: Every essential feature converted
 - **Unity Excellence**: Native platform integration and optimization

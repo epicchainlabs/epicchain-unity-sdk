@@ -6,10 +6,10 @@ using EpicChainUnityCryptography;
 namespace EpicChainUnityProtocol.Response
 {
     /// <summary>
-    /// Represents a Neo account state with balance and voting information
+    /// Represents a EpicChain account state with balance and voting information
     /// </summary>
     [Serializable]
-    public struct NeoAccountState : IEquatable<NeoAccountState>
+    public struct EpicChainAccountState : IEquatable<EpicChainAccountState>
     {
         [JsonProperty("balance")]
         [SerializeField] private long _balance;
@@ -41,13 +41,13 @@ namespace EpicChainUnityProtocol.Response
         public bool IsVoting => !string.IsNullOrEmpty(_publicKey);
         
         /// <summary>
-        /// Initializes a new instance of NeoAccountState
+        /// Initializes a new instance of EpicChainAccountState
         /// </summary>
-        /// <param name="balance">NEO balance</param>
+        /// <param name="balance">EpicChain balance</param>
         /// <param name="balanceHeight">Balance height</param>
         /// <param name="publicKey">Public key being voted to</param>
         [JsonConstructor]
-        public NeoAccountState(long balance, int? balanceHeight, string publicKey)
+        public EpicChainAccountState(long balance, int? balanceHeight, string publicKey)
         {
             _balance = balance;
             _balanceHeight = balanceHeight;
@@ -57,21 +57,21 @@ namespace EpicChainUnityProtocol.Response
         /// <summary>
         /// Creates an account state with no vote
         /// </summary>
-        /// <param name="balance">NEO balance</param>
+        /// <param name="balance">EpicChain balance</param>
         /// <param name="updateHeight">Update height</param>
         /// <returns>Account state with no vote</returns>
-        public static NeoAccountState WithNoVote(long balance, int updateHeight)
+        public static EpicChainAccountState WithNoVote(long balance, int updateHeight)
         {
-            return new NeoAccountState(balance, updateHeight, null);
+            return new EpicChainAccountState(balance, updateHeight, null);
         }
         
         /// <summary>
         /// Creates an account state with no balance
         /// </summary>
         /// <returns>Empty account state</returns>
-        public static NeoAccountState WithNoBalance()
+        public static EpicChainAccountState WithNoBalance()
         {
-            return new NeoAccountState(0, null, null);
+            return new EpicChainAccountState(0, null, null);
         }
         
         /// <summary>
@@ -102,7 +102,7 @@ namespace EpicChainUnityProtocol.Response
             return _balance / 100_000_000m;
         }
         
-        public bool Equals(NeoAccountState other)
+        public bool Equals(EpicChainAccountState other)
         {
             return _balance == other._balance && 
                    _balanceHeight == other._balanceHeight && 
@@ -111,7 +111,7 @@ namespace EpicChainUnityProtocol.Response
         
         public override bool Equals(object obj)
         {
-            return obj is NeoAccountState other && Equals(other);
+            return obj is EpicChainAccountState other && Equals(other);
         }
         
         public override int GetHashCode()
@@ -119,12 +119,12 @@ namespace EpicChainUnityProtocol.Response
             return HashCode.Combine(_balance, _balanceHeight, _publicKey);
         }
         
-        public static bool operator ==(NeoAccountState left, NeoAccountState right)
+        public static bool operator ==(EpicChainAccountState left, EpicChainAccountState right)
         {
             return left.Equals(right);
         }
         
-        public static bool operator !=(NeoAccountState left, NeoAccountState right)
+        public static bool operator !=(EpicChainAccountState left, EpicChainAccountState right)
         {
             return !left.Equals(right);
         }
@@ -132,7 +132,7 @@ namespace EpicChainUnityProtocol.Response
         public override string ToString()
         {
             var votingInfo = IsVoting ? $", VoteTo: {_publicKey}" : ", No Vote";
-            return $"NeoAccountState(Balance: {GetBalanceAsDecimal()} NEO, Height: {_balanceHeight}{votingInfo})";
+            return $"EpicChainAccountState(Balance: {GetBalanceAsDecimal()} XPR, Height: {_balanceHeight}{votingInfo})";
         }
     }
 }

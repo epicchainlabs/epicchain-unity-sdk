@@ -8,8 +8,8 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Represents the result of a smart contract invocation on the Neo blockchain.
-    /// Contains execution state, gas consumption, stack results, and diagnostic information.
+    /// Represents the result of a smart contract invocation on the EpicChain blockchain.
+    /// Contains execution state, epicpulse consumption, stack results, and diagnostic information.
     /// </summary>
     [System.Serializable]
     public class InvocationResult
@@ -22,9 +22,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>The execution state of the VM</summary>
         [JsonProperty("state")]
-        public NeoVMStateType State { get; set; }
+        public EpicChainVMStateType State { get; set; }
         
-        /// <summary>The amount of GAS consumed during execution</summary>
+        /// <summary>The amount of EpicPulse consumed during execution</summary>
         [JsonProperty("gasconsumed")]
         public string GasConsumed { get; set; }
         
@@ -62,11 +62,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Whether the execution resulted in a fault state</summary>
         [JsonIgnore]
-        public bool HasStateFault => State == NeoVMStateType.Fault;
+        public bool HasStateFault => State == EpicChainVMStateType.Fault;
         
         /// <summary>Whether the execution completed successfully</summary>
         [JsonIgnore]
-        public bool IsSuccess => State == NeoVMStateType.Halt;
+        public bool IsSuccess => State == EpicChainVMStateType.Halt;
         
         /// <summary>Whether there are notifications from the execution</summary>
         [JsonIgnore]
@@ -97,7 +97,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <param name="transactionHash">Transaction hash</param>
         /// <param name="pendingSignature">Pending signature</param>
         /// <param name="sessionId">Session ID</param>
-        public InvocationResult(string script, NeoVMStateType state, string gasConsumed, string exception,
+        public InvocationResult(string script, EpicChainVMStateType state, string gasConsumed, string exception,
                                List<Notification> notifications, Diagnostics diagnostics, List<StackItem> stack,
                                string transactionHash, PendingSignature pendingSignature, string sessionId)
         {
@@ -135,7 +135,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             if (Stack == null || Stack.Count == 0)
             {
-                throw new InvalidOperationException("The stack is empty. This means that no items were left on the NeoVM stack after this invocation.");
+                throw new InvalidOperationException("The stack is empty. This means that no items were left on the EpicChainVM stack after this invocation.");
             }
             
             return Stack[0];
@@ -210,9 +210,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         #region Convenience Methods
         
         /// <summary>
-        /// Gets the consumed GAS as a decimal value.
+        /// Gets the consumed EpicPulse as a decimal value.
         /// </summary>
-        /// <returns>The GAS consumed as decimal</returns>
+        /// <returns>The EpicPulse consumed as decimal</returns>
         public decimal GetGasConsumedDecimal()
         {
             if (string.IsNullOrEmpty(GasConsumed))
@@ -225,13 +225,13 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         }
         
         /// <summary>
-        /// Gets the consumed GAS as integer fractions.
+        /// Gets the consumed EpicPulse as integer fractions.
         /// </summary>
-        /// <returns>The GAS consumed in fractions</returns>
+        /// <returns>The EpicPulse consumed in fractions</returns>
         public long GetGasConsumedFractions()
         {
             var gasDecimal = GetGasConsumedDecimal();
-            return (long)(gasDecimal * 100_000_000); // Convert to GAS fractions
+            return (long)(gasDecimal * 100_000_000); // Convert to EpicPulse fractions
         }
         
         /// <summary>
@@ -272,7 +272,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             var result = $"InvocationResult:\n";
             result += $"  State: {State}\n";
-            result += $"  Gas Consumed: {GasConsumed}\n";
+            result += $"  EpicPulse Consumed: {GasConsumed}\n";
             result += $"  Stack Items: {Stack?.Count ?? 0}\n";
             result += $"  Notifications: {Notifications?.Count ?? 0}\n";
             

@@ -26,7 +26,7 @@ namespace EpicChain.Unity.SDK.Utils
 
     /// <summary>
     /// Extension methods for enum operations that provide convenience functions
-    /// commonly used in Neo blockchain operations.
+    /// commonly used in EpicChain blockchain operations.
     /// </summary>
     public static class EnumExtensions
     {

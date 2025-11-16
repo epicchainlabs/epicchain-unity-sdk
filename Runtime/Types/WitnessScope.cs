@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents the scope of a witness in a Neo transaction.
+    /// Represents the scope of a witness in a EpicChain transaction.
     /// Defines how and where a witness can be used within the blockchain.
     /// </summary>
     [Flags]
@@ -196,7 +196,7 @@ namespace EpicChain.Unity.SDK.Types
         }
 
         /// <summary>
-        /// Validates that the witness scope combination is valid according to Neo rules.
+        /// Validates that the witness scope combination is valid according to EpicChain rules.
         /// </summary>
         /// <param name="scope">The witness scope to validate.</param>
         /// <returns>True if the scope is valid, false otherwise.</returns>

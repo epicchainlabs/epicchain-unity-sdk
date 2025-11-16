@@ -6,7 +6,7 @@ namespace EpicChain.Unity.SDK.Utils
 {
     /// <summary>
     /// Extension methods for numeric types that provide convenience operations
-    /// commonly used in Neo blockchain operations.
+    /// commonly used in EpicChain blockchain operations.
     /// </summary>
     public static class NumericExtensions
     {
@@ -74,7 +74,7 @@ namespace EpicChain.Unity.SDK.Utils
 
         /// <summary>
         /// Gets the variable-length size encoding size for an integer.
-        /// This matches the Neo protocol's variable-length integer encoding.
+        /// This matches the EpicChain protocol's variable-length integer encoding.
         /// </summary>
         /// <param name="value">The integer value.</param>
         /// <returns>The number of bytes required to encode the integer as a variable-length integer.</returns>
@@ -95,7 +95,7 @@ namespace EpicChain.Unity.SDK.Utils
 
         /// <summary>
         /// Gets the variable-length size encoding size for a long.
-        /// This matches the Neo protocol's variable-length integer encoding.
+        /// This matches the EpicChain protocol's variable-length integer encoding.
         /// </summary>
         /// <param name="value">The long value.</param>
         /// <returns>The number of bytes required to encode the long as a variable-length integer.</returns>

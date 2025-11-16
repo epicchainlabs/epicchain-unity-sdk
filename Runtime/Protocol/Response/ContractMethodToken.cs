@@ -10,7 +10,7 @@ namespace EpicChainUnityRuntime.Protocol.Response
     /// Used for method calls and contract execution context.
     /// </summary>
     [Serializable]
-    public class ContractMethodToken : IResponse<ContractMethodToken>, INeoSerializable, IEquatable<ContractMethodToken>
+    public class ContractMethodToken : IResponse<ContractMethodToken>, IEpicChainSerializable, IEquatable<ContractMethodToken>
     {
         /// <summary>
         /// The contract hash.

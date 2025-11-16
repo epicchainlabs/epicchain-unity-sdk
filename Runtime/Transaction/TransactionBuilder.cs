@@ -12,8 +12,8 @@ using EpicChain.Unity.SDK.Wallet;
 namespace EpicChain.Unity.SDK.Transaction
 {
     /// <summary>
-    /// Used to build a NeoTransaction. When signing the TransactionBuilder, a transaction is created
-    /// that can be sent to the Neo node. Implements the builder pattern with method chaining for easy use.
+    /// Used to build a EpicChainTransaction. When signing the TransactionBuilder, a transaction is created
+    /// that can be sent to the EpicChain node. Implements the builder pattern with method chaining for easy use.
     /// </summary>
     [System.Serializable]
     public class TransactionBuilder
@@ -33,7 +33,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         #region Private Fields
         
-        private readonly NeoUnity neoUnity;
+        private readonly EpicChainUnity epicchainUnity;
         
         [SerializeField]
         private byte version;
@@ -83,13 +83,13 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <summary>
         /// Creates a new transaction builder.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for blockchain operations</param>
-        public TransactionBuilder(NeoUnity neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for blockchain operations</param>
+        public TransactionBuilder(EpicChainUnity epicchainUnity)
         {
-            this.epicchainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            this.epicchainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
             
             // Initialize with defaults
-            version = NeoConstants.CURRENT_TX_VERSION;
+            version = EpicChainConstants.CURRENT_TX_VERSION;
             nonce = GenerateRandomNonce();
             signers = new List<Signer>();
             attributes = new List<TransactionAttribute>();
@@ -113,7 +113,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         /// <summary>
         /// Sets the version for this transaction.
-        /// It is set to NeoConstants.CURRENT_TX_VERSION by default.
+        /// It is set to EpicChainConstants.CURRENT_TX_VERSION by default.
         /// </summary>
         /// <param name="version">The transaction version number</param>
         /// <returns>This transaction builder for method chaining</returns>
@@ -297,7 +297,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <summary>
         /// Configures the transaction with an additional system fee.
         /// The basic system fee required to send this transaction is added automatically.
-        /// Use this if you expect the transaction to consume more GAS because of chain state changes
+        /// Use this if you expect the transaction to consume more EpicPulse because of chain state changes
         /// happening between creating the transaction and actually sending it.
         /// </summary>
         /// <param name="fee">The additional system fee in fractions of GAS</param>
@@ -314,7 +314,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         /// <summary>
         /// Adds the given attributes to this transaction.
-        /// The maximum number of attributes on a transaction is given in NeoConstants.MAX_TRANSACTION_ATTRIBUTES.
+        /// The maximum number of attributes on a transaction is given in EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES.
         /// </summary>
         /// <param name="attributes">The attributes to add</param>
         /// <returns>This transaction builder for method chaining</returns>
@@ -325,7 +325,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         /// <summary>
         /// Adds the given attributes to this transaction.
-        /// The maximum number of attributes on a transaction is given in NeoConstants.MAX_TRANSACTION_ATTRIBUTES.
+        /// The maximum number of attributes on a transaction is given in EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES.
         /// </summary>
         /// <param name="attributes">The attributes to add</param>
         /// <returns>This transaction builder for method chaining</returns>
@@ -354,7 +354,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         /// <summary>
         /// Checks if the sender account of this transaction can cover the network and system fees.
-        /// If not, executes the given action supplying it with the required fee and the sender's GAS balance.
+        /// If not, executes the given action supplying it with the required fee and the sender's EpicPulse balance.
         /// The check and potential execution of the action is only performed when the transaction is built.
         /// </summary>
         /// <param name="feeConsumer">The action to execute if fees cannot be covered</param>
@@ -396,7 +396,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// Builds the transaction without signing it.
         /// </summary>
         /// <returns>The unsigned transaction</returns>
-        public async Task<NeoTransaction> GetUnsignedTransaction()
+        public async Task<EpicChainTransaction> GetUnsignedTransaction()
         {
             // Validate script
             if (script == null || script.Length == 0)
@@ -447,8 +447,8 @@ namespace EpicChain.Unity.SDK.Transaction
                 }
             }
             
-            return new NeoTransaction(
-                neoUnity: neoUnity,
+            return new EpicChainTransaction(
+                epicchainUnity: epicchainUnity,
                 version: version,
                 nonce: nonce,
                 validUntilBlock: validUntilBlock.Value,
@@ -462,12 +462,12 @@ namespace EpicChain.Unity.SDK.Transaction
         }
         
         /// <summary>
-        /// Makes an invokescript call to the Neo node with the transaction in its current configuration.
+        /// Makes an invokescript call to the EpicChain node with the transaction in its current configuration.
         /// No changes are made to the blockchain state.
         /// Make sure to add all necessary signers to the builder before making this call.
         /// </summary>
         /// <returns>The call's response</returns>
-        public async Task<NeoInvokeScriptResponse> CallInvokeScript()
+        public async Task<EpicChainInvokeScriptResponse> CallInvokeScript()
         {
             if (script == null || script.Length == 0)
             {
@@ -482,7 +482,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// For each signer of the transaction, a corresponding account with an EC key pair must exist.
         /// </summary>
         /// <returns>The signed transaction</returns>
-        public async Task<NeoTransaction> Sign()
+        public async Task<EpicChainTransaction> Sign()
         {
             var transaction = await GetUnsignedTransaction();
             var txBytes = await transaction.GetHashData();
@@ -525,9 +525,9 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <param name="attributeCount">Number of attributes</param>
         private void ThrowIfMaxAttributesExceeded(int signerCount, int attributeCount)
         {
-            if (signerCount + attributeCount > NeoConstants.MAX_TRANSACTION_ATTRIBUTES)
+            if (signerCount + attributeCount > EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES)
             {
-                throw new ArgumentException($"A transaction cannot have more than {NeoConstants.MAX_TRANSACTION_ATTRIBUTES} attributes (including signers).");
+                throw new ArgumentException($"A transaction cannot have more than {EpicChainConstants.MAX_TRANSACTION_ATTRIBUTES} attributes (including signers).");
             }
         }
         
@@ -596,7 +596,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <summary>
         /// Gets the system fee required for the script execution.
         /// </summary>
-        /// <returns>The system fee in GAS fractions</returns>
+        /// <returns>The system fee in EpicPulse fractions</returns>
         private async Task<long> GetSystemFeeForScript()
         {
             try
@@ -620,13 +620,13 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <summary>
         /// Calculates the network fee for this transaction.
         /// </summary>
-        /// <returns>The network fee in GAS fractions</returns>
+        /// <returns>The network fee in EpicPulse fractions</returns>
         private async Task<long> CalculateNetworkFee()
         {
             try
             {
-                var tempTransaction = new NeoTransaction(
-                    neoUnity: neoUnity,
+                var tempTransaction = new EpicChainTransaction(
+                    epicchainUnity: epicchainUnity,
                     version: version,
                     nonce: nonce,
                     validUntilBlock: validUntilBlock ?? 0,
@@ -670,9 +670,9 @@ namespace EpicChain.Unity.SDK.Transaction
         }
         
         /// <summary>
-        /// Gets the GAS balance of the sender account.
+        /// Gets the EpicPulse balance of the sender account.
         /// </summary>
-        /// <returns>The GAS balance in fractions</returns>
+        /// <returns>The EpicPulse balance in fractions</returns>
         private async Task<long> GetSenderGasBalance()
         {
             try
@@ -689,7 +689,7 @@ namespace EpicChain.Unity.SDK.Transaction
             }
             catch (Exception ex)
             {
-                throw new TransactionException($"Failed to get sender GAS balance: {ex.Message}", ex);
+                throw new TransactionException($"Failed to get sender EpicPulse balance: {ex.Message}", ex);
             }
         }
         
@@ -746,7 +746,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// <summary>
     /// Exception thrown when transaction building or configuration fails.
     /// </summary>
-    public class TransactionException : NeoUnityException
+    public class TransactionException : EpicChainUnityException
     {
         /// <summary>
         /// Creates a new transaction exception.

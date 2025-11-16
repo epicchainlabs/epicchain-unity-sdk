@@ -15,14 +15,14 @@ namespace EpicChain.Unity.SDK.Tests.Contract
     [TestFixture]
     public class SmartContractTests
     {
-        private static readonly Hash160 NEO_SCRIPT_HASH = new Hash160("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5");
+        private static readonly Hash160 EPICCHAIN_SCRIPT_HASH = new Hash160("ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5");
         private static readonly Hash160 SOME_SCRIPT_HASH = new Hash160("969a77db482f74ce27105f760efa139223431394");
         private Account account1;
         private Hash160 recipient;
 
         private MockEpicChainSwift mockEpicChainSwift;
         private SmartContract someContract;
-        private SmartContract neoContract;
+        private SmartContract epicchainContract;
 
         private const string XEP17_TRANSFER = "transfer";
         private const string XEP17_BALANCEOF = "balanceOf";
@@ -37,13 +37,13 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             mockEpicChainSwift = new MockEpicChainSwift();
             someContract = new SmartContract(SOME_SCRIPT_HASH, mockEpicChainSwift);
-            neoContract = new SmartContract(NEO_SCRIPT_HASH, mockEpicChainSwift);
+            epicchainContract = new SmartContract(EPICCHAIN_SCRIPT_HASH, mockEpicChainSwift);
         }
 
         [Test]
         public void TestConstructSmartContract()
         {
-            Assert.AreEqual(NEO_SCRIPT_HASH, neoContract.ScriptHash);
+            Assert.AreEqual(EPICCHAIN_SCRIPT_HASH, epicchainContract.ScriptHash);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             mockEpicChainSwift.SetupGetContractState();
             var manifest = await someContract.GetManifest();
             
-            Assert.AreEqual("neow3j", manifest.Name);
+            Assert.AreEqual("epicchain-jdk", manifest.Name);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             mockEpicChainSwift.SetupGetContractState();
             var name = await someContract.GetName();
             
-            Assert.AreEqual("neow3j", name);
+            Assert.AreEqual("epicchain-jdk", name);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                neoContract.InvokeFunction("", new List<ContractParameter>());
+                epicchainContract.InvokeFunction("", new List<ContractParameter>());
             });
             Assert.AreEqual("The invocation function must not be empty.", exception.Message);
         }
@@ -78,7 +78,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         public void TestBuildInvokeFunctionScript()
         {
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NEO_SCRIPT_HASH, XEP17_TRANSFER, new List<ContractParameter>
+                .ContractCall(EPICCHAIN_SCRIPT_HASH, XEP17_TRANSFER, new List<ContractParameter>
                 {
                     ContractParameter.CreateHash160(account1.ScriptHash),
                     ContractParameter.CreateHash160(recipient),
@@ -86,7 +86,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 })
                 .ToArray();
 
-            var script = neoContract.BuildInvokeFunctionScript(XEP17_TRANSFER, new List<ContractParameter>
+            var script = epicchainContract.BuildInvokeFunctionScript(XEP17_TRANSFER, new List<ContractParameter>
             {
                 ContractParameter.CreateHash160(account1.ScriptHash),
                 ContractParameter.CreateHash160(recipient),
@@ -100,7 +100,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         public void TestInvokeFunction()
         {
             var expectedScript = new ScriptBuilder()
-                .ContractCall(NEO_SCRIPT_HASH, XEP17_TRANSFER, new List<ContractParameter>
+                .ContractCall(EPICCHAIN_SCRIPT_HASH, XEP17_TRANSFER, new List<ContractParameter>
                 {
                     ContractParameter.CreateHash160(account1.ScriptHash),
                     ContractParameter.CreateHash160(recipient),
@@ -108,7 +108,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 })
                 .ToArray();
 
-            var builder = neoContract.InvokeFunction(XEP17_TRANSFER, new List<ContractParameter>
+            var builder = epicchainContract.InvokeFunction(XEP17_TRANSFER, new List<ContractParameter>
             {
                 ContractParameter.CreateHash160(account1.ScriptHash),
                 ContractParameter.CreateHash160(recipient),
@@ -134,7 +134,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             
             var exception = await AssertThrowsAsync<ContractException>(async () =>
             {
-                await neoContract.CallFunctionReturningString(XEP17_NAME);
+                await epicchainContract.CallFunctionReturningString(XEP17_NAME);
             });
             Assert.IsTrue(exception.Message.Contains("unexpected return type"));
         }
@@ -155,7 +155,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             
             var exception = await AssertThrowsAsync<ContractException>(async () =>
             {
-                await neoContract.CallFunctionReturningString(XEP17_TRANSFER);
+                await epicchainContract.CallFunctionReturningString(XEP17_TRANSFER);
             });
             Assert.IsTrue(exception.Message.Contains("unexpected return type"));
         }
@@ -194,7 +194,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             
             var exception = await AssertThrowsAsync<ContractException>(async () =>
             {
-                await neoContract.CallFunctionReturningBool("getCandidates");
+                await epicchainContract.CallFunctionReturningBool("getCandidates");
             });
             Assert.IsTrue(exception.Message.Contains("unexpected return type"));
         }
@@ -249,8 +249,8 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             var sessionId = "a7b35b13-bdfc-4ab3-a398-88a9db9da4fe";
             var tokens = new[]
             {
-                new List<object> { "neow#1", "besttoken" },
-                new List<object> { "neow#2", "almostbesttoken" }
+                new List<object> { "epicchainw#1", "besttoken" },
+                new List<object> { "epicchainw#2", "almostbesttoken" }
             };
             mockEpicChainSwift.SetupInvokeFunctionWithIterator("iterateTokens", iteratorId, sessionId);
             mockEpicChainSwift.SetupTraverseIteratorComplex(iteratorId, sessionId, tokens);
@@ -261,11 +261,11 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             Assert.AreEqual(2, results.Count);
             
             var token1 = results[0] as List<object>;
-            Assert.AreEqual("neow#1", token1[0]);
+            Assert.AreEqual("epicchainw#1", token1[0]);
             Assert.AreEqual("besttoken", token1[1]);
 
             var token2 = results[1] as List<object>;
-            Assert.AreEqual("neow#2", token2[0]);
+            Assert.AreEqual("epicchainw#2", token2[0]);
             Assert.AreEqual("almostbesttoken", token2[1]);
         }
 
@@ -276,8 +276,8 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             var sessionId = "a7b35b13-bdfc-4ab3-a398-88a9db9da4fe";
             var tokens = new[]
             {
-                new List<object> { "neow#1", "besttoken" },
-                new List<object> { "neow#2", "almostbesttoken" }
+                new List<object> { "epicchainw#1", "besttoken" },
+                new List<object> { "epicchainw#2", "almostbesttoken" }
             };
             mockEpicChainSwift.SetupInvokeFunctionWithIterator("tokens", iteratorId, sessionId);
             mockEpicChainSwift.SetupTraverseIteratorComplex(iteratorId, sessionId, tokens);
@@ -297,7 +297,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             
             var exception = await AssertThrowsAsync<ContractException>(async () =>
             {
-                await neoContract.CallFunctionReturningIterator("symbol");
+                await epicchainContract.CallFunctionReturningIterator("symbol");
             });
             Assert.IsTrue(exception.Message.Contains("unexpected return type"));
         }
@@ -309,9 +309,9 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             
             var exception = await AssertThrowsAsync<InvalidOperationException>(async () =>
             {
-                await neoContract.CallFunctionReturningIterator("tokensOf");
+                await epicchainContract.CallFunctionReturningIterator("tokensOf");
             });
-            Assert.AreEqual("No session id was found. The connected Neo node might not support sessions.", exception.Message);
+            Assert.AreEqual("No session id was found. The connected EpicChain node might not support sessions.", exception.Message);
         }
 
         [Test]
@@ -319,7 +319,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         {
             mockEpicChainSwift.SetupInvokeFunction(XEP17_BALANCEOF, 3);
             
-            var response = await neoContract.CallInvokeFunction(XEP17_BALANCEOF, new List<ContractParameter>
+            var response = await epicchainContract.CallInvokeFunction(XEP17_BALANCEOF, new List<ContractParameter>
             {
                 ContractParameter.CreateHash160(account1.GetScriptHash())
             });
@@ -330,11 +330,11 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         [Test]
         public async Task TestInvokingFunctionPerformsCorrectCall_WithoutParameters()
         {
-            mockEpicChainSwift.SetupInvokeFunction("symbol", "NEO");
+            mockEpicChainSwift.SetupInvokeFunction("symbol", "XPR");
             
-            var invokeFunction = await neoContract.CallInvokeFunction("symbol");
+            var invokeFunction = await epicchainContract.CallInvokeFunction("symbol");
             
-            Assert.AreEqual("NEO", invokeFunction.InvocationResult.Stack[0].String);
+            Assert.AreEqual("XPR", invokeFunction.InvocationResult.Stack[0].String);
         }
 
         [Test]
@@ -342,8 +342,8 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         {
             var owners = new[]
             {
-                new Hash160("NSdNMyrz7Bp8MXab41nTuz1mRCnsFr5Rsv"),
-                new Hash160("NhxK1PEmijLVD6D4WSuPoUYJVk855L21ru")
+                new Hash160("XSdNMyrz7Bp8MXab41nTuz1mRCnsFr5Rsv"),
+                new Hash160("XhxK1PEmijLVD6D4WSuPoUYJVk855L21ru")
             };
             mockEpicChainSwift.SetupInvokeScriptWithArray("ownerOf", owners);
             
@@ -359,7 +359,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
         {
             var exception = await AssertThrowsAsync<ArgumentException>(async () =>
             {
-                await neoContract.CallInvokeFunction("");
+                await epicchainContract.CallInvokeFunction("");
             });
             Assert.AreEqual("The invocation function must not be empty.", exception.Message);
         }
@@ -378,7 +378,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
 
             Assert.DoesNotThrow(() =>
             {
-                neoContract.InvokeFunction("testMethod", validParameters);
+                epicchainContract.InvokeFunction("testMethod", validParameters);
             });
         }
 
@@ -391,7 +391,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
                 ContractParameter.CreateInteger(100)
             };
 
-            var script = neoContract.BuildInvokeFunctionScript("transfer", parameters);
+            var script = epicchainContract.BuildInvokeFunctionScript("transfer", parameters);
             Assert.IsNotNull(script);
             Assert.IsTrue(script.Length > 0);
         }
@@ -403,7 +403,7 @@ namespace EpicChain.Unity.SDK.Tests.Contract
             var manifest = await someContract.GetManifest();
             
             Assert.IsNotNull(manifest);
-            Assert.AreEqual("neow3j", manifest.Name);
+            Assert.AreEqual("epicchain-jdk", manifest.Name);
         }
 
         [Test]

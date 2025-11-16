@@ -8,7 +8,7 @@ using EpicChain.Unity.SDK.Core;
 namespace EpicChain.Unity.SDK.Utils
 {
     /// <summary>
-    /// Extension methods for byte arrays to support Neo protocol operations.
+    /// Extension methods for byte arrays to support EpicChain protocol operations.
     /// Provides encoding, hashing, conversion, and validation utilities.
     /// </summary>
     public static class ByteExtensions
@@ -174,10 +174,10 @@ namespace EpicChain.Unity.SDK.Utils
         }
         
         /// <summary>
-        /// Converts script hash bytes to Neo address.
+        /// Converts script hash bytes to EpicChain address.
         /// </summary>
         /// <param name="scriptHashBytes">The script hash bytes (20 bytes)</param>
-        /// <returns>The Neo address</returns>
+        /// <returns>The EpicChain address</returns>
         public static string ScriptHashToAddress(this byte[] scriptHashBytes)
         {
             if (scriptHashBytes == null)
@@ -350,7 +350,7 @@ namespace EpicChain.Unity.SDK.Utils
         
         /// <summary>
         /// Gets the size needed to encode an integer as VarInt.
-        /// Matches Neo protocol VarInt encoding rules.
+        /// Matches EpicChain protocol VarInt encoding rules.
         /// </summary>
         /// <param name="value">The integer value</param>
         /// <returns>VarInt size in bytes</returns>
@@ -380,7 +380,7 @@ namespace EpicChain.Unity.SDK.Utils
         /// <returns>True if valid signature format</returns>
         public static bool IsValidSignature(this byte[] bytes)
         {
-            return bytes != null && bytes.Length == NeoConstants.SIGNATURE_SIZE;
+            return bytes != null && bytes.Length == EpicChainConstants.SIGNATURE_SIZE;
         }
         
         /// <summary>
@@ -524,14 +524,14 @@ namespace EpicChain.Unity.SDK.Utils
         
         #endregion
         
-        #region Neo Address Conversion
+        #region EpicChain Address Conversion
         
         /// <summary>
-        /// Converts script hash bytes to Neo address format.
+        /// Converts script hash bytes to EpicChain address format.
         /// </summary>
         /// <param name="scriptHashBytes">The script hash bytes (must be 20 bytes)</param>
-        /// <returns>The Neo address string</returns>
-        public static string ToNeoAddress(this byte[] scriptHashBytes)
+        /// <returns>The EpicChain address string</returns>
+        public static string ToEpicChainAddress(this byte[] scriptHashBytes)
         {
             return scriptHashBytes.ScriptHashToAddress();
         }

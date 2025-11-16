@@ -10,17 +10,17 @@ using EpicChain.Unity.SDK.Contracts;
 namespace EpicChain.Unity.SDK.Components
 {
     /// <summary>
-    /// Unity MonoBehaviour component for managing Neo blockchain connections and operations.
-    /// Provides a drag-and-drop solution for integrating Neo blockchain functionality into Unity games.
+    /// Unity MonoBehaviour component for managing EpicChain blockchain connections and operations.
+    /// Provides a drag-and-drop solution for integrating EpicChain blockchain functionality into Unity games.
     /// </summary>
-    public class NeoBlockchainManager : MonoBehaviour
+    public class EpicChainBlockchainManager : MonoBehaviour
     {
         #region Inspector Configuration
         
-        [Header("Neo Configuration")]
+        [Header("EpicChain Configuration")]
         [SerializeField]
         [Tooltip("EpicChain Unity SDK configuration asset")]
-        private EpicChainUnityConfig neoConfig;
+        private EpicChainUnityConfig EpicChainConfig;
         
         [SerializeField]
         [Tooltip("Auto-initialize on Start()")]
@@ -82,14 +82,14 @@ namespace EpicChain.Unity.SDK.Components
         
         #region Properties
         
-        /// <summary>Whether the Neo SDK is initialized and ready for use</summary>
+        /// <summary>Whether the EpicChain SDK is initialized and ready for use</summary>
         public bool IsInitialized => isInitialized && EpicChainUnityInstance.IsInitialized;
         
         /// <summary>The current active wallet</summary>
         public EpicChainWallet CurrentWallet => currentWallet;
         
-        /// <summary>The current Neo configuration</summary>
-        public EpicChainUnityConfig Config => neoConfig;
+        /// <summary>The current EpicChain configuration</summary>
+        public EpicChainUnityConfig Config => EpicChainConfig;
         
         /// <summary>The current block height</summary>
         public int CurrentBlockHeight => lastKnownBlockHeight;
@@ -114,9 +114,9 @@ namespace EpicChain.Unity.SDK.Components
         private void OnValidate()
         {
             // Validate configuration in Inspector
-            if (neoConfig == null)
+            if (EpicChainConfig == null)
             {
-                Debug.LogWarning("[EpicChainBlockchainManager] No Neo configuration assigned. Create one via: Assets → Create → EpicChain Unity SDK → Configuration");
+                Debug.LogWarning("[EpicChainBlockchainManager] No EpicChain configuration assigned. Create one via: Assets → Create → EpicChain Unity SDK → Configuration");
             }
             
             blockPollingInterval = Mathf.Clamp(blockPollingInterval, 5f, 60f);
@@ -133,7 +133,7 @@ namespace EpicChain.Unity.SDK.Components
         #region Initialization
         
         /// <summary>
-        /// Initializes the Neo blockchain connection.
+        /// Initializes the EpicChain blockchain connection.
         /// </summary>
         /// <returns>True if initialization was successful</returns>
         public async Task<bool> InitializeBlockchain()
@@ -147,7 +147,7 @@ namespace EpicChain.Unity.SDK.Components
             try
             {
                 // Use provided config or create default
-                var config = neoConfig ?? EpicChainUnityConfig.CreateMainnetConfig();
+                var config = EpicChainConfig ?? EpicChainUnityConfig.CreateMainnetConfig();
                 
                 // Update polling interval from Inspector
                 config.SetPollingInterval((int)(blockPollingInterval * 1000));
@@ -410,7 +410,7 @@ namespace EpicChain.Unity.SDK.Components
         {
             if (!isInitialized)
             {
-                throw new InvalidOperationException("Neo blockchain manager is not initialized. Call InitializeBlockchain() first.");
+                throw new InvalidOperationException("EpicChain blockchain manager is not initialized. Call InitializeBlockchain() first.");
             }
         }
         
@@ -456,7 +456,7 @@ namespace EpicChain.Unity.SDK.Components
                 Debug.Log($"[EpicChainBlockchainManager] Status: Initialized\n" +
                          $"Block Height: {blockHeight}\n" +
                          $"Wallet: {walletInfo}\n" +
-                         $"Node: {neoConfig?.NodeUrl ?? "Unknown"}");
+                         $"Node: {EpicChainConfig?.NodeUrl ?? "Unknown"}");
             }
             catch (Exception ex)
             {

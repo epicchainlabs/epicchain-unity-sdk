@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns the state root information for a specific block.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetStateRootResponse : NeoResponse<EpicChainGetStateRootResponse.StateRoot>
+    public class EpicChainGetStateRootResponse : EpicChainResponse<EpicChainGetStateRootResponse.StateRoot>
     {
         /// <summary>
         /// Gets the state root information from the response.
@@ -62,7 +62,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 
             /// <summary>The list of witnesses that validated this state root</summary>
             [JsonProperty("witnesses")]
-            public List<NeoWitness> Witnesses { get; set; } = new List<NeoWitness>();
+            public List<EpicChainWitness> Witnesses { get; set; } = new List<EpicChainWitness>();
 
             /// <summary>
             /// Default constructor for JSON deserialization.
@@ -78,12 +78,12 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             /// <param name="index">The block index</param>
             /// <param name="rootHash">The root hash</param>
             /// <param name="witnesses">The list of witnesses</param>
-            public StateRoot(int version, int index, string rootHash, List<NeoWitness> witnesses)
+            public StateRoot(int version, int index, string rootHash, List<EpicChainWitness> witnesses)
             {
                 Version = version;
                 Index = index;
                 RootHash = rootHash;
-                Witnesses = witnesses ?? new List<NeoWitness>();
+                Witnesses = witnesses ?? new List<EpicChainWitness>();
             }
 
             /// <summary>

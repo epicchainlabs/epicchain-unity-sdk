@@ -10,18 +10,18 @@ using EpicChain.Unity.SDK.Contracts;
 namespace EpicChain.Unity.SDK.Editor.Tools
 {
     /// <summary>
-    /// Unity Editor window for Neo blockchain development tools.
+    /// Unity Editor window for EpicChain blockchain development tools.
     /// Provides a comprehensive interface for wallet management, contract interaction,
     /// and blockchain development within the Unity Editor.
     /// </summary>
-    public class NeoUnityWindow : EditorWindow
+    public class EpicChainUnityWindow : EditorWindow
     {
         #region Window Management
         
-        [MenuItem("Window/EpicChain Unity SDK/Neo Developer Tools")]
+        [MenuItem("Window/EpicChain Unity SDK/EpicChain Developer Tools")]
         public static void ShowWindow()
         {
-            var window = GetWindow<NeoUnityWindow>("EpicChain Unity SDK");
+            var window = GetWindow<EpicChainUnityWindow>("EpicChain Unity SDK");
             window.minSize = new Vector2(400, 600);
             window.Show();
         }
@@ -325,15 +325,15 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             EditorGUILayout.LabelField("Quick Contract Access", EditorStyles.boldLabel);
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("NEO Token"))
+            if (GUILayout.Button("XPR Token"))
             {
-                contractHash = NeoToken.SCRIPT_HASH.ToString();
+                contractHash = EpicChainTokenSCRIPT_HASH.ToString();
                 contractFunction = "symbol";
                 contractParams = "[]";
             }
-            if (GUILayout.Button("GAS Token"))
+            if (GUILayout.Button("XPP Token"))
             {
-                contractHash = GasToken.SCRIPT_HASH.ToString();
+                contractHash = EpicPulseToken.SCRIPT_HASH.ToString();
                 contractFunction = "decimals";
                 contractParams = "[]";
             }
@@ -421,7 +421,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             EditorGUILayout.LabelField("Network Configuration", EditorStyles.boldLabel);
             
             // Current config
-            networkConfig = EditorGUILayout.ObjectField("Neo Config:", networkConfig, typeof(EpicChainUnityConfig), false) as EpicChainUnityConfig;
+            networkConfig = EditorGUILayout.ObjectField("EpicChain Config:", networkConfig, typeof(EpicChainUnityConfig), false) as EpicChainUnityConfig;
             
             if (networkConfig != null)
             {
@@ -447,11 +447,11 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Mainnet"))
             {
-                CreateNetworkConfig("https://mainnet1.neo.coz.io:443", 860833102);
+                CreateNetworkConfig("https://mainnet1-seed.epic-chain.org:10111", 860833102);
             }
             if (GUILayout.Button("Testnet"))
             {
-                CreateNetworkConfig("https://testnet1.neo.coz.io:443", 894710606);
+                CreateNetworkConfig("https://testnet1-seed.epic-chain.org:20111", 894710606);
             }
             EditorGUILayout.EndHorizontal();
             
@@ -501,7 +501,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
             
             var isMainnet = nodeUrl.Contains("mainnet");
             var networkName = isMainnet ? "Mainnet" : "Testnet";
-            var assetPath = $"Assets/Neo{networkName}Config.asset";
+            var assetPath = $"Assets/EpicChain{networkName}Config.asset";
             
             AssetDatabase.CreateAsset(config, assetPath);
             AssetDatabase.SaveAssets();
@@ -651,7 +651,7 @@ namespace EpicChain.Unity.SDK.Editor.Tools
         }
         
         /// <summary>
-        /// Validates a Neo address.
+        /// Validates a EpicChain address.
         /// </summary>
         private void ValidateAddress()
         {
@@ -668,11 +668,11 @@ namespace EpicChain.Unity.SDK.Editor.Tools
                 if (isValid)
                 {
                     var scriptHash = Hash160.FromAddress(addressToValidate);
-                    validationResult = $"Valid Neo address!\nScript Hash: {scriptHash}";
+                    validationResult = $"Valid EpicChain address!\nScript Hash: {scriptHash}";
                 }
                 else
                 {
-                    validationResult = "Invalid Neo address format";
+                    validationResult = "Invalid EpicChain address format";
                 }
             }
             catch (Exception ex)

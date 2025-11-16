@@ -6,7 +6,7 @@ using EpicChainUnityRuntime.Serialization;
 namespace EpicChainUnityRuntime.Types
 {
     /// <summary>
-    /// Enumeration of Neo blockchain roles for governance and consensus.
+    /// Enumeration of EpicChain blockchain roles for governance and consensus.
     /// </summary>
     [Serializable]
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -25,10 +25,10 @@ namespace EpicChainUnityRuntime.Types
         Oracle = 0x08,
 
         /// <summary>
-        /// NeoFS Alphabet Node role for distributed storage.
+        /// EpicChainFS Alphabet Node role for distributed storage.
         /// </summary>
-        [Description("NeoFSAlphabetNode")]
-        NeoFSAlphabetNode = 0x10
+        [Description("EpicChainFSAlphabetNode")]
+        EpicChainFSAlphabetNode = 0x10
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace EpicChainUnityRuntime.Types
             {
                 Role.StateValidator => "StateValidator",
                 Role.Oracle => "Oracle",
-                Role.NeoFSAlphabetNode => "NeoFSAlphabetNode",
+                Role.EpicChainFSAlphabetNode => "EpicChainFSAlphabetNode",
                 _ => throw new ArgumentOutOfRangeException(nameof(role), role, "Invalid role value")
             };
         }
@@ -74,7 +74,7 @@ namespace EpicChainUnityRuntime.Types
             {
                 0x04 => Role.StateValidator,
                 0x08 => Role.Oracle,
-                0x10 => Role.NeoFSAlphabetNode,
+                0x10 => Role.EpicChainFSAlphabetNode,
                 _ => throw new ArgumentException($"Invalid role byte value: 0x{value:X2}", nameof(value))
             };
         }
@@ -91,13 +91,13 @@ namespace EpicChainUnityRuntime.Types
             {
                 "StateValidator" => Role.StateValidator,
                 "Oracle" => Role.Oracle,
-                "NeoFSAlphabetNode" => Role.NeoFSAlphabetNode,
+                "EpicChainFSAlphabetNode" => Role.EpicChainFSAlphabetNode,
                 _ => throw new ArgumentException($"Invalid role string value: {value}", nameof(value))
             };
         }
 
         /// <summary>
-        /// Validates if the role is a valid Neo blockchain role.
+        /// Validates if the role is a valid EpicChain blockchain role.
         /// </summary>
         /// <param name="role">The role to validate</param>
         /// <returns>True if valid, false otherwise</returns>
@@ -105,7 +105,7 @@ namespace EpicChainUnityRuntime.Types
         {
             return role == Role.StateValidator ||
                    role == Role.Oracle ||
-                   role == Role.NeoFSAlphabetNode;
+                   role == Role.EpicChainFSAlphabetNode;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace EpicChainUnityRuntime.Types
             {
                 Role.StateValidator => "Validates state roots and provides consensus for state changes",
                 Role.Oracle => "Fetches external data and provides it to smart contracts",
-                Role.NeoFSAlphabetNode => "Participates in NeoFS distributed storage network",
+                Role.EpicChainFSAlphabetNode => "Participates in EpicChainFS distributed storage network",
                 _ => "Unknown role"
             };
         }

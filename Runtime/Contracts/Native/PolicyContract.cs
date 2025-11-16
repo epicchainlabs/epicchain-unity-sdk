@@ -35,15 +35,15 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Constructor
 
         /// <summary>
-        /// Constructs a new PolicyContract instance that uses the given NeoUnity instance for invocations.
+        /// Constructs a new PolicyContract instance that uses the given EpicChainUnity instance for invocations.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public PolicyContract(NeoUnity neoUnity) : base(SCRIPT_HASH, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public PolicyContract(EpicChainUnity epicchainUnity) : base(SCRIPT_HASH, epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a new PolicyContract instance using the singleton NeoUnity instance.
+        /// Constructs a new PolicyContract instance using the singleton EpicChainUnity instance.
         /// </summary>
         public PolicyContract() : base(SCRIPT_HASH)
         {
@@ -56,14 +56,14 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>
         /// Gets the fee paid per byte of transaction.
         /// </summary>
-        /// <returns>The system fee per transaction byte in GAS fractions</returns>
+        /// <returns>The system fee per transaction byte in EpicPulse fractions</returns>
         public async Task<long> GetFeePerByte()
         {
             var result = await CallFunctionReturningInt(GET_FEE_PER_BYTE);
             
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[PolicyContract] Fee per byte: {result} GAS fractions");
+                Debug.Log($"[PolicyContract] Fee per byte: {result} EpicPulse fractions");
             }
             
             return result;
@@ -87,16 +87,16 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Gets the GAS price for one byte of smart contract storage.
+        /// Gets the EpicPulse price for one byte of smart contract storage.
         /// </summary>
-        /// <returns>The storage price per byte in GAS fractions</returns>
+        /// <returns>The storage price per byte in EpicPulse fractions</returns>
         public async Task<long> GetStoragePrice()
         {
             var result = await CallFunctionReturningInt(GET_STORAGE_PRICE);
             
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[PolicyContract] Storage price per byte: {result} GAS fractions");
+                Debug.Log($"[PolicyContract] Storage price per byte: {result} EpicPulse fractions");
             }
             
             return result;
@@ -106,7 +106,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to set the fee per byte and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee, i.e., the transaction has to be signed by the committee members.
         /// </summary>
-        /// <param name="fee">The fee per byte in GAS fractions</param>
+        /// <param name="fee">The fee per byte in EpicPulse fractions</param>
         /// <returns>A transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> SetFeePerByte(long fee)
         {
@@ -117,7 +117,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[PolicyContract] Setting fee per byte to: {fee} GAS fractions");
+                Debug.Log($"[PolicyContract] Setting fee per byte to: {fee} EpicPulse fractions");
             }
 
             return await InvokeFunction(SET_FEE_PER_BYTE, ContractParameter.Integer(fee));
@@ -148,7 +148,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to set the storage price and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee.
         /// </summary>
-        /// <param name="price">The storage price per byte in GAS fractions</param>
+        /// <param name="price">The storage price per byte in EpicPulse fractions</param>
         /// <returns>A transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> SetStoragePrice(long price)
         {
@@ -159,7 +159,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[PolicyContract] Setting storage price to: {price} GAS fractions per byte");
+                Debug.Log($"[PolicyContract] Setting storage price to: {price} EpicPulse fractions per byte");
             }
 
             return await InvokeFunction(SET_STORAGE_PRICE, ContractParameter.Integer(price));
@@ -170,7 +170,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Account Blocking
 
         /// <summary>
-        /// Checks whether an account is blocked in the Neo network.
+        /// Checks whether an account is blocked in the EpicChain network.
         /// Blocked accounts cannot send transactions or receive transfers.
         /// </summary>
         /// <param name="scriptHash">The script hash of the account to check</param>
@@ -193,9 +193,9 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Checks whether an account is blocked by Neo address.
+        /// Checks whether an account is blocked by EpicChain address.
         /// </summary>
-        /// <param name="address">The Neo address to check</param>
+        /// <param name="address">The EpicChain address to check</param>
         /// <returns>True if the account is blocked, otherwise false</returns>
         public async Task<bool> IsBlocked(string address)
         {
@@ -224,7 +224,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Creates a transaction script to block an account in the Neo network and initializes a TransactionBuilder based on this script.
+        /// Creates a transaction script to block an account in the EpicChain network and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee, i.e., the transaction has to be signed by the committee members.
         /// </summary>
         /// <param name="scriptHash">The script hash of the account to block</param>
@@ -248,7 +248,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to block an account by address and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee.
         /// </summary>
-        /// <param name="address">The Neo address of the account to block</param>
+        /// <param name="address">The EpicChain address of the account to block</param>
         /// <returns>A transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> BlockAccount(string address)
         {
@@ -278,7 +278,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Creates a transaction script to unblock an account in the Neo network and initializes a TransactionBuilder based on this script.
+        /// Creates a transaction script to unblock an account in the EpicChain network and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee, i.e., the transaction has to be signed by the committee members.
         /// </summary>
         /// <param name="scriptHash">The script hash of the account to unblock</param>
@@ -302,7 +302,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Creates a transaction script to unblock an account by address and initializes a TransactionBuilder based on this script.
         /// This method can only be successfully invoked by the committee.
         /// </summary>
-        /// <param name="address">The Neo address of the account to unblock</param>
+        /// <param name="address">The EpicChain address of the account to unblock</param>
         /// <returns>A transaction builder ready for committee signing</returns>
         public async Task<TransactionBuilder> UnblockAccount(string address)
         {
@@ -359,7 +359,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Estimates the network fee for a transaction based on current policy settings.
         /// </summary>
         /// <param name="transactionSize">The size of the transaction in bytes</param>
-        /// <returns>The estimated network fee in GAS fractions</returns>
+        /// <returns>The estimated network fee in EpicPulse fractions</returns>
         public async Task<long> EstimateNetworkFee(int transactionSize)
         {
             if (transactionSize <= 0)
@@ -372,14 +372,14 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[PolicyContract] Estimated network fee for {transactionSize} bytes: {networkFee} GAS fractions");
+                Debug.Log($"[PolicyContract] Estimated network fee for {transactionSize} bytes: {networkFee} EpicPulse fractions");
             }
 
             return networkFee;
         }
 
         /// <summary>
-        /// Checks if an account can send transactions (not blocked and has sufficient gas for fees).
+        /// Checks if an account can send transactions (not blocked and has sufficient EpicPulse for fees).
         /// </summary>
         /// <param name="account">The account to check</param>
         /// <param name="estimatedTxSize">The estimated transaction size in bytes (default: 250)</param>
@@ -399,9 +399,9 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             // Estimate network fee
             var networkFeeTask = EstimateNetworkFee(estimatedTxSize);
             
-            // Check GAS balance
-            var gasToken = new GasToken(NeoUnity);
-            var gasBalanceTask = gasToken.GetBalanceOf(scriptHash);
+            // Check EpicPulse balance
+            var epicpulseToken = new EpicPulseToken(EpicChainUnity);
+            var epicpulseBalanceTask = epicpulseToken.GetBalanceOf(scriptHash);
 
             await Task.WhenAll(isBlockedTask, networkFeeTask, gasBalanceTask);
 
@@ -424,36 +424,36 @@ namespace EpicChain.Unity.SDK.Contracts.Native
     }
 
     /// <summary>
-    /// Represents the current policy settings of the Neo network.
+    /// Represents the current policy settings of the EpicChain network.
     /// </summary>
     [System.Serializable]
     public class PolicySettings
     {
-        /// <summary>The fee per byte of transaction in GAS fractions</summary>
+        /// <summary>The fee per byte of transaction in EpicPulse fractions</summary>
         public long FeePerByte { get; set; }
 
         /// <summary>The execution fee factor</summary>
         public long ExecFeeFactor { get; set; }
 
-        /// <summary>The storage price per byte in GAS fractions</summary>
+        /// <summary>The storage price per byte in EpicPulse fractions</summary>
         public long StoragePrice { get; set; }
 
         /// <summary>
-        /// Gets the fee per byte in decimal GAS format.
+        /// Gets the fee per byte in decimal EpicPulse format.
         /// </summary>
         /// <returns>Fee per byte in decimal GAS</returns>
         public decimal GetFeePerByteGas()
         {
-            return GasToken.FromGasFractions(FeePerByte);
+            return EpicPulseToken.FromGasFractions(FeePerByte);
         }
 
         /// <summary>
-        /// Gets the storage price in decimal GAS format.
+        /// Gets the storage price in decimal EpicPulse format.
         /// </summary>
         /// <returns>Storage price in decimal GAS</returns>
         public decimal GetStoragePriceGas()
         {
-            return GasToken.FromGasFractions(StoragePrice);
+            return EpicPulseToken.FromGasFractions(StoragePrice);
         }
 
         public override string ToString()
@@ -476,25 +476,25 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>Whether the account is blocked</summary>
         public bool IsBlocked { get; set; }
 
-        /// <summary>Whether the account has sufficient GAS for the estimated fee</summary>
+        /// <summary>Whether the account has sufficient EpicPulse for the estimated fee</summary>
         public bool HasSufficientGas { get; set; }
 
-        /// <summary>The account's current GAS balance in fractions</summary>
+        /// <summary>The account's current EpicPulse balance in fractions</summary>
         public long GasBalance { get; set; }
 
-        /// <summary>The estimated network fee in GAS fractions</summary>
+        /// <summary>The estimated network fee in EpicPulse fractions</summary>
         public long EstimatedNetworkFee { get; set; }
 
-        /// <summary>The remaining GAS after paying the fee</summary>
+        /// <summary>The remaining EpicPulse after paying the fee</summary>
         public long RemainingGasAfterFee { get; set; }
 
         /// <summary>
-        /// Gets the GAS balance in decimal format.
+        /// Gets the EpicPulse balance in decimal format.
         /// </summary>
         /// <returns>GAS balance in decimal GAS</returns>
         public decimal GetGasBalanceDecimal()
         {
-            return GasToken.FromGasFractions(GasBalance);
+            return EpicPulseToken.FromGasFractions(GasBalance);
         }
 
         /// <summary>
@@ -503,16 +503,16 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <returns>Network fee in decimal GAS</returns>
         public decimal GetNetworkFeeDecimal()
         {
-            return GasToken.FromGasFractions(EstimatedNetworkFee);
+            return EpicPulseToken.FromGasFractions(EstimatedNetworkFee);
         }
 
         /// <summary>
-        /// Gets the remaining GAS after fee in decimal format.
+        /// Gets the remaining EpicPulse after fee in decimal format.
         /// </summary>
-        /// <returns>Remaining GAS in decimal format</returns>
+        /// <returns>Remaining EpicPulse in decimal format</returns>
         public decimal GetRemainingGasDecimal()
         {
-            return GasToken.FromGasFractions(RemainingGasAfterFee);
+            return EpicPulseToken.FromGasFractions(RemainingGasAfterFee);
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             if (CanTransact) return null;
 
             if (IsBlocked) return "Account is blocked by network policy";
-            if (!HasSufficientGas) return $"Insufficient GAS balance. Required: {GetNetworkFeeDecimal():F8} GAS, Available: {GetGasBalanceDecimal():F8} GAS";
+            if (!HasSufficientGas) return $"Insufficient EpicPulse balance. Required: {GetNetworkFeeDecimal():F8} GAS, Available: {GetGasBalanceDecimal():F8} GAS";
 
             return "Unknown reason";
         }

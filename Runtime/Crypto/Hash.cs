@@ -5,8 +5,8 @@ using System.Text;
 namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
-    /// Cryptographic hash utilities for Neo blockchain operations.
-    /// Provides SHA-256, RIPEMD-160, and Neo-specific hash functions.
+    /// Cryptographic hash utilities for EpicChain blockchain operations.
+    /// Provides SHA-256, RIPEMD-160, and EpicChain-specific hash functions.
     /// Production-ready implementation using .NET cryptographic libraries.
     /// </summary>
     public static class Hash
@@ -49,7 +49,7 @@ namespace EpicChain.Unity.SDK.Crypto
         
         /// <summary>
         /// Computes double SHA-256 hash (Hash256) of the input data.
-        /// This is the standard hash function used for Neo transaction and block hashes.
+        /// This is the standard hash function used for EpicChain transaction and block hashes.
         /// </summary>
         /// <param name="data">Data to hash</param>
         /// <returns>32-byte double SHA-256 hash</returns>
@@ -99,11 +99,11 @@ namespace EpicChain.Unity.SDK.Crypto
         
         #endregion
         
-        #region Hash160 (Neo Address Hash)
+        #region Hash160 (EpicChain Address Hash)
         
         /// <summary>
         /// Computes Hash160 (RIPEMD-160 of SHA-256) of the input data.
-        /// This is used for Neo addresses and script hashes.
+        /// This is used for EpicChain addresses and script hashes.
         /// </summary>
         /// <param name="data">Data to hash</param>
         /// <returns>20-byte Hash160</returns>
@@ -180,7 +180,7 @@ namespace EpicChain.Unity.SDK.Crypto
         #region Utility Methods
         
         /// <summary>
-        /// Verifies a checksum for Neo address validation.
+        /// Verifies a checksum for EpicChain address validation.
         /// </summary>
         /// <param name="data">Address data (without checksum)</param>
         /// <param name="checksum">Provided checksum</param>

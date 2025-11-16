@@ -10,20 +10,20 @@ using EpicChain.Unity.SDK.Wallet;
 namespace EpicChain.Unity.SDK.Contracts.Native
 {
     /// <summary>
-    /// Represents the official NeoNameService contract and provides methods to invoke its functions.
-    /// The Neo Name Service allows users to register human-readable domain names that resolve to Neo addresses and other data.
+    /// Represents the official EpicChainNameService contract and provides methods to invoke its functions.
+    /// The EpicChain Name Service allows users to register human-readable domain names that resolve to EpicChain addresses and other data.
     /// </summary>
     [System.Serializable]
-    public class NeoNameService : NonFungibleToken
+    public class EpicChainNameService : NonFungibleToken
     {
         #region Constants
 
         public const string NAME = "NameService";
-        public const string SYMBOL = "NNS";
+        public const string SYMBOL = "XNS";
         public const int DECIMALS = 0;
 
-        // Default NNS contract hash on mainnet
-        private static readonly Hash160 DEFAULT_NNS_HASH = new Hash160("0x50ac1c37690cc2cfc594472833cf57505d5f46de");
+        // Default XNS contract hash on mainnet
+        private static readonly Hash160 DEFAULT_XNS_HASH = new Hash160("0x50ac1c37690cc2cfc594472833cf57505d5f46de");
 
         // Contract methods
         private const string ADD_ROOT = "addRoot";
@@ -50,31 +50,31 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Constructor
 
         /// <summary>
-        /// Constructs a new NeoNameService instance that uses the given NeoUnity instance for invocations.
-        /// Uses the NNS script hash specified in the NeoUnity configuration, or the default mainnet NNS contract.
+        /// Constructs a new EpicChainNameService instance that uses the given EpicChainUnity instance for invocations.
+        /// Uses the XNS script hash specified in the EpicChainUnity configuration, or the default mainnet XNS contract.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public NeoNameService(NeoUnity neoUnity) : base(GetNNSHash(neoUnity), neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public EpicChainNameService(EpicChainUnity epicchainUnity) : base(GetXNSHash(epicchainUnity), epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a new NeoNameService instance using the singleton NeoUnity instance.
-        /// Uses the NNS script hash specified in the configuration, or the default mainnet NNS contract.
+        /// Constructs a new EpicChainNameService instance using the singleton EpicChainUnity instance.
+        /// Uses the XNS script hash specified in the configuration, or the default mainnet XNS contract.
         /// </summary>
-        public NeoNameService() : base(GetNNSHash(Core.EpicChainUnityInstance))
+        public EpicChainNameService() : base(GetXNSHash(Core.EpicChainUnityInstance))
         {
         }
 
         /// <summary>
-        /// Gets the NNS contract hash from configuration or default.
+        /// Gets the XNS contract hash from configuration or default.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance</param>
-        /// <returns>The NNS contract hash</returns>
-        private static Hash160 GetNNSHash(NeoUnity neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance</param>
+        /// <returns>The XNS contract hash</returns>
+        private static Hash160 GetXNSHash(EpicChainUnity epicchainUnity)
         {
-            // In a full implementation, this would check NeoUnity configuration for custom NNS hash
-            return DEFAULT_NNS_HASH;
+            // In a full implementation, this would check EpicChainUnity configuration for custom XNS hash
+            return DEFAULT_XNS_HASH;
         }
 
         #endregion
@@ -82,8 +82,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Token Metadata Overrides
 
         /// <summary>
-        /// Returns the name of the NeoNameService contract.
-        /// Doesn't require a call to the Neo node.
+        /// Returns the name of the EpicChainNameService contract.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The name</returns>
         public async Task<string> GetName()
@@ -92,8 +92,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Returns the symbol of the NeoNameService contract.
-        /// Doesn't require a call to the Neo node.
+        /// Returns the symbol of the EpicChainNameService contract.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The symbol</returns>
         public override async Task<string> GetSymbol()
@@ -102,8 +102,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         }
 
         /// <summary>
-        /// Returns the decimals of the NeoNameService contract.
-        /// Doesn't require a call to the Neo node.
+        /// Returns the decimals of the EpicChainNameService contract.
+        /// Doesn't require a call to the EpicChain node.
         /// </summary>
         /// <returns>The decimals</returns>
         public override async Task<int> GetDecimals()
@@ -166,7 +166,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Root Domain Management
 
         /// <summary>
-        /// Creates a transaction script to add a root domain (like .neo) and initializes a TransactionBuilder based on this script.
+        /// Creates a transaction script to add a root domain (like .epicchain) and initializes a TransactionBuilder based on this script.
         /// Only the committee is allowed to add a new root domain.
         /// Requires to be signed by the committee.
         /// </summary>
@@ -189,7 +189,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Gets all existing root domains using an iterator.
-        /// This method requires sessions to be enabled on the Neo node.
+        /// This method requires sessions to be enabled on the EpicChain node.
         /// </summary>
         /// <returns>An iterator of root domain strings</returns>
         public async Task<Iterator<string>> GetRoots()
@@ -199,7 +199,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
         /// <summary>
         /// Gets all existing root domains without using sessions.
-        /// Use this method if sessions are disabled on the Neo node.
+        /// Use this method if sessions are disabled on the EpicChain node.
         /// </summary>
         /// <param name="count">Maximum number of roots to retrieve</param>
         /// <returns>List of root domain strings</returns>
@@ -251,7 +251,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Gets the price to register a domain name of a certain length.
         /// </summary>
         /// <param name="domainNameLength">The length of the domain name</param>
-        /// <returns>The price to register a domain in GAS fractions</returns>
+        /// <returns>The price to register a domain in EpicPulse fractions</returns>
         public async Task<long> GetPrice(int domainNameLength)
         {
             if (domainNameLength <= 0)
@@ -263,7 +263,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 
             if (EpicChainUnityConfig.EnableDebugLogging)
             {
-                Debug.Log($"[EpicChainNameService] Price for {domainNameLength}-character domain: {result} GAS fractions");
+                Debug.Log($"[EpicChainNameService] Price for {domainNameLength}-character domain: {result} EpicPulse fractions");
             }
 
             return result;
@@ -660,7 +660,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// Estimates the cost to register a domain name.
         /// </summary>
         /// <param name="domainName">The domain name to register</param>
-        /// <returns>The estimated registration cost in GAS fractions</returns>
+        /// <returns>The estimated registration cost in EpicPulse fractions</returns>
         public async Task<long> EstimateRegistrationCost(string domainName)
         {
             if (string.IsNullOrEmpty(domainName))
@@ -827,12 +827,12 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
         /// <summary>
-        /// Gets the registration cost in decimal GAS format.
+        /// Gets the registration cost in decimal EpicPulse format.
         /// </summary>
         /// <returns>Registration cost in decimal GAS</returns>
         public decimal GetRegistrationCostGas()
         {
-            return GasToken.FromGasFractions(RegistrationCost);
+            return EpicPulseToken.FromGasFractions(RegistrationCost);
         }
 
         /// <summary>

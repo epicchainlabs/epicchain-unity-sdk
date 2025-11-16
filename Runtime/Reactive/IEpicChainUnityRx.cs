@@ -9,7 +9,7 @@ namespace EpicChainUnityRuntime.Reactive
     /// The Unity-compatible reactive blockchain API interface.
     /// Provides async enumerable patterns for blockchain event streams.
     /// </summary>
-    public interface INeoUnityRx
+    public interface IEpicChainUnityRx
     {
         /// <summary>
         /// Creates an async enumerable that emits newly created blocks on the blockchain.
@@ -18,7 +18,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable that emits all new blocks as they are added to the blockchain</returns>
-        IAsyncEnumerable<NeoBlock> GetBlockStream(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> GetBlockStream(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits all blocks from the blockchain contained within the requested range.
@@ -28,7 +28,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="fullTransactionObjects">If true, provides transactions embedded in blocks, otherwise transaction hashes</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit these blocks</returns>
-        IAsyncEnumerable<NeoBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits all blocks from the blockchain contained within the requested range.
@@ -39,7 +39,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="ascending">If true, emits blocks in ascending order between range, otherwise, in descending order</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit these blocks</returns>
-        IAsyncEnumerable<NeoBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects, bool ascending, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> ReplayBlocks(int startBlock, int endBlock, bool fullTransactionObjects, bool ascending, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits all blocks from the blockchain starting with a provided block number.
@@ -49,7 +49,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="fullTransactionObjects">If true, provides transactions embedded in blocks, otherwise transaction hashes</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all requested blocks</returns>
-        IAsyncEnumerable<NeoBlock> CatchUpToLatestBlocks(int startBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> CatchUpToLatestBlocks(int startBlock, bool fullTransactionObjects = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits all blocks from the requested block number to the most current.
@@ -60,7 +60,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval for new blocks in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all requested blocks and future blocks</returns>
-        IAsyncEnumerable<NeoBlock> CatchUpToLatestAndSubscribeToNewBlocks(int startBlock, bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> CatchUpToLatestAndSubscribeToNewBlocks(int startBlock, bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits new blocks as they are created on the blockchain (starting from the latest block).
@@ -69,7 +69,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable to emit all future blocks</returns>
-        IAsyncEnumerable<NeoBlock> SubscribeToNewBlocks(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainBlock> SubscribeToNewBlocks(bool fullTransactionObjects = false, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits transactions matching the provided predicate.
@@ -78,7 +78,7 @@ namespace EpicChainUnityRuntime.Reactive
         /// <param name="pollingIntervalMs">Polling interval in milliseconds</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>An async enumerable of matching transactions</returns>
-        IAsyncEnumerable<NeoTransaction> GetTransactionStream(Func<NeoTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EpicChainTransaction> GetTransactionStream(Func<EpicChainTransaction, bool> transactionPredicate = null, int pollingIntervalMs = 1000, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an async enumerable that emits block indices as they are created.

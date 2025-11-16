@@ -41,7 +41,7 @@ namespace EpicChain.Unity.SDK.Tests.Wallet
             
             // Assert
             Assert.IsNotNull(wallet, "Wallet should not be null");
-            Assert.AreEqual("NeoUnityWallet", wallet.Name, "Should have default name");
+            Assert.AreEqual("EpicChainUnityWallet", wallet.Name, "Should have default name");
             Assert.AreEqual("3.0", wallet.Version, "Should have current version");
             Assert.AreEqual(0, wallet.AccountCount, "Should start with no accounts");
             Assert.IsNull(wallet.DefaultAccount, "Should have no default account initially");

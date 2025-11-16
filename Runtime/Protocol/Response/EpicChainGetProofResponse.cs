@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns a proof for a specific key in the state tree.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetProofResponse : NeoResponse<string>
+    public class EpicChainGetProofResponse : EpicChainResponse<string>
     {
         /// <summary>
         /// Gets the proof string from the response.

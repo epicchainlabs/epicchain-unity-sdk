@@ -10,11 +10,11 @@ namespace EpicChain.Unity.SDK.Utils
     public static class JsonSettings
     {
         /// <summary>
-        /// Default JSON serializer settings optimized for Neo blockchain data.
+        /// Default JSON serializer settings optimized for EpicChain blockchain data.
         /// </summary>
         public static readonly JsonSerializerSettings Default = new JsonSerializerSettings
         {
-            // Use camelCase property names to match Neo RPC API
+            // Use camelCase property names to match EpicChain RPC API
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             
             // Handle null values gracefully

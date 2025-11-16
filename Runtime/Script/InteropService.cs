@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Defines system calls (interop services) that can be invoked from Neo VM scripts.
+    /// Defines system calls (interop services) that can be invoked from EpicChain VM scripts.
     /// These services provide access to blockchain functionality like cryptography, storage, and runtime information.
     /// </summary>
     public enum InteropService
@@ -149,11 +149,11 @@ namespace EpicChain.Unity.SDK.Script
         }
         
         /// <summary>
-        /// Gets the base GAS cost for calling this interop service.
+        /// Gets the base EpicPulse cost for calling this interop service.
         /// These are the minimum costs; actual costs may be higher based on complexity.
         /// </summary>
         /// <param name="service">The interop service</param>
-        /// <returns>The base GAS cost in fractions</returns>
+        /// <returns>The base EpicPulse cost in fractions</returns>
         public static long GetPrice(this InteropService service)
         {
             return service switch
@@ -248,7 +248,7 @@ namespace EpicChain.Unity.SDK.Script
                 InteropService.SystemRuntimeLog => "Emits a log message",
                 InteropService.SystemRuntimeNotify => "Emits a notification event",
                 InteropService.SystemRuntimeGetNotifications => "Gets all notifications",
-                InteropService.SystemRuntimeGasLeft => "Gets remaining GAS for execution",
+                InteropService.SystemRuntimeGasLeft => "Gets remaining EpicPulse for execution",
                 InteropService.SystemRuntimeBurnGas => "Burns/consumes GAS",
                 InteropService.SystemRuntimeGetNetwork => "Gets network magic number",
                 InteropService.SystemRuntimeGetRandom => "Gets a random number",
@@ -367,7 +367,7 @@ namespace EpicChain.Unity.SDK.Script
         {
             Debug.Log($"Interop Service: {service.GetServiceName()}\n" +
                      $"Hash: {service.GetHashString()}\n" +
-                     $"Price: {service.GetPrice()} GAS fractions\n" +
+                     $"Price: {service.GetPrice()} EpicPulse fractions\n" +
                      $"Description: {service.GetDescription()}");
         }
         
@@ -409,7 +409,7 @@ namespace EpicChain.Unity.SDK.Script
         public static string GetAllServicesInfo()
         {
             var info = new StringBuilder();
-            info.AppendLine("Neo Interop Services:");
+            info.AppendLine("EpicChain Interop Services:");
             info.AppendLine("=====================");
             
             var categories = new[] { "Crypto", "Contract", "Iterator", "Runtime", "Storage" };

@@ -5,16 +5,16 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Contains fundamental constants used throughout the Neo blockchain ecosystem.
-    /// These values are derived from the Neo protocol specification and core implementations.
+    /// Contains fundamental constants used throughout the EpicChain blockchain ecosystem.
+    /// These values are derived from the EpicChain protocol specification and core implementations.
     /// </summary>
-    public static class NeoConstants
+    public static class EpicChainConstants
     {
         // MARK: Accounts, Addresses, Keys
 
         /// <summary>
         /// The maximum number of public keys that can take part in a multi-signature address.
-        /// Taken from Neo.SmartContract.Contract.CreateMultiSigRedeemScript(...) in the C# neo repo.
+        /// Taken from EpicChain.SmartContract.Contract.CreateMultiSigRedeemScript(...) in the C# EpicChain repo.
         /// </summary>
         public const int MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT = 1024;
 
@@ -55,14 +55,14 @@ namespace EpicChain.Unity.SDK.Types
         public const int VERIFICATION_SCRIPT_SIZE = 40;
 
         /// <summary>
-        /// Standard address version for Neo addresses.
+        /// Standard address version for EpicChain addresses.
         /// </summary>
         public const byte ADDRESS_VERSION = 0x35;
 
         // MARK: Transactions & Contracts
 
         /// <summary>
-        /// The current version used for Neo transactions.
+        /// The current version used for EpicChain transactions.
         /// </summary>
         public const byte CURRENT_TX_VERSION = 0;
 
@@ -141,34 +141,34 @@ namespace EpicChain.Unity.SDK.Types
         // MARK: Native Contracts
 
         /// <summary>
-        /// The decimals for the NEO token (NEO is indivisible).
+        /// The decimals for the EpicChain token (EpicChain is indivisible).
         /// </summary>
-        public const int NEO_TOKEN_DECIMALS = 0;
+        public const int EPICCHAIN_TOKEN_DECIMALS = 0;
 
         /// <summary>
-        /// The decimals for the GAS token.
+        /// The decimals for the EpicPulse token.
         /// </summary>
         public const int GAS_TOKEN_DECIMALS = 8;
 
         /// <summary>
-        /// The initial supply of NEO tokens.
+        /// The initial supply of EpicChain tokens.
         /// </summary>
-        public const long NEO_TOKEN_TOTAL_SUPPLY = 100_000_000;
+        public const long EPICCHAIN_TOKEN_TOTAL_SUPPLY = 1_000_000_000;
 
         /// <summary>
-        /// The symbol for the NEO token.
+        /// The symbol for the EpicChain token.
         /// </summary>
-        public const string NEO_TOKEN_SYMBOL = "NEO";
+        public const string EPICCHAIN_TOKEN_SYMBOL = "XPR";
 
         /// <summary>
-        /// The symbol for the GAS token.
+        /// The symbol for the EpicPulse token.
         /// </summary>
-        public const string GAS_TOKEN_SYMBOL = "GAS";
+        public const string GAS_TOKEN_SYMBOL = "XPP";
 
         // MARK: Cryptography
 
         /// <summary>
-        /// The curve used by Neo for elliptic curve cryptography.
+        /// The curve used by EpicChain for elliptic curve cryptography.
         /// </summary>
         public const string SECP256R1_CURVE_NAME = "secp256r1";
 
@@ -248,7 +248,7 @@ namespace EpicChain.Unity.SDK.Types
         // MARK: Encoding & Serialization
 
         /// <summary>
-        /// The prefix used for Base58Check encoding of Neo addresses.
+        /// The prefix used for Base58Check encoding of EpicChain addresses.
         /// </summary>
         public const string BASE58_ADDRESS_PREFIX = "A";
 
@@ -260,7 +260,7 @@ namespace EpicChain.Unity.SDK.Types
         // MARK: Economic Parameters
 
         /// <summary>
-        /// The minimum GAS required to keep a transaction alive in the memory pool.
+        /// The minimum EpicPulse required to keep a transaction alive in the memory pool.
         /// </summary>
         public const long MIN_TRANSACTION_FEE = 1000_000; // 0.01 GAS
 
@@ -277,7 +277,7 @@ namespace EpicChain.Unity.SDK.Types
         // MARK: Time & Timestamps
 
         /// <summary>
-        /// The Unix timestamp of the Neo Genesis block.
+        /// The Unix timestamp of the EpicChain Genesis block.
         /// </summary>
         public const long GENESIS_TIMESTAMP = 1468595301000; // July 15, 2016
 
@@ -289,7 +289,7 @@ namespace EpicChain.Unity.SDK.Types
         // MARK: Protocol Versions
 
         /// <summary>
-        /// The current protocol version of Neo.
+        /// The current protocol version of EpicChain.
         /// </summary>
         public const int PROTOCOL_VERSION = 0;
 
@@ -316,9 +316,9 @@ namespace EpicChain.Unity.SDK.Types
         public const float UNITY_DEFAULT_POLLING_INTERVAL = 1.0f;
 
         /// <summary>
-        /// Converts GAS fraction to the smallest unit (10^-8 GAS).
+        /// Converts EpicPulse fraction to the smallest unit (10^-8 GAS).
         /// </summary>
-        /// <param name="gas">The GAS amount.</param>
+        /// <param name="gas">The EpicPulse amount.</param>
         /// <returns>The amount in the smallest unit.</returns>
         public static long GasToFixedPoint(decimal gas)
         {
@@ -326,10 +326,10 @@ namespace EpicChain.Unity.SDK.Types
         }
 
         /// <summary>
-        /// Converts the smallest GAS unit to decimal GAS.
+        /// Converts the smallest EpicPulse unit to decimal GAS.
         /// </summary>
         /// <param name="fixedPointGas">The amount in the smallest unit.</param>
-        /// <returns>The GAS amount as decimal.</returns>
+        /// <returns>The EpicPulse amount as decimal.</returns>
         public static decimal FixedPointToGas(long fixedPointGas)
         {
             return (decimal)fixedPointGas / (decimal)Math.Pow(10, GAS_TOKEN_DECIMALS);
@@ -339,8 +339,8 @@ namespace EpicChain.Unity.SDK.Types
         /// Calculates the system fee for a transaction based on its size and complexity.
         /// </summary>
         /// <param name="transactionSize">The size of the transaction in bytes.</param>
-        /// <param name="executionCost">The execution cost in GAS units.</param>
-        /// <returns>The system fee in the smallest GAS unit.</returns>
+        /// <param name="executionCost">The execution cost in EpicPulse units.</param>
+        /// <returns>The system fee in the smallest EpicPulse unit.</returns>
         public static long CalculateSystemFee(int transactionSize, long executionCost)
         {
             return Math.Max(executionCost, MIN_TRANSACTION_FEE);
@@ -351,7 +351,7 @@ namespace EpicChain.Unity.SDK.Types
         /// </summary>
         /// <param name="transactionSize">The size of the transaction in bytes.</param>
         /// <param name="feePerByte">The fee per byte (optional, uses default if not specified).</param>
-        /// <returns>The network fee in the smallest GAS unit.</returns>
+        /// <returns>The network fee in the smallest EpicPulse unit.</returns>
         public static long CalculateNetworkFee(int transactionSize, long feePerByte = DEFAULT_NETWORK_FEE_PER_BYTE)
         {
             return transactionSize * feePerByte;

@@ -5,13 +5,13 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Protocol
 {
     /// <summary>
-    /// Exception types specific to Neo protocol operations.
+    /// Exception types specific to EpicChain protocol operations.
     /// Provides detailed error information for various protocol-level failures including
     /// RPC communication, VM execution, and client connection issues.
     /// Unity-optimized with proper serialization support.
     /// </summary>
     [System.Serializable]
-    public class ProtocolException : NeoUnityException
+    public class ProtocolException : EpicChainUnityException
     {
         /// <summary>
         /// The type of protocol error.
@@ -68,7 +68,7 @@ namespace EpicChain.Unity.SDK.Protocol
         {
             return new ProtocolException(
                 ProtocolErrorType.RpcResponseError,
-                $"The Neo node responded with an error: {error}",
+                $"The EpicChain node responded with an error: {error}",
                 error,
                 errorCode
             );
@@ -313,7 +313,7 @@ namespace EpicChain.Unity.SDK.Protocol
         General,
         
         /// <summary>
-        /// Neo node returned an RPC error.
+        /// EpicChain node returned an RPC error.
         /// </summary>
         RpcResponseError,
         
@@ -378,7 +378,7 @@ namespace EpicChain.Unity.SDK.Protocol
     /// Provides common functionality for all SDK exceptions.
     /// </summary>
     [System.Serializable]
-    public class NeoUnityException : Exception
+    public class EpicChainUnityException : Exception
     {
         /// <summary>
         /// The timestamp when the exception occurred.
@@ -386,20 +386,20 @@ namespace EpicChain.Unity.SDK.Protocol
         public DateTime Timestamp { get; }
         
         /// <summary>
-        /// Initializes a new instance of the NeoUnityException class.
+        /// Initializes a new instance of the EpicChainUnityException class.
         /// </summary>
         /// <param name="message">The error message</param>
-        public NeoUnityException(string message) : base(message)
+        public EpicChainUnityException(string message) : base(message)
         {
             Timestamp = DateTime.UtcNow;
         }
         
         /// <summary>
-        /// Initializes a new instance of the NeoUnityException class with an inner exception.
+        /// Initializes a new instance of the EpicChainUnityException class with an inner exception.
         /// </summary>
         /// <param name="message">The error message</param>
         /// <param name="innerException">The inner exception</param>
-        public NeoUnityException(string message, Exception innerException) : base(message, innerException)
+        public EpicChainUnityException(string message, Exception innerException) : base(message, innerException)
         {
             Timestamp = DateTime.UtcNow;
         }

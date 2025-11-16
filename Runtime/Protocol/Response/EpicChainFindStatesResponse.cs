@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns a list of state key-value pairs matching the search criteria.
     /// </summary>
     [System.Serializable]
-    public class NeoFindStatesResponse : NeoResponse<NeoFindStatesResponse.States>
+    public class EpicChainFindStatesResponse : EpicChainResponse<EpicChainFindStatesResponse.States>
     {
         /// <summary>
         /// Gets the states information from the response.
@@ -21,7 +21,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoFindStatesResponse() : base()
+        public EpicChainFindStatesResponse() : base()
         {
         }
 
@@ -30,7 +30,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="states">The states information</param>
         /// <param name="id">The request ID</param>
-        public NeoFindStatesResponse(States states, int id = 1) : base(states, id)
+        public EpicChainFindStatesResponse(States states, int id = 1) : base(states, id)
         {
         }
 
@@ -39,7 +39,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoFindStatesResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainFindStatesResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 

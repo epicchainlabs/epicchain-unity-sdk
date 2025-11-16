@@ -5,10 +5,10 @@ using UnityEngine;
 namespace EpicChainUnityProtocol.Response
 {
     /// <summary>
-    /// Represents a Neo address with key and watch-only information
+    /// Represents a EpicChain address with key and watch-only information
     /// </summary>
     [Serializable]
-    public struct NeoAddress : IEquatable<NeoAddress>
+    public struct EpicChainAddress : IEquatable<EpicChainAddress>
     {
         [JsonProperty("address")]
         [SerializeField] private string _address;
@@ -23,7 +23,7 @@ namespace EpicChainUnityProtocol.Response
         [SerializeField] private bool _watchOnly;
         
         /// <summary>
-        /// Gets the Neo address string
+        /// Gets the EpicChain address string
         /// </summary>
         public string Address => _address;
         
@@ -48,14 +48,14 @@ namespace EpicChainUnityProtocol.Response
         public bool CanSign => _hasKey && !_watchOnly;
         
         /// <summary>
-        /// Initializes a new instance of NeoAddress
+        /// Initializes a new instance of EpicChainAddress
         /// </summary>
-        /// <param name="address">Neo address string</param>
+        /// <param name="address">EpicChain address string</param>
         /// <param name="hasKey">Whether address has private key</param>
         /// <param name="label">Optional label</param>
         /// <param name="watchOnly">Whether address is watch-only</param>
         [JsonConstructor]
-        public NeoAddress(string address, bool hasKey, string label, bool watchOnly)
+        public EpicChainAddress(string address, bool hasKey, string label, bool watchOnly)
         {
             _address = address ?? throw new ArgumentNullException(nameof(address));
             _hasKey = hasKey;
@@ -66,23 +66,23 @@ namespace EpicChainUnityProtocol.Response
         /// <summary>
         /// Creates a signing address (has key, not watch-only)
         /// </summary>
-        /// <param name="address">Neo address string</param>
+        /// <param name="address">EpicChain address string</param>
         /// <param name="label">Optional label</param>
         /// <returns>Signing address</returns>
-        public static NeoAddress CreateSigningAddress(string address, string label = null)
+        public static EpicChainAddress CreateSigningAddress(string address, string label = null)
         {
-            return new NeoAddress(address, true, label, false);
+            return new EpicChainAddress(address, true, label, false);
         }
         
         /// <summary>
         /// Creates a watch-only address
         /// </summary>
-        /// <param name="address">Neo address string</param>
+        /// <param name="address">EpicChain address string</param>
         /// <param name="label">Optional label</param>
         /// <returns>Watch-only address</returns>
-        public static NeoAddress CreateWatchOnlyAddress(string address, string label = null)
+        public static EpicChainAddress CreateWatchOnlyAddress(string address, string label = null)
         {
-            return new NeoAddress(address, false, label, true);
+            return new EpicChainAddress(address, false, label, true);
         }
         
         /// <summary>
@@ -94,7 +94,7 @@ namespace EpicChainUnityProtocol.Response
             if (string.IsNullOrEmpty(_address))
                 return false;
                 
-            // Neo addresses start with 'N' and are 34 characters long
+            // EpicChain addresses start with 'N' and are 34 characters long
             return _address.Length == 34 && _address.StartsWith('N');
         }
         
@@ -107,7 +107,7 @@ namespace EpicChainUnityProtocol.Response
             return !string.IsNullOrEmpty(_label) ? _label : _address;
         }
         
-        public bool Equals(NeoAddress other)
+        public bool Equals(EpicChainAddress other)
         {
             return _address == other._address && 
                    _hasKey == other._hasKey && 
@@ -117,7 +117,7 @@ namespace EpicChainUnityProtocol.Response
         
         public override bool Equals(object obj)
         {
-            return obj is NeoAddress other && Equals(other);
+            return obj is EpicChainAddress other && Equals(other);
         }
         
         public override int GetHashCode()
@@ -125,12 +125,12 @@ namespace EpicChainUnityProtocol.Response
             return HashCode.Combine(_address, _hasKey, _label, _watchOnly);
         }
         
-        public static bool operator ==(NeoAddress left, NeoAddress right)
+        public static bool operator ==(EpicChainAddress left, EpicChainAddress right)
         {
             return left.Equals(right);
         }
         
-        public static bool operator !=(NeoAddress left, NeoAddress right)
+        public static bool operator !=(EpicChainAddress left, EpicChainAddress right)
         {
             return !left.Equals(right);
         }
@@ -139,7 +139,7 @@ namespace EpicChainUnityProtocol.Response
         {
             var status = CanSign ? "Signing" : (_watchOnly ? "Watch-Only" : "No Key");
             var labelPart = !string.IsNullOrEmpty(_label) ? $" ({_label})" : "";
-            return $"NeoAddress({_address}{labelPart}, {status})";
+            return $"EpicChainAddress({_address}{labelPart}, {status})";
         }
     }
 }

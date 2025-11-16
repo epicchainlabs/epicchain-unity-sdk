@@ -32,7 +32,7 @@ namespace EpicChain.Unity.SDK.Protocol
         
         #region Private Fields
         
-        private readonly NeoUnity neoUnity;
+        private readonly EpicChainUnity epicchainUnity;
         private readonly MonoBehaviour monoBehaviour;
         private readonly float pollingInterval;
         
@@ -65,12 +65,12 @@ namespace EpicChain.Unity.SDK.Protocol
         /// <summary>
         /// Creates a new block index polling service.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance for blockchain queries</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance for blockchain queries</param>
         /// <param name="monoBehaviour">MonoBehaviour for coroutine execution</param>
         /// <param name="pollingInterval">Polling interval in seconds</param>
-        public BlockIndexPolling(NeoUnity neoUnity, MonoBehaviour monoBehaviour, float pollingInterval = 15f)
+        public BlockIndexPolling(EpicChainUnity epicchainUnity, MonoBehaviour monoBehaviour, float pollingInterval = 15f)
         {
-            this.epicchainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            this.epicchainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
             this.monoBehaviour = monoBehaviour ?? throw new ArgumentNullException(nameof(monoBehaviour));
             
             if (pollingInterval <= 0)
@@ -100,7 +100,7 @@ namespace EpicChain.Unity.SDK.Protocol
             
             if (!EpicChainUnityIsInitialized)
             {
-                throw new InvalidOperationException("NeoUnity must be initialized before starting polling");
+                throw new InvalidOperationException("EpicChainUnity must be initialized before starting polling");
             }
             
             isPolling = true;

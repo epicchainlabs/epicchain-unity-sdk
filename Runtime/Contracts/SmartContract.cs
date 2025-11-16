@@ -11,7 +11,7 @@ using EpicChain.Unity.SDK.Protocol.Response;
 namespace EpicChain.Unity.SDK.Contracts
 {
     /// <summary>
-    /// Represents a smart contract on the Neo blockchain and provides methods to invoke and deploy it.
+    /// Represents a smart contract on the EpicChain blockchain and provides methods to invoke and deploy it.
     /// Unity-optimized base class for all smart contract interactions.
     /// </summary>
     [System.Serializable]
@@ -29,8 +29,8 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>The script hash of this smart contract</summary>
         public Hash160 ScriptHash { get; protected set; }
         
-        /// <summary>The NeoUnity instance used for all invocations</summary>
-        protected NeoUnity NeoUnity { get; set; }
+        /// <summary>The EpicChainUnity instance used for all invocations</summary>
+        protected EpicChainUnity EpicChainUnity { get; set; }
         
         #endregion
         
@@ -38,18 +38,18 @@ namespace EpicChain.Unity.SDK.Contracts
         
         /// <summary>
         /// Constructs a SmartContract representing the smart contract with the given script hash.
-        /// Uses the given NeoUnity instance for all invocations.
+        /// Uses the given EpicChainUnity instance for all invocations.
         /// </summary>
         /// <param name="scriptHash">The smart contract's script hash</param>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public SmartContract(Hash160 scriptHash, NeoUnity neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public SmartContract(Hash160 scriptHash, EpicChainUnity epicchainUnity)
         {
             ScriptHash = scriptHash ?? throw new ArgumentNullException(nameof(scriptHash));
-            EpicChainUnity = neoUnity ?? throw new ArgumentNullException(nameof(neoUnity));
+            EpicChainUnity = epicchainUnity ?? throw new ArgumentNullException(nameof(epicchainUnity));
         }
         
         /// <summary>
-        /// Constructs a SmartContract using the singleton NeoUnity instance.
+        /// Constructs a SmartContract using the singleton EpicChainUnity instance.
         /// </summary>
         /// <param name="scriptHash">The smart contract's script hash</param>
         public SmartContract(Hash160 scriptHash) : this(scriptHash, Core.EpicChainUnityInstance)
@@ -70,7 +70,7 @@ namespace EpicChain.Unity.SDK.Contracts
         public async Task<TransactionBuilder> InvokeFunction(string function, params ContractParameter[] parameters)
         {
             var script = await BuildInvokeFunctionScript(function, parameters);
-            return new TransactionBuilder(NeoUnity).SetScript(script);
+            return new TransactionBuilder(EpicChainUnity).SetScript(script);
         }
         
         /// <summary>
@@ -226,7 +226,7 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Sends an invokefunction RPC call to the given contract function expecting an InteropInterface as return type.
         /// Returns an iterator that can be traversed to retrieve the iterator items.
-        /// Requires sessions to be enabled on the Neo node.
+        /// Requires sessions to be enabled on the EpicChain node.
         /// </summary>
         /// <typeparam name="T">The type to map stack items to</typeparam>
         /// <param name="function">The function to call</param>
@@ -247,16 +247,16 @@ namespace EpicChain.Unity.SDK.Contracts
             
             if (string.IsNullOrEmpty(result.SessionId))
             {
-                throw new NeoUnityException("No session id was found. The connected Neo node might not support sessions.");
+                throw new EpicChainUnityException("No session id was found. The connected EpicChain node might not support sessions.");
             }
             
-            return new Iterator<T>(NeoUnity, result.SessionId, stackItem.GetIteratorId(), mapper ?? (item => (T)(object)item));
+            return new Iterator<T>(EpicChainUnity, result.SessionId, stackItem.GetIteratorId(), mapper ?? (item => (T)(object)item));
         }
         
         /// <summary>
         /// Sends an invokefunction RPC call expecting an InteropInterface as return type,
         /// then traverses the iterator to retrieve the first DEFAULT_ITERATOR_COUNT stack items.
-        /// Requires sessions to be enabled on the Neo node.
+        /// Requires sessions to be enabled on the EpicChain node.
         /// </summary>
         /// <typeparam name="T">The type to map stack items to</typeparam>
         /// <param name="function">The function to call</param>
@@ -276,7 +276,7 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <summary>
         /// Calls function of this contract and expects an iterator as the return value.
         /// That iterator is then traversed and its entries are put in an array which is returned.
-        /// This all happens on the NeoVM, useful for Neo nodes that don't have iterator sessions enabled.
+        /// This all happens on the EpicChainVM, useful for EpicChain nodes that don't have iterator sessions enabled.
         /// </summary>
         /// <param name="function">The function to call</param>
         /// <param name="parameters">The contract parameters to include in the call</param>
@@ -306,7 +306,7 @@ namespace EpicChain.Unity.SDK.Contracts
         /// <param name="parameters">The contract parameters to include in the call</param>
         /// <param name="signers">The list of signers for this request</param>
         /// <returns>The call's response</returns>
-        public async Task<NeoInvokeFunctionResponse> CallInvokeFunction(string function, ContractParameter[] parameters = null, List<Signer> signers = null)
+        public async Task<EpicChainInvokeFunctionResponse> CallInvokeFunction(string function, ContractParameter[] parameters = null, List<Signer> signers = null)
         {
             if (string.IsNullOrEmpty(function))
             {
@@ -392,7 +392,7 @@ namespace EpicChain.Unity.SDK.Contracts
     /// <summary>
     /// Exception thrown when smart contract operations fail.
     /// </summary>
-    public class ContractException : NeoUnityException
+    public class ContractException : EpicChainUnityException
     {
         /// <summary>
         /// Creates a new contract exception.

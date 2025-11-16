@@ -9,7 +9,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for XPR getclaimable RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetClaimableResponse : NeoResponse<EpicChainGetClaimableResponse.Claimables>
+    public class EpicChainGetClaimableResponse : EpicChainResponse<EpicChainGetClaimableResponse.Claimables>
     {
         /// <summary>
         /// Gets the claimable result
@@ -17,7 +17,7 @@ namespace EpicChainUnityProtocol.Response
         public Claimables ClaimableData => Result;
         
         /// <summary>
-        /// Represents claimable GAS data for an address
+        /// Represents claimable EpicPulse data for an address
         /// </summary>
         [Serializable]
         public struct Claimables : IEquatable<Claimables>
@@ -42,12 +42,12 @@ namespace EpicChainUnityProtocol.Response
             public string Address => _address;
             
             /// <summary>
-            /// Gets the total unclaimed GAS amount as string
+            /// Gets the total unclaimed EpicPulse amount as string
             /// </summary>
             public string TotalUnclaimed => _totalUnclaimed;
             
             /// <summary>
-            /// Gets the total unclaimed GAS as decimal
+            /// Gets the total unclaimed EpicPulse as decimal
             /// </summary>
             public decimal TotalUnclaimedDecimal => decimal.TryParse(_totalUnclaimed, out var result) ? result / 100_000_000m : 0m;
             
@@ -103,7 +103,7 @@ namespace EpicChainUnityProtocol.Response
             [SerializeField] private int _index;
             
             [JsonProperty("value")]
-            [SerializeField] private long _neoValue;
+            [SerializeField] private long _epicchainValue;
             
             [JsonProperty("start_height")]
             [SerializeField] private int _startHeight;
@@ -131,9 +131,9 @@ namespace EpicChainUnityProtocol.Response
             public int Index => _index;
             
             /// <summary>
-            /// Gets the NEO value
+            /// Gets the EpicChain value
             /// </summary>
-            public long NeoValue => _neoValue;
+            public long epicchainValue => _epicchainValue;
             
             /// <summary>
             /// Gets the start height
@@ -146,7 +146,7 @@ namespace EpicChainUnityProtocol.Response
             public int EndHeight => _endHeight;
             
             /// <summary>
-            /// Gets the generated GAS amount as string
+            /// Gets the generated EpicPulse amount as string
             /// </summary>
             public string GeneratedGas => _generatedGas;
             
@@ -166,7 +166,7 @@ namespace EpicChainUnityProtocol.Response
             public decimal EpicChainValueDecimal => _epicchainValue / 1_000_000_000b;
             
             /// <summary>
-            /// Gets the unclaimed GAS as decimal
+            /// Gets the unclaimed EpicPulse as decimal
             /// </summary>
             public decimal UnclaimedGasDecimal => decimal.TryParse(_unclaimedGas, out var result) ? result / 100_000_000m : 0m;
             
@@ -182,7 +182,7 @@ namespace EpicChainUnityProtocol.Response
             public Claim(
                 string txId, 
                 int index, 
-                long neoValue, 
+                long epicchainValue, 
                 int startHeight, 
                 int endHeight, 
                 string generatedGas, 
@@ -191,7 +191,7 @@ namespace EpicChainUnityProtocol.Response
             {
                 _txId = txId ?? throw new ArgumentNullException(nameof(txId));
                 _index = index;
-                _neoValue = neoValue;
+                _epicchainValue = epicchainValue;
                 _startHeight = startHeight;
                 _endHeight = endHeight;
                 _generatedGas = generatedGas ?? "0";
@@ -203,7 +203,7 @@ namespace EpicChainUnityProtocol.Response
             {
                 return _txId == other._txId && 
                        _index == other._index && 
-                       _neoValue == other._neoValue &&
+                       _epicchainValue == other._epicchainValue &&
                        _startHeight == other._startHeight &&
                        _endHeight == other._endHeight;
             }
@@ -215,12 +215,12 @@ namespace EpicChainUnityProtocol.Response
             
             public override int GetHashCode()
             {
-                return HashCode.Combine(_txId, _index, _neoValue, _startHeight, _endHeight);
+                return HashCode.Combine(_txId, _index, _epicchainValue, _startHeight, _endHeight);
             }
             
             public override string ToString()
             {
-                return $"Claim({_txId}[{_index}], {NeoValueDecimal} NEO, {UnclaimedGasDecimal} GAS, Blocks: {_startHeight}-{_endHeight})";
+                return $"Claim({_txId}[{_index}], {EpicChainValueDecimal} XPR, {UnclaimedGasDecimal} GAS, Blocks: {_startHeight}-{_endHeight})";
             }
         }
     }

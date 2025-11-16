@@ -11,7 +11,7 @@ using UnityEngine;
 namespace EpicChain.Unity.SDK.Wallet
 {
     /// <summary>
-    /// Class encapsulating a BIP-39 compatible NEO account.
+    /// Class encapsulating a BIP-39 compatible EpicChain account.
     /// Supports mnemonic-based key generation and recovery according to BIP-39 specification.
     /// Unity-optimized with proper serialization support and async operations.
     /// </summary>
@@ -86,13 +86,13 @@ namespace EpicChain.Unity.SDK.Wallet
         #region Static Factory Methods
         
         /// <summary>
-        /// Generates a BIP-39 compatible NEO account. The private key for the wallet can be calculated using:
+        /// Generates a BIP-39 compatible EpicChain account. The private key for the wallet can be calculated using:
         /// Key = SHA-256(BIP_39_SEED(mnemonic, password))
         /// The password will only be used as passphrase for BIP-39 seed (i.e., used to recover the account).
         /// </summary>
         /// <param name="password">The passphrase with which to encrypt the private key (can be empty)</param>
         /// <param name="wordCount">The number of mnemonic words to generate (12, 15, 18, 21, or 24)</param>
-        /// <returns>A BIP-39 compatible Neo account</returns>
+        /// <returns>A BIP-39 compatible EpicChain account</returns>
         public static async Task<Bip39Account> CreateAsync(string password = "", int wordCount = 12)
         {
             ValidateWordCount(wordCount);

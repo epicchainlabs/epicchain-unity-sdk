@@ -27,7 +27,7 @@ namespace EpicChainUnityProtocol.Response
         public int Id => _id;
         
         /// <summary>
-        /// Gets the contract NEF (Neo Executable Format)
+        /// Gets the contract NEF (EpicChain Executable Format)
         /// </summary>
         public ContractNef Nef => _nef;
         

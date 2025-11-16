@@ -101,7 +101,7 @@ public async Task<long> GetTokenBalanceAsync(Hash160 tokenHash, Hash160 accountH
 public async Task GetBalance_WithValidToken_ShouldReturnCorrectBalance()
 {
     // Arrange
-    var tokenHash = GasToken.SCRIPT_HASH;
+    var tokenHash = EpicPulseToken.SCRIPT_HASH;
     var account = await Account.Create();
     
     // Act
@@ -219,7 +219,7 @@ Follow **semantic versioning**:
 
 ### 🎓 **Learning Resources**
 
-- **[EpicChain Documentation](https://epic-chain.org/docs)** - Learn about Neo blockchain
+- **[EpicChain Documentation](https://epic-chain.org/docs)** - Learn about EpicChain blockchain
 - **[Unity Documentation](https://docs.unity3d.com/)** - Unity development guides
 - **[C# Async Programming](https://docs.microsoft.com/en-us/dotnet/csharp/async)** - Async/await patterns
 - **[EpicChain Unity SDK Examples](Samples~/)** - Practical implementation examples
@@ -229,9 +229,9 @@ Follow **semantic versioning**:
 ### 📞 **Support Channels**
 
 - **[GitHub Issues](https://github.com/epicchainlabs/epicchain-unity-sdk/issues)** - Bug reports and feature requests
-- **[EpicChain Discord](https://discord.gg/neo)** - Community chat and support
+- **[EpicChain Discord](https://discord.gg/epicchainlabs)** - Community chat and support
 - **[Unity Forums](https://forum.unity.com/)** - Unity-specific questions
-- **[Stack Overflow](https://stackoverflow.com/questions/tagged/neo-blockchain+unity)** - Technical Q&A
+- **[Stack Overflow](https://stackoverflow.com/questions/tagged/epiccchain-blockchain+unity)** - Technical Q&A
 
 ### 📚 **Documentation**
 
@@ -278,4 +278,4 @@ Before submitting your contribution:
 
 **Thank you for contributing to the future of blockchain gaming! 🎮⛓️**
 
-Together, we're building the tools that will power the next generation of Web3 games on the Neo blockchain.
+Together, we're building the tools that will power the next generation of Web3 games on the EpicChain blockchain.

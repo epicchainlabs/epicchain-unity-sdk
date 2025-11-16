@@ -13,7 +13,7 @@ using EpicChainUnityUtils;
 namespace EpicChain.Unity.SDK.Script
 {
     /// <summary>
-    /// Builds Neo VM scripts for contract invocations, verification scripts, and other blockchain operations.
+    /// Builds EpicChain VM scripts for contract invocations, verification scripts, and other blockchain operations.
     /// Supports method chaining for fluent API usage with proper async/await patterns for Unity compatibility.
     /// </summary>
     public class ScriptBuilder : IDisposable
@@ -448,8 +448,8 @@ namespace EpicChain.Unity.SDK.Script
             if (publicKey == null)
                 throw new ArgumentNullException(nameof(publicKey));
                 
-            if (publicKey.Length != NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED)
-                throw new ArgumentException($"Public key must be {NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes");
+            if (publicKey.Length != EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED)
+                throw new ArgumentException($"Public key must be {EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes");
             
             using var builder = new ScriptBuilder();
             return builder.PushData(publicKey)
@@ -471,8 +471,8 @@ namespace EpicChain.Unity.SDK.Script
             if (signingThreshold < 1 || signingThreshold > publicKeys.Length)
                 throw new ArgumentException("Invalid signing threshold");
                 
-            if (publicKeys.Length > NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
-                throw new ArgumentException($"Too many public keys (max {NeoConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
+            if (publicKeys.Length > EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT)
+                throw new ArgumentException($"Too many public keys (max {EpicChainConstants.MAX_PUBLIC_KEYS_PER_MULTISIG_ACCOUNT})");
             
             using var builder = new ScriptBuilder();
             

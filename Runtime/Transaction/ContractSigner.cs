@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// You can use this in transactions that require the verification of a smart contract,
     /// e.g., if you want to withdraw tokens from a contract you own.
     /// 
-    /// Using such a signer will make Neo call the `verify()` method of the corresponding contract.
+    /// Using such a signer will make EpicChain call the `verify()` method of the corresponding contract.
     /// Make sure to provide the necessary contract parameters if the contract's `verify()` method expects any.
     /// </summary>
     [Serializable]

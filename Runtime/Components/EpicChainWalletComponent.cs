@@ -246,21 +246,21 @@ namespace EpicChain.Unity.SDK.Components
         #region Balance Operations
         
         /// <summary>
-        /// Gets the NEO balance of the default account.
+        /// Gets the EpicChain balance of the default account.
         /// </summary>
-        /// <returns>NEO balance in fractions</returns>
-        public async Task<long> GetNeoBalance()
+        /// <returns>EpicChain balance in fractions</returns>
+        public async Task<long> GetEpicChainBalance()
         {
-            return await GetTokenBalance(NeoToken.SCRIPT_HASH);
+            return await GetTokenBalance(EpicChainTokenSCRIPT_HASH);
         }
         
         /// <summary>
-        /// Gets the GAS balance of the default account.
+        /// Gets the EpicPulse balance of the default account.
         /// </summary>
         /// <returns>GAS balance in fractions</returns>
         public async Task<long> GetGasBalance()
         {
-            return await GetTokenBalance(GasToken.SCRIPT_HASH);
+            return await GetTokenBalance(EpicPulseToken.SCRIPT_HASH);
         }
         
         /// <summary>

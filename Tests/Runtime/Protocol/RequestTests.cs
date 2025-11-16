@@ -17,7 +17,7 @@ namespace EpicChain.Unity.SDK.Tests.Protocol
         private MockepicchainSwift mockepicchainSwift;
         private const string DefaultAccountAddress = "NM7Aky765FG8NhhwtxjXRx7jEL1cnw7PBP";
         private const string DefaultAccountPublicKey = "033a4d051b04b7fc0230d2b1aaedfd5a84be279a5361a7358db665ad7857787f1b";
-        private const string NeoTokenHash = "ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5";
+        private const string EpicChainTokenHash = "ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5";
         private const string CommitteeAccountScriptHash = "05859de95ccbbd5668e0f055b208273634d4657f";
 
         [SetUp]
@@ -177,11 +177,11 @@ namespace EpicChain.Unity.SDK.Tests.Protocol
         [Test]
         public async Task TestGetContractState_ByName()
         {
-            var expectedJson = @"{""jsonrpc"":""2.0"",""method"":""getcontractstate"",""id"":1,""params"":[""NeoToken""]}";
+            var expectedJson = @"{""jsonrpc"":""2.0"",""method"":""getcontractstate"",""id"":1,""params"":[""EpicChain""]}";
             
             await VerifyRequest(expectedJson, async epicchainSwift =>
             {
-                return await epicchainSwift.GetNativeContractState("NeoToken");
+                return await epicchainSwift.GetNativeContractState("EpicChain");
             });
         }
 
@@ -344,9 +344,9 @@ namespace EpicChain.Unity.SDK.Tests.Protocol
             var contractHash = new Hash160("af7c7328eee5a275a3bcaee2bf0cf662b5e739be");
             var accountHash = new Hash160("91b83e96f2a7c4fdf0c1688441ec61986c7cae26");
             var signerHash = new Hash160("0xcadb3dc2faa3ef14a13b619c9a43124755aa2569");
-            var epicchainTokenHashObj = new Hash160(NeoTokenHash);
+            var epicchainTokenHashObj = new Hash160(EpicChainTokenHash);
             
-            var expectedJson = $@"{{""jsonrpc"":""2.0"",""method"":""invokefunction"",""id"":1,""params"":[""af7c7328eee5a275a3bcaee2bf0cf662b5e739be"",""balanceOf"",[{{""type"":""Hash160"",""value"":""91b83e96f2a7c4fdf0c1688441ec61986c7cae26""}}],[{{""allowedcontracts"":[""ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5""],""account"":""cadb3dc2faa3ef14a13b619c9a43124755aa2569"",""rules"":[{{""condition"":{{""type"":""CalledByContract"",""hash"":""{NeoTokenHash}""}},""action"":""Allow""}}],""allowedgroups"":[""033a4d051b04b7fc0230d2b1aaedfd5a84be279a5361a7358db665ad7857787f1b""],""scopes"":""CalledByEntry,CustomContracts,CustomGroups,WitnessRules""}}]}}";
+            var expectedJson = $@"{{""jsonrpc"":""2.0"",""method"":""invokefunction"",""id"":1,""params"":[""af7c7328eee5a275a3bcaee2bf0cf662b5e739be"",""balanceOf"",[{{""type"":""Hash160"",""value"":""91b83e96f2a7c4fdf0c1688441ec61986c7cae26""}}],[{{""allowedcontracts"":[""ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5""],""account"":""cadb3dc2faa3ef14a13b619c9a43124755aa2569"",""rules"":[{{""condition"":{{""type"":""CalledByContract"",""hash"":""{EpicChainTokenHash}""}},""action"":""Allow""}}],""allowedgroups"":[""033a4d051b04b7fc0230d2b1aaedfd5a84be279a5361a7358db665ad7857787f1b""],""scopes"":""CalledByEntry,CustomContracts,CustomGroups,WitnessRules""}}]}}";
             
             await VerifyRequest(expectedJson, async epicchainSwift =>
             {
@@ -539,7 +539,7 @@ namespace EpicChain.Unity.SDK.Tests.Protocol
 
         // Helper Methods
 
-        private async Task VerifyRequest<T>(string expectedJson, Func<INeoUnity, Task<T>> makeRequest)
+        private async Task VerifyRequest<T>(string expectedJson, Func<IEpicChainUnity, Task<T>> makeRequest)
         {
             mockepicchainSwift.SetupRequestInterceptor(request =>
             {
@@ -628,7 +628,7 @@ namespace EpicChain.Unity.SDK.Tests.Protocol
         {
             mockepicchainSwift.SetupErrorResponse("Invalid method", -32601);
             
-            var exception = await AssertThrowsAsync<NeoUnityException>(async () =>
+            var exception = await AssertThrowsAsync<EpicChainUnityException>(async () =>
             {
                 await mockepicchainSwift.GetBlockCount();
             });

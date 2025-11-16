@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Wallet
 {
     /// <summary>
-    /// The Neo wallet manages a collection of accounts and provides methods for account operations,
+    /// The EpicChain wallet manages a collection of accounts and provides methods for account operations,
     /// balance checking, and XEP-6 wallet file compatibility.
     /// Unity-optimized wallet implementation with ScriptableObject support.
     /// </summary>
@@ -23,7 +23,7 @@ namespace EpicChain.Unity.SDK.Wallet
         #region Constants
         
         /// <summary>Default wallet name</summary>
-        private const string DEFAULT_WALLET_NAME = "NeoUnityWallet";
+        private const string DEFAULT_WALLET_NAME = "EpicChainUnityWallet";
         
         /// <summary>Current XEP-6 wallet version</summary>
         public const string CURRENT_VERSION = "3.0";
@@ -409,20 +409,20 @@ namespace EpicChain.Unity.SDK.Wallet
         /// <summary>
         /// Gets the balances of all XEP-17 tokens that this wallet owns.
         /// The token amounts are returned in token fractions.
-        /// Requires a Neo node with the RpcXep17Tracker plugin installed.
+        /// Requires a EpicChain node with the RpcXep17Tracker plugin installed.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for RPC calls</param>
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for RPC calls</param>
         /// <returns>Dictionary mapping token script hashes to token amounts</returns>
-        public async Task<Dictionary<Hash160, long>> GetXep17TokenBalances(NeoUnity epicchainUnity = null)
+        public async Task<Dictionary<Hash160, long>> GetXep17TokenBalances(EpicChainUnity epicchainUnity = null)
         {
-            epicchainUnity = neoUnity ?? EpicChainUnityInstance;
+            epicchainUnity = epicchainUnity ?? EpicChainUnityInstance;
             var balances = new Dictionary<Hash160, long>();
             
             var tasks = Accounts.Select(async account => 
             {
                 try
                 {
-                    return await account.GetXep17Balances(neoUnity);
+                    return await account.GetXep17Balances(epicchainUnity);
                 }
                 catch (Exception ex)
                 {

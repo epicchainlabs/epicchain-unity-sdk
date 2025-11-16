@@ -13,7 +13,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// This determines which contracts can use the witness/signature in an invocation.
     /// </summary>
     [System.Serializable]
-    public class Signer : INeoSerializable
+    public class Signer : IEpicChainSerializable
     {
         #region Properties
         
@@ -115,9 +115,9 @@ namespace EpicChain.Unity.SDK.Transaction
                 throw new ArgumentException("Cannot set allowed contracts on a Signer with global scope.");
             }
             
-            if (AllowedContracts.Count + allowedContracts.Count > NeoConstants.MAX_SIGNER_SUBITEMS)
+            if (AllowedContracts.Count + allowedContracts.Count > EpicChainConstants.MAX_SIGNER_SUBITEMS)
             {
-                throw new ArgumentException($"Cannot set more than {NeoConstants.MAX_SIGNER_SUBITEMS} allowed contracts on a signer.");
+                throw new ArgumentException($"Cannot set more than {EpicChainConstants.MAX_SIGNER_SUBITEMS} allowed contracts on a signer.");
             }
             
             // Remove 'None' scope and add 'CustomContracts' scope
@@ -158,9 +158,9 @@ namespace EpicChain.Unity.SDK.Transaction
                 throw new ArgumentException("Cannot set allowed contract groups on a Signer with global scope.");
             }
             
-            if (AllowedGroups.Count + allowedGroups.Count > NeoConstants.MAX_SIGNER_SUBITEMS)
+            if (AllowedGroups.Count + allowedGroups.Count > EpicChainConstants.MAX_SIGNER_SUBITEMS)
             {
-                throw new ArgumentException($"Cannot set more than {NeoConstants.MAX_SIGNER_SUBITEMS} allowed contract groups on a signer.");
+                throw new ArgumentException($"Cannot set more than {EpicChainConstants.MAX_SIGNER_SUBITEMS} allowed contract groups on a signer.");
             }
             
             // Remove 'None' scope and add 'CustomGroups' scope
@@ -201,9 +201,9 @@ namespace EpicChain.Unity.SDK.Transaction
                 throw new ArgumentException("Cannot set witness rules on a Signer with global scope.");
             }
             
-            if (Rules.Count + rules.Count > NeoConstants.MAX_SIGNER_SUBITEMS)
+            if (Rules.Count + rules.Count > EpicChainConstants.MAX_SIGNER_SUBITEMS)
             {
-                throw new ArgumentException($"Cannot set more than {NeoConstants.MAX_SIGNER_SUBITEMS} witness rules on a signer.");
+                throw new ArgumentException($"Cannot set more than {EpicChainConstants.MAX_SIGNER_SUBITEMS} witness rules on a signer.");
             }
             
             // Validate rule nesting depth
@@ -288,7 +288,7 @@ namespace EpicChain.Unity.SDK.Transaction
         
         #endregion
         
-        #region INeoSerializable Implementation
+        #region IEpicChainSerializable Implementation
         
         /// <summary>
         /// Gets the size in bytes when serialized.
@@ -297,7 +297,7 @@ namespace EpicChain.Unity.SDK.Transaction
         {
             get
             {
-                var size = NeoConstants.HASH160_SIZE + 1; // Hash + scope byte
+                var size = EpicChainConstants.HASH160_SIZE + 1; // Hash + scope byte
                 
                 if (Scopes.Contains(WitnessScope.CustomContracts))
                 {
@@ -392,9 +392,9 @@ namespace EpicChain.Unity.SDK.Transaction
                             break;
                     }
                     
-                    if (count > NeoConstants.MAX_SIGNER_SUBITEMS)
+                    if (count > EpicChainConstants.MAX_SIGNER_SUBITEMS)
                     {
-                        throw new ArgumentException($"A signer's scope can only contain {NeoConstants.MAX_SIGNER_SUBITEMS} {errorLabel}. The input data contained {count}.");
+                        throw new ArgumentException($"A signer's scope can only contain {EpicChainConstants.MAX_SIGNER_SUBITEMS} {errorLabel}. The input data contained {count}.");
                     }
                 }
             }

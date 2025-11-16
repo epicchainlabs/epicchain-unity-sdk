@@ -92,7 +92,7 @@ namespace EpicChain.Unity.SDK.Tests.Crypto
             var publicKey = ECPublicKey.FromBytes(data);
 
             // Assert
-            Assert.AreEqual(NeoConstants.SECP256R1_DOMAIN.G, publicKey.ECPoint);
+            Assert.AreEqual(EpicChainConstants.SECP256R1_DOMAIN.G, publicKey.ECPoint);
         }
 
         [Test]

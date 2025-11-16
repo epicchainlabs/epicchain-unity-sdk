@@ -6,13 +6,13 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
     /// Response for the getunclaimedgas RPC call.
-    /// Returns the amount of unclaimed GAS tokens for a specific address.
+    /// Returns the amount of unclaimed EpicPulse tokens for a specific address.
     /// </summary>
     [System.Serializable]
     public class EpicChainGetUnclaimedGasResponse : EpicChainResponse<EpicChainGetUnclaimedGasResponse.UnclaimedGasInfo>
     {
         /// <summary>
-        /// Gets the unclaimed GAS information from the response.
+        /// Gets the unclaimed EpicPulse information from the response.
         /// </summary>
         public UnclaimedGasInfo UnclaimedGasInfo => Result;
 
@@ -24,16 +24,16 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         }
 
         /// <summary>
-        /// Creates a successful unclaimed GAS response.
+        /// Creates a successful unclaimed EpicPulse response.
         /// </summary>
-        /// <param name="unclaimedGasInfo">The unclaimed GAS information</param>
+        /// <param name="unclaimedGasInfo">The unclaimed EpicPulse information</param>
         /// <param name="id">The request ID</param>
         public EpicChainGetUnclaimedGasResponse(UnclaimedGasInfo unclaimedGasInfo, int id = 1) : base(unclaimedGasInfo, id)
         {
         }
 
         /// <summary>
-        /// Creates an error unclaimed GAS response.
+        /// Creates an error unclaimed EpicPulse response.
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
@@ -51,7 +51,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             [JsonProperty("unclaimed")]
             public string Unclaimed { get; set; }
 
-            /// <summary>The EpicChain address for which the unclaimed GAS is being queried</summary>
+            /// <summary>The EpicChain address for which the unclaimed EpicPulse is being queried</summary>
             [JsonProperty("address")]
             public string Address { get; set; }
 
@@ -93,7 +93,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Gets the unclaimed GAS amount as a double value.
+            /// Gets the unclaimed EpicPulse amount as a double value.
             /// Note: May lose precision for very small amounts.
             /// </summary>
             [JsonIgnore]
@@ -112,13 +112,13 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Checks if there is any unclaimed GAS available.
+            /// Checks if there is any unclaimed EpicPulse available.
             /// </summary>
             [JsonIgnore]
             public bool HasUnclaimedGas => UnclaimedDecimal > 0m;
 
             /// <summary>
-            /// Gets the unclaimed GAS amount in the smallest unit (equivalent to satoshis).
+            /// Gets the unclaimed EpicPulse amount in the smallest unit (equivalent to satoshis).
             /// </summary>
             [JsonIgnore]
             public long UnclaimedInSmallestUnit
@@ -137,10 +137,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Returns a formatted string representation of the unclaimed GAS amount.
+            /// Returns a formatted string representation of the unclaimed EpicPulse amount.
             /// </summary>
             /// <param name="decimals">Number of decimal places to show (default: 8)</param>
-            /// <returns>Formatted GAS amount</returns>
+            /// <returns>Formatted EpicPulse amount</returns>
             public string GetFormattedAmount(int decimals = 8)
             {
                 if (decimals < 0 || decimals > 8)
@@ -150,7 +150,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Returns a string representation of the unclaimed GAS information.
+            /// Returns a string representation of the unclaimed EpicPulse information.
             /// </summary>
             /// <returns>String representation</returns>
             public override string ToString()
@@ -159,7 +159,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             }
 
             /// <summary>
-            /// Validates the unclaimed GAS information.
+            /// Validates the unclaimed EpicPulse information.
             /// </summary>
             /// <exception cref="ArgumentException">If the information is invalid</exception>
             public void Validate()
@@ -176,9 +176,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
                 if (amount < 0)
                     throw new ArgumentException("Unclaimed amount cannot be negative");
 
-                // Basic address validation (Neo addresses start with 'N' and are typically 34 characters)
+                // Basic address validation (EpicChain addresses start with 'N' and are typically 34 characters)
                 if (!Address.StartsWith("N") || Address.Length != 34)
-                    throw new ArgumentException($"Invalid Neo address format: {Address}");
+                    throw new ArgumentException($"Invalid EpicChain address format: {Address}");
             }
 
             /// <summary>

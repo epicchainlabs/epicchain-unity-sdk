@@ -8,7 +8,7 @@ using EpicChain.Unity.SDK.Core;
 namespace EpicChain.Unity.SDK.Utils
 {
     /// <summary>
-    /// Extension methods for string operations related to Neo blockchain functionality.
+    /// Extension methods for string operations related to EpicChain blockchain functionality.
     /// Provides encoding, validation, conversion, and utility methods.
     /// </summary>
     public static class StringExtensions
@@ -180,13 +180,13 @@ namespace EpicChain.Unity.SDK.Utils
         
         #endregion
         
-        #region Neo Address Operations
+        #region EpicChain Address Operations
         
         /// <summary>
-        /// Validates if string is a valid Neo address.
+        /// Validates if string is a valid EpicChain address.
         /// </summary>
         /// <param name="address">The address string</param>
-        /// <returns>True if valid Neo address</returns>
+        /// <returns>True if valid EpicChain address</returns>
         public static bool IsValidAddress(this string address)
         {
             if (string.IsNullOrEmpty(address))
@@ -216,19 +216,19 @@ namespace EpicChain.Unity.SDK.Utils
         }
         
         /// <summary>
-        /// Converts Neo address to script hash bytes.
+        /// Converts EpicChain address to script hash bytes.
         /// </summary>
-        /// <param name="address">The Neo address</param>
+        /// <param name="address">The EpicChain address</param>
         /// <returns>Script hash bytes (20 bytes)</returns>
         /// <exception cref="ArgumentException">If address is invalid</exception>
         public static byte[] AddressToScriptHash(this string address)
         {
             if (!address.IsValidAddress())
-                throw new ArgumentException("Not a valid Neo address.", nameof(address));
+                throw new ArgumentException("Not a valid EpicChain address.", nameof(address));
             
             var decoded = address.Base58Decoded();
             if (decoded == null)
-                throw new ArgumentException("Failed to decode Neo address.", nameof(address));
+                throw new ArgumentException("Failed to decode EpicChain address.", nameof(address));
             
             // Extract script hash (bytes 1-20) and reverse for Hash160 format
             return decoded.Skip(1).Take(20).Reverse().ToArray();

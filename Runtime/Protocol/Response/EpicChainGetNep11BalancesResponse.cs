@@ -12,7 +12,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns XEP-11 (NFT) token balances for a specific address.
     /// </summary>
     [System.Serializable]
-    public class EpicChainGetXep11BalancesResponse : NeoResponse<EpicChainGetXep11BalancesResponse.Xep11Balances>
+    public class EpicChainGetXep11BalancesResponse : EpicChainResponse<EpicChainGetXep11BalancesResponse.Xep11Balances>
     {
         /// <summary>
         /// XEP-11 balances data structure containing all NFT balances for an address.

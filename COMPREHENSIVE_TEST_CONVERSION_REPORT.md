@@ -72,7 +72,7 @@ The following contract tests follow the same comprehensive conversion pattern as
 11. **FungibleTokenTests.cs** (Pattern: Token operations, balance tracking, transfers)
 12. **EpicChainNameServiceTests.cs** (Pattern: Domain resolution, registration, records)
 13. **EpicChainURITests.cs** (Pattern: URI parsing, validation, parameter extraction)
-14. **NNSNameTests.cs** (Pattern: Name validation, encoding, domain operations)
+14. **XNSNameTests.cs** (Pattern: Name validation, encoding, domain operations)
 15. **NonFungibleTokenTests.cs** (Pattern: NFT operations, ownership, metadata)
 16. **PolicyContractTests.cs** (Pattern: Policy management, fee calculations)
 17. **RoleManagementTests.cs** (Pattern: Role assignments, permissions, validation)

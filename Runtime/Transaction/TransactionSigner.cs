@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Transaction
 {
     /// <summary>
     /// Represents a transaction signer for JSON-RPC serialization.
-    /// Used specifically for RPC method parameters when calling Neo node methods.
+    /// Used specifically for RPC method parameters when calling EpicChain node methods.
     /// </summary>
     [System.Serializable]
     public class TransactionSigner

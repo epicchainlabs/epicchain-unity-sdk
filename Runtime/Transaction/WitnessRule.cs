@@ -10,7 +10,7 @@ namespace EpicChain.Unity.SDK.Transaction
     /// Witness rules determine how witnesses can be used based on specific conditions.
     /// </summary>
     [Serializable]
-    public struct WitnessRule : INeoSerializable, IEquatable<WitnessRule>
+    public struct WitnessRule : IEpicChainSerializable, IEquatable<WitnessRule>
     {
         [SerializeField]
         private WitnessAction _action;

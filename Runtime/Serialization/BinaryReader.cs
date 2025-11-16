@@ -11,7 +11,7 @@ using EpicChain.Unity.SDK.Script;
 namespace EpicChain.Unity.SDK.Serialization
 {
     /// <summary>
-    /// Binary reader for Neo protocol data structures.
+    /// Binary reader for EpicChain protocol data structures.
     /// Handles little-endian binary data reading with variable-length integer support.
     /// Unity-optimized implementation with proper async support and memory management.
     /// </summary>
@@ -394,20 +394,20 @@ namespace EpicChain.Unity.SDK.Serialization
         /// <summary>
         /// Reads a serializable object of the specified type.
         /// </summary>
-        /// <typeparam name="T">The type implementing INeoSerializable</typeparam>
+        /// <typeparam name="T">The type implementing IEpicChainSerializable</typeparam>
         /// <returns>The deserialized object</returns>
-        public T ReadSerializable<T>() where T : INeoSerializable, new()
+        public T ReadSerializable<T>() where T : IEpicChainSerializable, new()
         {
             EnsureNotDisposed();
-            return INeoSerializable.Deserialize<T>(this);
+            return IEpicChainSerializable.Deserialize<T>(this);
         }
         
         /// <summary>
         /// Reads a list of serializable objects with variable-length byte encoding.
         /// </summary>
-        /// <typeparam name="T">The type implementing INeoSerializable</typeparam>
+        /// <typeparam name="T">The type implementing IEpicChainSerializable</typeparam>
         /// <returns>The list of deserialized objects</returns>
-        public List<T> ReadSerializableListVarBytes<T>() where T : INeoSerializable, new()
+        public List<T> ReadSerializableListVarBytes<T>() where T : IEpicChainSerializable, new()
         {
             EnsureNotDisposed();
             
@@ -437,9 +437,9 @@ namespace EpicChain.Unity.SDK.Serialization
         /// <summary>
         /// Reads a list of serializable objects with count prefix.
         /// </summary>
-        /// <typeparam name="T">The type implementing INeoSerializable</typeparam>
+        /// <typeparam name="T">The type implementing IEpicChainSerializable</typeparam>
         /// <returns>The list of deserialized objects</returns>
-        public List<T> ReadSerializableList<T>() where T : INeoSerializable, new()
+        public List<T> ReadSerializableList<T>() where T : IEpicChainSerializable, new()
         {
             EnsureNotDisposed();
             

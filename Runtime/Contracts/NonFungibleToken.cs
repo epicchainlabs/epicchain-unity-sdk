@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Contracts
 {
     /// <summary>
     /// Represents a non-fungible token contract that is compliant with the XEP-11 standard
-    /// and provides methods to invoke it. XEP-11 is the Neo standard for non-fungible tokens (NFTs).
+    /// and provides methods to invoke it. XEP-11 is the EpicChain standard for non-fungible tokens (NFTs).
     /// </summary>
     [System.Serializable]
     public abstract class NonFungibleToken : Token
@@ -32,13 +32,13 @@ namespace EpicChain.Unity.SDK.Contracts
         /// Constructs a NonFungibleToken instance representing the XEP-11 token contract with the given script hash.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        protected NonFungibleToken(Hash160 scriptHash, NeoUnity neoUnity) : base(scriptHash, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        protected NonFungibleToken(Hash160 scriptHash, EpicChainUnity epicchainUnity) : base(scriptHash, epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a NonFungibleToken instance using the singleton NeoUnity instance.
+        /// Constructs a NonFungibleToken instance using the singleton EpicChainUnity instance.
         /// </summary>
         /// <param name="scriptHash">The token contract's script hash</param>
         protected NonFungibleToken(Hash160 scriptHash) : base(scriptHash)
@@ -268,7 +268,7 @@ namespace EpicChain.Unity.SDK.Contracts
             }
 
             var transferScript = await BuildInvokeFunctionScript(TRANSFER, parameters.ToArray());
-            return new TransactionBuilder(NeoUnity).SetScript(transferScript);
+            return new TransactionBuilder(EpicChainUnity).SetScript(transferScript);
         }
 
         /// <summary>

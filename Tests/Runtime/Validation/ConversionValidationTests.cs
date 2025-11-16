@@ -22,32 +22,32 @@ namespace EpicChainUnityTests.Runtime.Validation
             // Test Role enum functionality
             var stateValidator = Role.StateValidator;
             var oracle = Role.Oracle;
-            var neoFS = Role.NeoFSAlphabetNode;
+            var epicchainFS = Role.EpicChainFSAlphabetNode;
 
             // Test byte values
             Assert.AreEqual(0x04, stateValidator.ToByte());
             Assert.AreEqual(0x08, oracle.ToByte());
-            Assert.AreEqual(0x10, neoFS.ToByte());
+            Assert.AreEqual(0x10, epicchainFS.ToByte());
 
             // Test JSON string values
             Assert.AreEqual("StateValidator", stateValidator.ToJsonString());
             Assert.AreEqual("Oracle", oracle.ToJsonString());
-            Assert.AreEqual("NeoFSAlphabetNode", neoFS.ToJsonString());
+            Assert.AreEqual("EpicChainFSAlphabetNode", epicchainFS.ToJsonString());
 
             // Test from byte conversion
             Assert.AreEqual(Role.StateValidator, RoleExtensions.FromByte(0x04));
             Assert.AreEqual(Role.Oracle, RoleExtensions.FromByte(0x08));
-            Assert.AreEqual(Role.NeoFSAlphabetNode, RoleExtensions.FromByte(0x10));
+            Assert.AreEqual(Role.EpicChainFSAlphabetNode, RoleExtensions.FromByte(0x10));
 
             // Test from string conversion
             Assert.AreEqual(Role.StateValidator, RoleExtensions.FromString("StateValidator"));
             Assert.AreEqual(Role.Oracle, RoleExtensions.FromString("Oracle"));
-            Assert.AreEqual(Role.NeoFSAlphabetNode, RoleExtensions.FromString("NeoFSAlphabetNode"));
+            Assert.AreEqual(Role.EpicChainFSAlphabetNode, RoleExtensions.FromString("EpicChainFSAlphabetNode"));
 
             // Test validation
             Assert.IsTrue(stateValidator.IsValid());
             Assert.IsTrue(oracle.IsValid());
-            Assert.IsTrue(neoFS.IsValid());
+            Assert.IsTrue(epicchainFS.IsValid());
         }
 
         [Test]
@@ -107,10 +107,10 @@ namespace EpicChainUnityTests.Runtime.Validation
         }
 
         [Test]
-        public void INeoExpress_Interface_IsValid()
+        public void IEpicChainExpress_Interface_IsValid()
         {
-            // Test that INeoExpress interface is properly defined
-            var interfaceType = typeof(INeoExpress);
+            // Test that IEpicChainExpress interface is properly defined
+            var interfaceType = typeof(IEpicChainExpress);
             Assert.IsTrue(interfaceType.IsInterface);
 
             // Check all required methods exist
@@ -126,14 +126,14 @@ namespace EpicChainUnityTests.Runtime.Validation
             Assert.Contains("ExpressCreateOracleResponseTx", methodNames);
             Assert.Contains("ExpressShutdown", methodNames);
 
-            Debug.Log($"INeoExpress interface has {methods.Length} methods: {string.Join(", ", methodNames)}");
+            Debug.Log($"IEpicChainExpress interface has {methods.Length} methods: {string.Join(", ", methodNames)}");
         }
 
         [Test]
-        public void INeoUnityRx_Interface_IsValid()
+        public void IEpicChainUnityRx_Interface_IsValid()
         {
-            // Test that INeoUnityRx interface is properly defined
-            var interfaceType = typeof(INeoUnityRx);
+            // Test that IEpicChainUnityRx interface is properly defined
+            var interfaceType = typeof(IEpicChainUnityRx);
             Assert.IsTrue(interfaceType.IsInterface);
 
             // Check all required methods exist
@@ -148,7 +148,7 @@ namespace EpicChainUnityTests.Runtime.Validation
             Assert.Contains("GetTransactionStream", methodNames);
             Assert.Contains("GetBlockIndexStream", methodNames);
 
-            Debug.Log($"INeoUnityRx interface has {methods.Length} methods");
+            Debug.Log($"IEpicChainUnityRx interface has {methods.Length} methods");
         }
 
         [Test]
@@ -167,21 +167,21 @@ namespace EpicChainUnityTests.Runtime.Validation
         }
 
         [Test]
-        public void NeoUnityRx_Class_IsValid()
+        public void EpicChainUnityRx_Class_IsValid()
         {
-            // Test that NeoUnityRx class is properly defined and instantiable
-            var classType = typeof(NeoUnityRx);
+            // Test that EpicChainUnityRx class is properly defined and instantiable
+            var classType = typeof(EpicChainUnityRx);
             Assert.IsFalse(classType.IsAbstract);
             Assert.IsFalse(classType.IsInterface);
 
-            // Check it implements INeoUnityRx
-            Assert.IsTrue(typeof(INeoUnityRx).IsAssignableFrom(classType));
+            // Check it implements IEpicChainUnityRx
+            Assert.IsTrue(typeof(IEpicChainUnityRx).IsAssignableFrom(classType));
 
             // Check constructor exists
             var constructors = classType.GetConstructors();
             Assert.Greater(constructors.Length, 0);
 
-            Debug.Log($"NeoUnityRx implements INeoUnityRx and has {constructors.Length} constructors");
+            Debug.Log($"EpicChainUnityRx implements IEpicChainUnityRx and has {constructors.Length} constructors");
         }
 
         [Test]
@@ -274,13 +274,13 @@ namespace EpicChainUnityTests.Runtime.Validation
         [Test]
         public async Task ReactiveWrapper_Can_Be_Created()
         {
-            // Create a mock NeoUnity instance (this would normally be injected)
+            // Create a mock EpicChainUnity instance (this would normally be injected)
             // For now, just test that the wrapper can be created
             try
             {
-                // We can't fully test without a real INeo implementation,
+                // We can't fully test without a real IEpicChain implementation,
                 // but we can test the class structure
-                var wrapperType = typeof(ReactiveNeoUnityWrapper);
+                var wrapperType = typeof(ReactiveEpicChainUnityWrapper);
                 Assert.IsNotNull(wrapperType);
 
                 var methods = wrapperType.GetMethods();
@@ -291,7 +291,7 @@ namespace EpicChainUnityTests.Runtime.Validation
                 Assert.Contains("StopStream", methodNames);
                 Assert.Contains("Dispose", methodNames);
 
-                Debug.Log("ReactiveNeoUnityWrapper structure is valid");
+                Debug.Log("ReactiveEpicChainUnityWrapper structure is valid");
             }
             catch (Exception ex)
             {

@@ -32,7 +32,7 @@
   "samples": [
     {
       "displayName": "NFT Marketplace Game",
-      "description": "Complete NFT marketplace with game integration showcasing Neo blockchain operations.",
+      "description": "Complete NFT marketplace with game integration showcasing EpicChain blockchain operations.",
       "path": "Samples~/NFTMarketplaceGame"
     },
     {

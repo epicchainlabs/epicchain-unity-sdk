@@ -9,7 +9,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns whether the session was successfully terminated.
     /// </summary>
     [System.Serializable]
-    public class NeoTerminateSessionResponse : NeoResponse<bool>
+    public class EpicChainTerminateSessionResponse : EpicChainResponse<bool>
     {
         /// <summary>
         /// Gets the termination result from the response.
@@ -19,7 +19,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoTerminateSessionResponse() : base()
+        public EpicChainTerminateSessionResponse() : base()
         {
         }
 
@@ -28,7 +28,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="terminationResult">The termination result</param>
         /// <param name="id">The request ID</param>
-        public NeoTerminateSessionResponse(bool terminationResult, int id = 1) : base(terminationResult, id)
+        public EpicChainTerminateSessionResponse(bool terminationResult, int id = 1) : base(terminationResult, id)
         {
         }
 
@@ -37,7 +37,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoTerminateSessionResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainTerminateSessionResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -80,7 +80,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             if (HasError)
                 return base.ToString();
 
-            return $"NeoTerminateSessionResponse(Success: {WasSessionTerminated}, Status: {TerminationStatus})";
+            return $"EpicChainTerminateSessionResponse(Success: {WasSessionTerminated}, Status: {TerminationStatus})";
         }
 
         /// <summary>
@@ -129,10 +129,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Creates a copy of this response with a new termination result.
         /// </summary>
         /// <param name="newResult">The new termination result</param>
-        /// <returns>New NeoTerminateSessionResponse instance</returns>
-        public NeoTerminateSessionResponse WithResult(bool newResult)
+        /// <returns>New EpicChainTerminateSessionResponse instance</returns>
+        public EpicChainTerminateSessionResponse WithResult(bool newResult)
         {
-            return new NeoTerminateSessionResponse(newResult, Id);
+            return new EpicChainTerminateSessionResponse(newResult, Id);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="other">The other response to compare with</param>
         /// <returns>True if both responses have the same termination result</returns>
-        public bool ResultEquals(NeoTerminateSessionResponse other)
+        public bool ResultEquals(EpicChainTerminateSessionResponse other)
         {
             if (other == null)
                 return false;

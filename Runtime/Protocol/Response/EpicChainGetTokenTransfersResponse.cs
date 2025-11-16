@@ -11,7 +11,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getting token transfers for an address
     /// </summary>
     [Serializable]
-    public class EpicChainGetTokenTransfersResponse : NeoResponse<EpicChainGetTokenTransfersResponse.TokenTransfers>
+    public class EpicChainGetTokenTransfersResponse : EpicChainResponse<EpicChainGetTokenTransfersResponse.TokenTransfers>
     {
         /// <summary>
         /// Gets the token transfers result

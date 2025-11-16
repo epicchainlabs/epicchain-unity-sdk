@@ -25,7 +25,7 @@ namespace EpicChain.Unity.SDK.Utils
         public const string JSON_CONTENT_TYPE = "application/json; charset=utf-8";
         
         /// <summary>Default User-Agent for requests</summary>
-        public const string DEFAULT_USER_AGENT = "NeoUnity-SDK/1.0";
+        public const string DEFAULT_USER_AGENT = "EpicChainUnity-SDK/1.0";
         
         #endregion
         

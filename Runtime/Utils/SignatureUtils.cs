@@ -9,7 +9,7 @@ using EpicChain.Unity.SDK.Crypto;
 namespace EpicChain.Unity.SDK.Utils
 {
     /// <summary>
-    /// Utilities for cryptographic signing operations in the Neo blockchain context.
+    /// Utilities for cryptographic signing operations in the EpicChain blockchain context.
     /// Provides methods for creating, verifying, and recovering signatures.
     /// </summary>
     public static class SignatureUtils

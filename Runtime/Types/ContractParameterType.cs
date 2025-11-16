@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents the different types of contract parameters supported by the Neo VM.
+    /// Represents the different types of contract parameters supported by the EpicChain VM.
     /// Each type corresponds to a specific data format for smart contract invocations.
     /// </summary>
     [JsonConverter(typeof(ContractParameterTypeConverter))]

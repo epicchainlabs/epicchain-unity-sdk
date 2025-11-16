@@ -19,22 +19,22 @@ namespace EpicChain.Unity.SDK.Tests
             ["Contract"] = new TestCategoryInfo
             {
                 Name = "Contract",
-                Description = "Contract interaction tests (NeoToken, GasToken, etc.)",
+                Description = "Contract interaction tests (EpicChain, EpicPulse, etc.)",
                 ExpectedTestCount = 25,
                 SwiftFilesConverted = new[]
                 {
-                    "NeoTokenTests.swift",
-                    "GasTokenTests.swift",
+                    "EpicChainTests.swift",
+                    "EpicPulseTests.swift",
                     "FungibleTokenTests.swift",
                     "NonFungibleTokenTests.swift",
                     "ContractManagementTests.swift",
                     "PolicyContractTests.swift",
                     "RoleManagementTests.swift",
                     "SmartContractTests.swift",
-                    "NeoNameServiceTests.swift",
+                    "EpicChainNameServiceTests.swift",
                     "EpicChainURITests.swift",
                     "NefFileTests.swift",
-                    "NNSNameTests.swift",
+                    "XNSNameTests.swift",
                     "TokenTests.swift"
                 }
             },

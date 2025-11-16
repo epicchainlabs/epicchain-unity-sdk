@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     /// Returns a list of stack items from iterator traversal.
     /// </summary>
     [System.Serializable]
-    public class NeoTraverseIteratorResponse : NeoResponse<List<object>>
+    public class EpicChainTraverseIteratorResponse : EpicChainResponse<List<object>>
     {
         /// <summary>
         /// Gets the traverse iterator results from the response.
@@ -21,7 +21,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoTraverseIteratorResponse() : base()
+        public EpicChainTraverseIteratorResponse() : base()
         {
         }
 
@@ -30,7 +30,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="results">The iterator results</param>
         /// <param name="id">The request ID</param>
-        public NeoTraverseIteratorResponse(List<object> results, int id = 1) : base(results, id)
+        public EpicChainTraverseIteratorResponse(List<object> results, int id = 1) : base(results, id)
         {
         }
 
@@ -39,7 +39,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoTraverseIteratorResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainTraverseIteratorResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
@@ -302,7 +302,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             var typeSummary = GetItemTypeSummary();
             var typeInfo = string.Join(", ", typeSummary.Select(kv => $"{kv.Key}: {kv.Value}"));
 
-            return $"NeoTraverseIteratorResponse(Items: {ItemCount}, Types: [{typeInfo}])";
+            return $"EpicChainTraverseIteratorResponse(Items: {ItemCount}, Types: [{typeInfo}])";
         }
 
         /// <summary>
@@ -356,10 +356,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Creates a copy of this response with new results.
         /// </summary>
         /// <param name="newResults">The new results list</param>
-        /// <returns>New NeoTraverseIteratorResponse instance</returns>
-        public NeoTraverseIteratorResponse WithResults(List<object> newResults)
+        /// <returns>New EpicChainTraverseIteratorResponse instance</returns>
+        public EpicChainTraverseIteratorResponse WithResults(List<object> newResults)
         {
-            return new NeoTraverseIteratorResponse(newResults, Id);
+            return new EpicChainTraverseIteratorResponse(newResults, Id);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <typeparam name="T">The type to filter for</typeparam>
         /// <returns>New response with filtered results</returns>
-        public NeoTraverseIteratorResponse FilterByType<T>()
+        public EpicChainTraverseIteratorResponse FilterByType<T>()
         {
             var filteredResults = GetItemsAs<T>().Cast<object>().ToList();
             return WithResults(filteredResults);

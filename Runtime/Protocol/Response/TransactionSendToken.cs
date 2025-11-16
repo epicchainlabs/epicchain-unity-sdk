@@ -131,7 +131,7 @@ namespace EpicChainUnityProtocol.Response
             if (string.IsNullOrEmpty(_address))
                 return false;
                 
-            // Neo addresses start with 'N' and are 34 characters long
+            // EpicChain addresses start with 'N' and are 34 characters long
             return _address.Length == 34 && _address.StartsWith('N');
         }
         

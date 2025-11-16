@@ -16,14 +16,14 @@ namespace EpicChain.Unity.SDK.Core
         /// <summary>Default block time interval in milliseconds (15 seconds)</summary>
         public const int DEFAULT_BLOCK_TIME = 15_000;
         
-        /// <summary>Default Neo address version byte</summary>
+        /// <summary>Default EpicChain address version byte</summary>
         public const byte DEFAULT_ADDRESS_VERSION = 0x35;
         
         /// <summary>Maximum valid until block increment base time in milliseconds (24 hours)</summary>
         public const int MAX_VALID_UNTIL_BLOCK_INCREMENT_BASE = 86_400_000;
         
-        /// <summary>Mainnet NeoNameService contract hash</summary>
-        public static readonly Hash160 MAINNET_NNS_CONTRACT_HASH = new Hash160("50ac1c37690cc2cfc594472833cf57505d5f46de");
+        /// <summary>Mainnet EpicChainNameService contract hash</summary>
+        public static readonly Hash160 MAINNET_XNS_CONTRACT_HASH = new Hash160("50ac1c37690cc2cfc594472833cf57505d5f46de");
         
         #endregion
         
@@ -31,8 +31,8 @@ namespace EpicChain.Unity.SDK.Core
         
         [Header("Network Configuration")]
         [SerializeField] 
-        [Tooltip("Neo RPC node endpoint URL")]
-        private string nodeUrl = "https://mainnet1.neo.coz.io:443";
+        [Tooltip("EpicChain RPC node endpoint URL")]
+        private string nodeUrl = "https://mainnet1-seed.epic-chain.org:10111";
         
         [SerializeField] 
         [Tooltip("Network magic number (will be auto-fetched if not set)")]
@@ -52,7 +52,7 @@ namespace EpicChain.Unity.SDK.Core
         
         [Header("Blockchain Settings")]
         [SerializeField] 
-        [Tooltip("Neo address version byte")]
+        [Tooltip("EpicChain address version byte")]
         private byte addressVersion = DEFAULT_ADDRESS_VERSION;
         
         [SerializeField] 
@@ -60,8 +60,8 @@ namespace EpicChain.Unity.SDK.Core
         private bool allowTransmissionOnFault = false;
         
         [SerializeField] 
-        [Tooltip("Neo Name Service resolver contract hash")]
-        private string nnsResolver = "50ac1c37690cc2cfc594472833cf57505d5f46de";
+        [Tooltip("EpicChain Name Service resolver contract hash")]
+        private string xnsResolver = "50ac1c37690cc2cfc594472833cf57505d5f46de";
         
         [Header("Unity Integration")]
         [SerializeField] 
@@ -80,7 +80,7 @@ namespace EpicChain.Unity.SDK.Core
         
         #region Properties
         
-        /// <summary>Neo RPC node endpoint URL</summary>
+        /// <summary>EpicChain RPC node endpoint URL</summary>
         public string NodeUrl 
         { 
             get => nodeUrl; 
@@ -115,7 +115,7 @@ namespace EpicChain.Unity.SDK.Core
             set => maxValidUntilBlockIncrement = value; 
         }
         
-        /// <summary>Neo address version byte</summary>
+        /// <summary>EpicChain address version byte</summary>
         public byte AddressVersion 
         { 
             get => addressVersion; 
@@ -129,11 +129,11 @@ namespace EpicChain.Unity.SDK.Core
             set => allowTransmissionOnFault = value; 
         }
         
-        /// <summary>Neo Name Service resolver contract hash</summary>
-        public Hash160 NNSResolver 
+        /// <summary>EpicChain Name Service resolver contract hash</summary>
+        public Hash160 XNSResolver 
         { 
-            get => new Hash160(nnsResolver); 
-            set => nnsResolver = value.ToString(); 
+            get => new Hash160(xnsResolver); 
+            set => xnsResolver = value.ToString(); 
         }
         
         /// <summary>Enable debug logging</summary>
@@ -211,13 +211,13 @@ namespace EpicChain.Unity.SDK.Core
         }
         
         /// <summary>
-        /// Sets the Neo Name Service resolver contract hash.
+        /// Sets the EpicChain Name Service resolver contract hash.
         /// </summary>
-        /// <param name="nnsResolver">NNS resolver contract hash</param>
+        /// <param name="xnsResolver">XNS resolver contract hash</param>
         /// <returns>This configuration instance for method chaining</returns>
-        public EpicChainUnityConfig SetNNSResolver(Hash160 nnsResolver)
+        public EpicChainUnityConfig SetXNSResolver(Hash160 xnsResolver)
         {
-            this.nnsResolver = nnsResolver.ToString();
+            this.xnsResolver = xnsResolver.ToString();
             return this;
         }
         
@@ -259,10 +259,10 @@ namespace EpicChain.Unity.SDK.Core
                 Debug.LogWarning($"[EpicChainUnityConfig] Invalid node URL format: {nodeUrl}. Should start with 'http' or 'https'.");
             }
             
-            // Validate NNS resolver hash format
-            if (!string.IsNullOrEmpty(nnsResolver) && nnsResolver.Length != 40)
+            // Validate XNS resolver hash format
+            if (!string.IsNullOrEmpty(xnsResolver) && xnsResolver.Length != 40)
             {
-                Debug.LogWarning($"[EpicChainUnityConfig] Invalid NNS resolver hash format: {nnsResolver}. Should be 40 characters long.");
+                Debug.LogWarning($"[EpicChainUnityConfig] Invalid XNS resolver hash format: {xnsResolver}. Should be 40 characters long.");
             }
         }
         
@@ -271,30 +271,30 @@ namespace EpicChain.Unity.SDK.Core
         #region Static Utilities
         
         /// <summary>
-        /// Creates a default configuration for Neo mainnet.
+        /// Creates a default configuration for EpicChain mainnet.
         /// </summary>
         /// <returns>Default mainnet configuration</returns>
         public static EpicChainUnityConfig CreateMainnetConfig()
         {
             var config = CreateInstance<EpicChainUnityConfig>();
-            config.nodeUrl = "https://mainnet1.neo.coz.io:443";
+            config.nodeUrl = "https://mainnet1-seed.epic-chain.org:10111";
             config.networkMagic = 860833102; // EpicChain mainnet magic
-            config.nnsResolver = MAINNET_NNS_CONTRACT_HASH.ToString();
-            config.name = "Neo Mainnet Config";
+            config.xnsResolver = MAINNET_XNS_CONTRACT_HASH.ToString();
+            config.name = "EpicChain Mainnet Config";
             return config;
         }
         
         /// <summary>
-        /// Creates a default configuration for Neo testnet.
+        /// Creates a default configuration for EpicChain testnet.
         /// </summary>
         /// <returns>Default testnet configuration</returns>
         public static EpicChainUnityConfig CreateTestnetConfig()
         {
             var config = CreateInstance<EpicChainUnityConfig>();
-            config.nodeUrl = "https://testnet1.neo.coz.io:443";
+            config.nodeUrl = "https://testnet1-seed.epic-chain.org:20111";
             config.networkMagic = 894710606; // EpicChain testnet magic
-            config.nnsResolver = "0xa46c1e9f936d2967adf5d8ee5c3e2b4b5a7fff3a"; // Testnet NNS
-            config.name = "Neo Testnet Config";
+            config.xnsResolver = "0xa46c1e9f936d2967adf5d8ee5c3e2b4b5a7fff3a"; // Testnet XNS
+            config.name = "EpicChain Testnet Config";
             return config;
         }
         

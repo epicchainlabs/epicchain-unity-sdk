@@ -3,7 +3,7 @@
 **Benchmark Status**: ✅ **ALL TARGETS EXCEEDED**  
 **Benchmark Date**: 2024-08-23  
 **Test Environment**: Unity 2022.3 LTS / Windows 11 / Intel i7-12700K  
-**Baseline**: Original Swift NeoSwift SDK performance
+**Baseline**: Original Swift EpicChainSwift SDK performance
 
 ---
 

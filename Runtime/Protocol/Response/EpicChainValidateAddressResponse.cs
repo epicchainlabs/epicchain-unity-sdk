@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Response for validating a Neo address format.
+    /// Response for validating a EpicChain address format.
     /// Contains validation result and address information.
     /// </summary>
     [System.Serializable]
-    public class NeoValidateAddressResponse : NeoResponse<AddressValidationResult>
+    public class EpicChainValidateAddressResponse : EpicChainResponse<AddressValidationResult>
     {
         /// <summary>
         /// Gets the validation result from the response.
@@ -24,7 +24,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the validation result or throws if the response failed.
         /// </summary>
         /// <returns>Validation result</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         public AddressValidationResult GetValidationOrThrow()
         {
             return GetResult();
@@ -32,8 +32,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
     }
     
     /// <summary>
-    /// Represents the result of Neo address validation.
-    /// Contains the address and whether it's valid according to Neo address format rules.
+    /// Represents the result of EpicChain address validation.
+    /// Contains the address and whether it's valid according to EpicChain address format rules.
     /// </summary>
     [System.Serializable]
     public class AddressValidationResult
@@ -82,9 +82,9 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         [JsonIgnore]
         public bool LooksLikeScriptHash => Address?.StartsWith("0x") == true && Address.Length == 42;
         
-        /// <summary>Whether the address appears to be a Neo address</summary>
+        /// <summary>Whether the address appears to be a EpicChain address</summary>
         [JsonIgnore]
-        public bool LooksLikeNeoAddress => !string.IsNullOrEmpty(Address) && Address.StartsWith("N") && Address.Length > 30;
+        public bool LooksLikeEpicChainAddress => !string.IsNullOrEmpty(Address) && Address.StartsWith("N") && Address.Length > 30;
         
         #endregion
         
@@ -102,8 +102,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             if (LooksLikeScriptHash)
                 return AddressFormatType.ScriptHash;
             
-            if (LooksLikeNeoAddress)
-                return AddressFormatType.NeoAddress;
+            if (LooksLikeEpicChainAddress)
+                return AddressFormatType.EpicChainAddress;
             
             return AddressFormatType.Unknown;
         }
@@ -125,7 +125,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             {
                 AddressFormatType.Empty => "Address is empty",
                 AddressFormatType.ScriptHash => "Script hash format but invalid checksum or encoding",
-                AddressFormatType.NeoAddress => "Neo address format but invalid checksum or encoding",
+                AddressFormatType.EpicChainAddress => "EpicChain address format but invalid checksum or encoding",
                 AddressFormatType.Unknown => "Unknown address format",
                 _ => "Invalid address format"
             };
@@ -147,8 +147,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             return format switch
             {
                 AddressFormatType.ScriptHash => "Ensure the script hash starts with '0x' and is exactly 40 hex characters",
-                AddressFormatType.NeoAddress => "Check that the Neo address uses the correct Base58 encoding and checksum",
-                AddressFormatType.Unknown => "Use either Neo address format (starting with 'N') or script hash format (starting with '0x')",
+                AddressFormatType.EpicChainAddress => "Check that the EpicChain address uses the correct Base58 encoding and checksum",
+                AddressFormatType.Unknown => "Use either EpicChain address format (starting with 'N') or script hash format (starting with '0x')",
                 _ => "Please check the address format and try again"
             };
         }
@@ -188,7 +188,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
             if (string.IsNullOrEmpty(address))
                 return CreateInvalid(address);
             
-            // Basic Neo address format check (starts with 'N' and reasonable length)
+            // Basic EpicChain address format check (starts with 'N' and reasonable length)
             if (address.StartsWith("N") && address.Length >= 25 && address.Length <= 35)
             {
                 // Could add more sophisticated Base58 validation here
@@ -248,7 +248,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         {
             if (IsInvalid)
             {
-                throw new ArgumentException($"Invalid Neo address: {Address}. {GetValidationError()}");
+                throw new ArgumentException($"Invalid EpicChain address: {Address}. {GetValidationError()}");
             }
         }
         
@@ -298,8 +298,8 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>Empty or null address</summary>
         Empty,
         
-        /// <summary>Neo address format (Base58)</summary>
-        NeoAddress,
+        /// <summary>EpicChain address format (Base58)</summary>
+        EpicChainAddress,
         
         /// <summary>Script hash format (0x...)</summary>
         ScriptHash,

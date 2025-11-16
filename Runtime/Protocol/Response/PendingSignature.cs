@@ -66,11 +66,11 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         
         /// <summary>Whether this is for mainnet</summary>
         [JsonIgnore]
-        public bool IsMainNet => Network == 860833102; // Neo mainnet magic number
+        public bool IsMainNet => Network == 860833102; // EpicChain mainnet magic number
         
         /// <summary>Whether this is for testnet</summary>
         [JsonIgnore]
-        public bool IsTestNet => Network == 894710606; // Neo testnet magic number
+        public bool IsTestNet => Network == 894710606; // EpicChain testnet magic number
         
         #endregion
         

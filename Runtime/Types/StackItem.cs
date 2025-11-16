@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
-    /// Represents a stack item returned by the Neo VM during script execution.
+    /// Represents a stack item returned by the EpicChain VM during script execution.
     /// Stack items can contain various types of data and are used for contract return values.
     /// </summary>
     [System.Serializable]
@@ -338,7 +338,7 @@ namespace EpicChain.Unity.SDK.Types
         /// <summary>
         /// Gets the address from a ByteString representing a script hash.
         /// </summary>
-        /// <returns>The Neo address</returns>
+        /// <returns>The EpicChain address</returns>
         public string GetAddress()
         {
             if (Type != BYTE_STRING_VALUE && Type != BUFFER_VALUE)

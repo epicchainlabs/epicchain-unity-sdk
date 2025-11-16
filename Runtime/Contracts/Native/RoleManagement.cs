@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
 {
     /// <summary>
     /// Represents the RoleManagement native contract that is used to assign roles to and check roles of designated nodes.
-    /// This contract manages node role assignments for various network services like oracles, state validators, and NeoFS alphabet nodes.
+    /// This contract manages node role assignments for various network services like oracles, state validators, and EpicChainFS alphabet nodes.
     /// </summary>
     [System.Serializable]
     public class RoleManagement : SmartContract
@@ -29,15 +29,15 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         #region Constructor
 
         /// <summary>
-        /// Constructs a new RoleManagement instance that uses the given NeoUnity instance for invocations.
+        /// Constructs a new RoleManagement instance that uses the given EpicChainUnity instance for invocations.
         /// </summary>
-        /// <param name="epicchainUnity">The NeoUnity instance to use for invocations</param>
-        public RoleManagement(NeoUnity neoUnity) : base(SCRIPT_HASH, neoUnity)
+        /// <param name="epicchainUnity">The EpicChainUnity instance to use for invocations</param>
+        public RoleManagement(EpicChainUnity epicchainUnity) : base(SCRIPT_HASH, epicchainUnity)
         {
         }
 
         /// <summary>
-        /// Constructs a new RoleManagement instance using the singleton NeoUnity instance.
+        /// Constructs a new RoleManagement instance using the singleton EpicChainUnity instance.
         /// </summary>
         public RoleManagement() : base(SCRIPT_HASH)
         {
@@ -305,7 +305,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             {
                 StateValidators = allDesignations.GetValueOrDefault(Role.StateValidator, new List<ECPublicKey>()),
                 Oracles = allDesignations.GetValueOrDefault(Role.Oracle, new List<ECPublicKey>()),
-                NeoFSAlphabetNodes = allDesignations.GetValueOrDefault(Role.NeoFSAlphabetNode, new List<ECPublicKey>()),
+                EpicChainFSAlphabetNodes = allDesignations.GetValueOrDefault(Role.EpicChainFSAlphabetNode, new List<ECPublicKey>()),
                 TotalDesignatedNodes = allDesignations.Values.SelectMany(nodes => nodes).Distinct().Count()
             };
         }
@@ -374,8 +374,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>Oracle nodes that provide external data to smart contracts</summary>
         Oracle = 0x08,
 
-        /// <summary>NeoFS alphabet nodes for distributed file system</summary>
-        NeoFSAlphabetNode = 0x10
+        /// <summary>EpicChainFS alphabet nodes for distributed file system</summary>
+        EpicChainFSAlphabetNode = 0x10
     }
 
     /// <summary>
@@ -394,7 +394,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             {
                 Role.StateValidator => "StateValidator",
                 Role.Oracle => "Oracle",
-                Role.NeoFSAlphabetNode => "NeoFSAlphabetNode",
+                Role.EpicChainFSAlphabetNode => "EpicChainFSAlphabetNode",
                 _ => role.ToString()
             };
         }
@@ -410,7 +410,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
             {
                 Role.StateValidator => "Validates state transitions and participates in consensus",
                 Role.Oracle => "Provides external data feeds to smart contracts",
-                Role.NeoFSAlphabetNode => "Manages distributed file system operations",
+                Role.EpicChainFSAlphabetNode => "Manages distributed file system operations",
                 _ => "Unknown role"
             };
         }
@@ -428,8 +428,8 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <summary>Oracle nodes</summary>
         public List<ECPublicKey> Oracles { get; set; } = new List<ECPublicKey>();
 
-        /// <summary>NeoFS alphabet nodes</summary>
-        public List<ECPublicKey> NeoFSAlphabetNodes { get; set; } = new List<ECPublicKey>();
+        /// <summary>EpicChainFS alphabet nodes</summary>
+        public List<ECPublicKey> EpicChainFSAlphabetNodes { get; set; } = new List<ECPublicKey>();
 
         /// <summary>Total number of unique designated nodes across all roles</summary>
         public int TotalDesignatedNodes { get; set; }
@@ -440,7 +440,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         /// <returns>Sum of all role designations</returns>
         public int GetTotalDesignations()
         {
-            return StateValidators.Count + Oracles.Count + NeoFSAlphabetNodes.Count;
+            return StateValidators.Count + Oracles.Count + EpicChainFSAlphabetNodes.Count;
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace EpicChain.Unity.SDK.Contracts.Native
         public override string ToString()
         {
             return $"RoleDesignationSummary(StateValidators: {StateValidators.Count}, " +
-                   $"Oracles: {Oracles.Count}, NeoFS: {NeoFSAlphabetNodes.Count}, " +
+                   $"Oracles: {Oracles.Count}, EpicChainFS: {EpicChainFSAlphabetNodes.Count}, " +
                    $"Total Unique: {TotalDesignatedNodes})";
         }
     }

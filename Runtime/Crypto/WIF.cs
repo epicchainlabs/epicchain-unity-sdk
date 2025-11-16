@@ -6,15 +6,15 @@ using EpicChain.Unity.SDK.Utils;
 namespace EpicChain.Unity.SDK.Crypto
 {
     /// <summary>
-    /// Wallet Import Format (WIF) utilities for Neo private key encoding/decoding.
-    /// Provides standard WIF operations following the Bitcoin/Neo WIF specification.
+    /// Wallet Import Format (WIF) utilities for EpicChain private key encoding/decoding.
+    /// Provides standard WIF operations following the Bitcoin/EpicChain WIF specification.
     /// Production-ready implementation with proper validation and error handling.
     /// </summary>
     public static class WIF
     {
         #region Constants
         
-        /// <summary>WIF version byte for Neo (0x80)</summary>
+        /// <summary>WIF version byte for EpicChain (0x80)</summary>
         private const byte WIF_VERSION = 0x80;
         
         /// <summary>Compression flag for compressed public keys</summary>

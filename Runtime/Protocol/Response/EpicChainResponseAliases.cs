@@ -15,7 +15,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getblockcount RPC method
     /// </summary>
     [Serializable]
-    public class NeoBlockCountResponse : NeoResponse<int>
+    public class EpicChainBlockCountResponse : EpicChainResponse<int>
     {
         /// <summary>Gets the current block count</summary>
         public int BlockCount => Result;
@@ -25,7 +25,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getblockhash RPC method
     /// </summary>
     [Serializable]
-    public class NeoBlockHashResponse : NeoResponse<string>
+    public class EpicChainBlockHashResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the block hash as string</summary>
         public string BlockHashString => Result;
@@ -38,7 +38,7 @@ namespace EpicChainUnityProtocol.Response
     /// Alias for connection count (used by multiple methods)
     /// </summary>
     [Serializable]
-    public class NeoConnectionCountResponse : NeoResponse<int>
+    public class EpicChainConnectionCountResponse : EpicChainResponse<int>
     {
         /// <summary>Gets the connection count</summary>
         public int Count => Result;
@@ -48,23 +48,23 @@ namespace EpicChainUnityProtocol.Response
     /// Alias for block header count (same as connection count)
     /// </summary>
     [Serializable]
-    public class NeoBlockHeaderCountResponse : NeoConnectionCountResponse { }
+    public class EpicChainBlockHeaderCountResponse : EpicChainConnectionCountResponse { }
     
     /// <summary>
     /// Response for calculatenetworkfee RPC method
     /// </summary>
     [Serializable]
-    public class NeoCalculateNetworkFeeResponse : NeoResponse<NeoNetworkFee>
+    public class EpicChainCalculateNetworkFeeResponse : EpicChainResponse<EpicChainNetworkFee>
     {
         /// <summary>Gets the calculated network fee</summary>
-        public NeoNetworkFee NetworkFee => Result;
+        public EpicChainNetworkFee NetworkFee => Result;
     }
     
     /// <summary>
     /// Response for closewallet RPC method
     /// </summary>
     [Serializable]
-    public class NeoCloseWalletResponse : NeoResponse<bool>
+    public class EpicChainCloseWalletResponse : EpicChainResponse<bool>
     {
         /// <summary>Gets whether wallet was closed successfully</summary>
         public bool CloseWallet => Result;
@@ -74,7 +74,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for dumpprivkey RPC method
     /// </summary>
     [Serializable]
-    public class NeoDumpPrivKeyResponse : NeoResponse<string>
+    public class EpicChainDumpPrivKeyResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the private key as string</summary>
         public string PrivateKey => Result;
@@ -86,7 +86,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express createcheckpoint RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressCreateCheckpointResponse : NeoResponse<string>
+    public class EpicChainExpressCreateCheckpointResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the checkpoint filename</summary>
         public string Filename => Result;
@@ -96,7 +96,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express createoracleresponsetx RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressCreateOracleResponseTxResponse : NeoResponse<string>
+    public class EpicChainExpressCreateOracleResponseTxResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the oracle response transaction</summary>
         public string OracleResponseTx => Result;
@@ -106,7 +106,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express getcontractstorage RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressGetContractStorageResponse : NeoResponse<List<ContractStorageEntry>>
+    public class EpicChainExpressGetContractStorageResponse : EpicChainResponse<List<ContractStorageEntry>>
     {
         /// <summary>Gets the contract storage entries</summary>
         public List<ContractStorageEntry> ContractStorage => Result ?? new List<ContractStorageEntry>();
@@ -116,7 +116,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express GetXep17contracts RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressGetXep17ContractsResponse : NeoResponse<List<Xep17Contract>>
+    public class EpicChainExpressGetXep17ContractsResponse : EpicChainResponse<List<Xep17Contract>>
     {
         /// <summary>Gets the XEP-17 contracts</summary>
         public List<Xep17Contract> Xep17Contracts => Result ?? new List<Xep17Contract>();
@@ -126,7 +126,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express getpopulatedblocks RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressGetPopulatedBlocksResponse : NeoResponse<PopulatedBlocks>
+    public class EpicChainExpressGetPopulatedBlocksResponse : EpicChainResponse<PopulatedBlocks>
     {
         /// <summary>Gets the populated blocks</summary>
         public PopulatedBlocks PopulatedBlocks => Result;
@@ -136,7 +136,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express listcontracts RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressListContractsResponse : NeoResponse<List<ExpressContractState>>
+    public class EpicChainExpressListContractsResponse : EpicChainResponse<List<ExpressContractState>>
     {
         /// <summary>Gets the contracts</summary>
         public List<ExpressContractState> Contracts => Result ?? new List<ExpressContractState>();
@@ -146,7 +146,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express listoraclerequests RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressListOracleRequestsResponse : NeoResponse<List<OracleRequest>>
+    public class EpicChainExpressListOracleRequestsResponse : EpicChainResponse<List<OracleRequest>>
     {
         /// <summary>Gets the oracle requests</summary>
         public List<OracleRequest> OracleRequests => Result ?? new List<OracleRequest>();
@@ -156,39 +156,39 @@ namespace EpicChainUnityProtocol.Response
     /// Response for express shutdown RPC method
     /// </summary>
     [Serializable]
-    public class NeoExpressShutdownResponse : NeoResponse<ExpressShutdown>
+    public class EpicChainExpressShutdownResponse : EpicChainResponse<ExpressShutdown>
     {
         /// <summary>Gets the express shutdown info</summary>
         public ExpressShutdown ExpressShutdown => Result;
     }
     
-    // Standard Neo RPC response types
+    // Standard EpicChain RPC response types
     
     /// <summary>
     /// Response for getapplicationlog RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetApplicationLogResponse : NeoResponse<NeoApplicationLog>
+    public class EpicChainGetApplicationLogResponse : EpicChainResponse<EpicChainApplicationLog>
     {
         /// <summary>Gets the application log</summary>
-        public NeoApplicationLog ApplicationLog => Result;
+        public EpicChainApplicationLog ApplicationLog => Result;
     }
     
     /// <summary>
     /// Response for getblock RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetBlockResponse : NeoResponse<NeoBlock>
+    public class EpicChainGetBlockResponse : EpicChainResponse<EpicChainBlock>
     {
         /// <summary>Gets the block</summary>
-        public NeoBlock Block => Result;
+        public EpicChainBlock Block => Result;
     }
     
     /// <summary>
     /// Response for getcommittee RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetCommitteeResponse : NeoResponse<List<string>>
+    public class EpicChainGetCommitteeResponse : EpicChainResponse<List<string>>
     {
         /// <summary>Gets the committee members</summary>
         public List<string> Committee => Result ?? new List<string>();
@@ -198,7 +198,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getcontractstate RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetContractStateResponse : NeoResponse<ContractState>
+    public class EpicChainGetContractStateResponse : EpicChainResponse<ContractState>
     {
         /// <summary>Gets the contract state</summary>
         public ContractState ContractState => Result;
@@ -208,7 +208,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getnativecontracts RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetNativeContractsResponse : NeoResponse<List<NativeContractState>>
+    public class EpicChainGetNativeContractsResponse : EpicChainResponse<List<NativeContractState>>
     {
         /// <summary>Gets the native contracts</summary>
         public List<NativeContractState> NativeContracts => Result ?? new List<NativeContractState>();
@@ -218,7 +218,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for GetXep11properties RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetXep11PropertiesResponse : NeoResponse<Dictionary<string, string>>
+    public class EpicChainGetXep11PropertiesResponse : EpicChainResponse<Dictionary<string, string>>
     {
         /// <summary>Gets the XEP-11 properties</summary>
         public Dictionary<string, string> Properties => Result ?? new Dictionary<string, string>();
@@ -228,7 +228,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getnewaddress RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetNewAddressResponse : NeoResponse<string>
+    public class EpicChainGetNewAddressResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the new address</summary>
         public string Address => Result;
@@ -238,7 +238,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getrawblock RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetRawBlockResponse : NeoResponse<string>
+    public class EpicChainGetRawBlockResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the raw block data</summary>
         public string RawBlock => Result;
@@ -248,7 +248,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getrawmempool RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetRawMemPoolResponse : NeoResponse<List<string>>
+    public class EpicChainGetRawMemPoolResponse : EpicChainResponse<List<string>>
     {
         /// <summary>Gets the raw mempool transaction hashes</summary>
         public List<string> TransactionHashes => Result ?? new List<string>();
@@ -275,7 +275,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getrawtransaction RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetRawTransactionResponse : NeoResponse<string>
+    public class EpicChainGetRawTransactionResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the raw transaction data</summary>
         public string RawTransaction => Result;
@@ -285,7 +285,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getstorage RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetStorageResponse : NeoResponse<string>
+    public class EpicChainGetStorageResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the storage value</summary>
         public string Storage => Result;
@@ -295,17 +295,17 @@ namespace EpicChainUnityProtocol.Response
     /// Response for gettransaction RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetTransactionResponse : NeoResponse<NeoTransaction>
+    public class EpicChainGetTransactionResponse : EpicChainResponse<EpicChainTransaction>
     {
         /// <summary>Gets the transaction</summary>
-        public NeoTransaction Transaction => Result;
+        public EpicChainTransaction Transaction => Result;
     }
     
     /// <summary>
     /// Response for getwalletheight RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetWalletHeightResponse : NeoResponse<int>
+    public class EpicChainGetWalletHeightResponse : EpicChainResponse<int>
     {
         /// <summary>Gets the wallet height</summary>
         public int Height => Result;
@@ -321,12 +321,12 @@ namespace EpicChainUnityProtocol.Response
     /// Response for getwalletunclaimedgas RPC method
     /// </summary>
     [Serializable]
-    public class EpicChainGetWalletUnclaimedGasResponse : NeoResponse<string>
+    public class EpicChainGetWalletUnclaimedGasResponse : EpicChainResponse<string>
     {
         /// <summary>Gets the wallet unclaimed GAS</summary>
         public string WalletUnclaimedGas => Result;
         
-        /// <summary>Gets the unclaimed GAS as decimal</summary>
+        /// <summary>Gets the unclaimed EpicPulse as decimal</summary>
         public decimal WalletUnclaimedGasDecimal => decimal.TryParse(Result, out var result) ? result / 100_000_000m : 0m;
     }
     
@@ -334,17 +334,17 @@ namespace EpicChainUnityProtocol.Response
     /// Response for importprivkey RPC method
     /// </summary>
     [Serializable]
-    public class NeoImportPrivKeyResponse : NeoResponse<NeoAddress>
+    public class EpicChainImportPrivKeyResponse : EpicChainResponse<EpicChainAddress>
     {
         /// <summary>Gets the imported address</summary>
-        public NeoAddress Address => Result;
+        public EpicChainAddress Address => Result;
     }
     
     /// <summary>
     /// Response for invoke* RPC methods
     /// </summary>
     [Serializable]
-    public class NeoInvokeResponse : NeoResponse<InvocationResult>
+    public class EpicChainInvokeResponse : EpicChainResponse<InvocationResult>
     {
         /// <summary>Gets the invocation result</summary>
         public InvocationResult InvocationResult => Result;
@@ -354,35 +354,35 @@ namespace EpicChainUnityProtocol.Response
     /// Alias for invokecontractverify (same as invoke)
     /// </summary>
     [Serializable]
-    public class NeoInvokeContractVerifyResponse : NeoInvokeResponse { }
+    public class EpicChainInvokeContractVerifyResponse : EpicChainInvokeResponse { }
     
     /// <summary>
     /// Alias for invokefunction (same as invoke)
     /// </summary>
     [Serializable]
-    public class NeoInvokeFunctionResponse : NeoInvokeResponse { }
+    public class EpicChainInvokeFunctionResponse : EpicChainInvokeResponse { }
     
     /// <summary>
     /// Alias for invokescript (same as invoke)
     /// </summary>
     [Serializable]
-    public class NeoInvokeScriptResponse : NeoInvokeResponse { }
+    public class EpicChainInvokeScriptResponse : EpicChainInvokeResponse { }
     
     /// <summary>
     /// Response for listaddress RPC method
     /// </summary>
     [Serializable]
-    public class NeoListAddressResponse : NeoResponse<List<NeoAddress>>
+    public class EpicChainListAddressResponse : EpicChainResponse<List<EpicChainAddress>>
     {
         /// <summary>Gets the addresses</summary>
-        public List<NeoAddress> Addresses => Result ?? new List<NeoAddress>();
+        public List<EpicChainAddress> Addresses => Result ?? new List<EpicChainAddress>();
     }
     
     /// <summary>
     /// Response for openwallet RPC method
     /// </summary>
     [Serializable]
-    public class NeoOpenWalletResponse : NeoResponse<bool>
+    public class EpicChainOpenWalletResponse : EpicChainResponse<bool>
     {
         /// <summary>Gets whether wallet was opened successfully</summary>
         public bool OpenWallet => Result;
@@ -392,37 +392,37 @@ namespace EpicChainUnityProtocol.Response
     /// Response for sendfrom RPC method
     /// </summary>
     [Serializable]
-    public class NeoSendFromResponse : NeoResponse<NeoTransaction>
+    public class EpicChainSendFromResponse : EpicChainResponse<EpicChainTransaction>
     {
         /// <summary>Gets the send from transaction</summary>
-        public NeoTransaction SendFromTransaction => Result;
+        public EpicChainTransaction SendFromTransaction => Result;
     }
     
     /// <summary>
     /// Response for sendmany RPC method
     /// </summary>
     [Serializable]
-    public class NeoSendManyResponse : NeoResponse<NeoTransaction>
+    public class EpicChainSendManyResponse : EpicChainResponse<EpicChainTransaction>
     {
         /// <summary>Gets the send many transaction</summary>
-        public NeoTransaction SendManyTransaction => Result;
+        public EpicChainTransaction SendManyTransaction => Result;
     }
     
     /// <summary>
     /// Response for sendtoaddress RPC method
     /// </summary>
     [Serializable]
-    public class NeoSendToAddressResponse : NeoResponse<NeoTransaction>
+    public class EpicChainSendToAddressResponse : EpicChainResponse<EpicChainTransaction>
     {
         /// <summary>Gets the send to address transaction</summary>
-        public NeoTransaction SendToAddressTransaction => Result;
+        public EpicChainTransaction SendToAddressTransaction => Result;
     }
     
     /// <summary>
     /// Response for submitblock RPC method
     /// </summary>
     [Serializable]
-    public class NeoSubmitBlockResponse : NeoResponse<bool>
+    public class EpicChainSubmitBlockResponse : EpicChainResponse<bool>
     {
         /// <summary>Gets whether block was submitted successfully</summary>
         public bool SubmitBlock => Result;
@@ -432,7 +432,7 @@ namespace EpicChainUnityProtocol.Response
     /// Response for terminatesession RPC method
     /// </summary>
     [Serializable]
-    public class NeoTerminateSessionResponse : NeoResponse<bool>
+    public class EpicChainTerminateSessionResponse : EpicChainResponse<bool>
     {
         /// <summary>Gets whether session was terminated successfully</summary>
         public bool TerminateSession => Result;

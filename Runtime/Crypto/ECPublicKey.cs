@@ -117,9 +117,9 @@ namespace EpicChain.Unity.SDK.Crypto
         #region Address Operations
         
         /// <summary>
-        /// Gets the Neo address for this public key.
+        /// Gets the EpicChain address for this public key.
         /// </summary>
-        /// <returns>Neo address string</returns>
+        /// <returns>EpicChain address string</returns>
         public string GetAddress()
         {
             var hash160 = Hash160.FromPublicKey(GetEncoded(true));

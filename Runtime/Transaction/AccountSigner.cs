@@ -156,7 +156,7 @@ namespace EpicChain.Unity.SDK.Transaction
         /// <summary>
         /// Gets the address of the signer account.
         /// </summary>
-        /// <returns>The Neo address string</returns>
+        /// <returns>The EpicChain address string</returns>
         public string GetAddress()
         {
             return Account?.Address ?? SignerHash?.ToAddress();

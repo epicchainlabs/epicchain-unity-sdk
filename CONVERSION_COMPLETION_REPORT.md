@@ -1,32 +1,32 @@
 # Swift to C# Conversion Completion Report
 
 ## Overview
-This report documents the successful completion of converting all remaining Swift classes to C# for the NeoUnity project. The goal was to achieve **100% conversion** with zero missing Swift functionality.
+This report documents the successful completion of converting all remaining Swift classes to C# for the EpicChainUnity project. The goal was to achieve **100% conversion** with zero missing Swift functionality.
 
 ## Conversion Summary
 
 ### ✅ COMPLETED: Core Missing Classes
 
 #### 1. **Role.cs** - Core Type Enumeration
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/core/Role.swift`
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/core/Role.swift`
 - **Target**: `/Runtime/Types/Role.cs`
 - **Features**:
-  - Complete enum with StateValidator, Oracle, NeoFSAlphabetNode values
+  - Complete enum with StateValidator, Oracle, EpicChainFSAlphabetNode values
   - Extension methods for JSON string conversion, byte conversion
   - Validation methods and error handling
-  - Full compatibility with Neo blockchain role system
+  - Full compatibility with EpicChain blockchain role system
 
 #### 2. **ContractMethodToken.cs** - Response Class
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/core/response/ContractMethodToken.swift`
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/core/response/ContractMethodToken.swift`
 - **Target**: `/Runtime/Protocol/Response/ContractMethodToken.cs`
 - **Features**:
   - Complete method invocation token representation
-  - IResponse<T> and INeoSerializable interface implementations
-  - Binary serialization support for Neo network protocol
+  - IResponse<T> and IEpicChainSerializable interface implementations
+  - Binary serialization support for EpicChain network protocol
   - Comprehensive validation and equality comparison
 
 #### 3. **ContractStorageEntry.cs** - Response Class
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/core/response/ContractStorageEntry.swift`
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/core/response/ContractStorageEntry.swift`
 - **Target**: `/Runtime/Protocol/Response/ContractStorageEntry.cs`
 - **Features**:
   - Key-value storage representation for contract state
@@ -34,17 +34,17 @@ This report documents the successful completion of converting all remaining Swif
   - Binary serialization for network transport
   - Full validation and error handling
 
-#### 4. **INeoExpress.cs** - Development Interface
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/core/NeoExpress.swift`
-- **Target**: `/Runtime/Protocol/INeoExpress.cs`
+#### 4. **IEpicChainExpress.cs** - Development Interface
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/core/EpicChainExpress.swift`
+- **Target**: `/Runtime/Protocol/IEpicChainExpress.cs`
 - **Features**:
-  - Complete Neo Express development functionality
+  - Complete EpicChain Express development functionality
   - All 8 express methods: populated blocks, XEP-17 contracts, storage inspection
   - Checkpoint creation, oracle request management, shutdown functionality
   - Full async/await pattern with Unity Task integration
 
 #### 5. **JsonRpc2_0Rx.cs** - Reactive Extensions Core
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/rx/JsonRpc2_0Rx.swift`
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/rx/JsonRpc2_0Rx.swift`
 - **Target**: `/Runtime/Reactive/JsonRpc2_0Rx.cs`
 - **Features**:
   - Unity-compatible reactive blockchain event streams
@@ -52,9 +52,9 @@ This report documents the successful completion of converting all remaining Swif
   - Block streaming, index polling, transaction filtering
   - Unity MonoBehaviour integration with ReactiveBlockchainMonitor
 
-#### 6. **INeoUnityRx.cs & NeoUnityRx.cs** - Reactive Interface & Implementation
-- **Source**: `/NeoSwift/Sources/NeoSwift/protocol/rx/NeoSwiftRx.swift`
-- **Target**: `/Runtime/Reactive/INeoUnityRx.cs` & `/Runtime/Reactive/NeoUnityRx.cs`
+#### 6. **IEpicChainUnityRx.cs & EpicChainUnityRx.cs** - Reactive Interface & Implementation
+- **Source**: `/EpicChainSwift/Sources/EpicChainSwift/protocol/rx/EpicChainSwiftRx.swift`
+- **Target**: `/Runtime/Reactive/IEpicChainUnityRx.cs` & `/Runtime/Reactive/EpicChainUnityRx.cs`
 - **Features**:
   - Complete reactive blockchain client interface
   - Block replay functionality with range support
@@ -86,9 +86,9 @@ This report documents the successful completion of converting all remaining Swif
 ### Namespace Structure
 ```
 EpicChainUnityRuntime.Types/             # Core types (Role)
-EpicChainUnityRuntime.Protocol/          # Interface definitions (INeoExpress)
+EpicChainUnityRuntime.Protocol/          # Interface definitions (IEpicChainExpress)
 EpicChainUnityRuntime.Protocol.Response/ # Response classes (ContractMethodToken, ContractStorageEntry)
-EpicChainUnityRuntime.Reactive/          # Reactive extensions (JsonRpc2_0Rx, NeoUnityRx)
+EpicChainUnityRuntime.Reactive/          # Reactive extensions (JsonRpc2_0Rx, EpicChainUnityRx)
 EpicChainUnityTests.Runtime.Validation/  # Validation tests
 ```
 
@@ -104,13 +104,13 @@ EpicChainUnityTests.Runtime.Validation/  # Validation tests
 ### ✅ Already Implemented (Using Newtonsoft.Json - Legacy Format)
 Most response classes were already implemented but using the old serialization system:
 - ExpressContractState.cs, ExpressShutdown.cs, NativeContractState.cs
-- NeoAccountState.cs, NeoAddress.cs, and 50+ other response classes
+- EpicChainAccountState.cs, EpicChainAddress.cs, and 50+ other response classes
 - All major protocol response types already exist
 
 ### 🔄 Conversion Strategy Applied
 Rather than recreate existing classes, focused on:
 1. **New Missing Classes**: Role, ContractMethodToken, ContractStorageEntry
-2. **Protocol Interfaces**: INeoExpress for development features
+2. **Protocol Interfaces**: IEpicChainExpress for development features
 3. **Reactive Extensions**: Complete async enumerable-based reactive system
 4. **Validation**: Comprehensive test coverage for all new implementations
 
@@ -123,10 +123,10 @@ Rather than recreate existing classes, focused on:
 | Role.swift | Role.cs | ✅ Complete | Full enum with extensions |
 | ContractMethodToken.swift | ContractMethodToken.cs | ✅ Complete | Full response class |
 | ContractStorageEntry.swift | ContractStorageEntry.cs | ✅ Complete | Full response class |
-| NeoExpress.swift | INeoExpress.cs | ✅ Complete | All 8 methods implemented |
+| EpicChainExpress.swift | IEpicChainExpress.cs | ✅ Complete | All 8 methods implemented |
 | JsonRpc2_0Rx.swift | JsonRpc2_0Rx.cs | ✅ Complete | Unity-compatible reactive |
-| NeoSwiftRx.swift | INeoUnityRx.cs + NeoUnityRx.cs | ✅ Complete | Full interface + implementation |
-| NeoSwiftService.swift | INeoUnityService.cs | ✅ Already Existed | Service interface complete |
+| EpicChainSwiftRx.swift | IEpicChainUnityRx.cs + EpicChainUnityRx.cs | ✅ Complete | Full interface + implementation |
+| EpicChainSwiftService.swift | IEpicChainUnityService.cs | ✅ Already Existed | Service interface complete |
 | All Response Classes | Response/*.cs | ✅ Already Existed | 50+ classes already implemented |
 
 ## Quality Assurance
@@ -164,8 +164,8 @@ var fromByte = RoleExtensions.FromByte(0x04); // Role.StateValidator
 
 ### Reactive Blockchain Monitoring
 ```csharp
-var epicchainUnity = // ... get INeo instance
-var rx = new NeoUnityRx(neoUnity);
+var epicchainUnity = // ... get IEpicChain instance
+var rx = new EpicChainUnityRx(epicchainUnity);
 
 // Stream new blocks
 await foreach (var block in rx.GetBlockStream(fullTransactionObjects: true))
@@ -183,11 +183,11 @@ public class BlockchainMonitor : MonoBehaviour
     void Start()
     {
         monitor = GetComponent<ReactiveBlockchainMonitor>();
-        monitor.Initialize(neoUnityInstance);
+        monitor.Initialize(epicchainUnityInstance);
         monitor.OnNewBlock.AddListener(OnNewBlock);
     }
     
-    private void OnNewBlock(NeoBlock block)
+    private void OnNewBlock(EpicChainBlock block)
     {
         Debug.Log($"New block received: {block.Index}");
     }
@@ -206,7 +206,7 @@ All remaining Swift functionality has been successfully converted to C# with:
 - ✅ Production-ready implementations
 - ✅ Excellent performance characteristics
 
-The NeoUnity project now has complete feature parity with NeoSwift, providing Unity developers with the full power of Neo blockchain integration in a Unity-native C# implementation.
+The EpicChainUnity project now has complete feature parity with EpicChainSwift, providing Unity developers with the full power of EpicChain blockchain integration in a Unity-native C# implementation.
 
 **Total Classes Converted**: 6 major missing components + comprehensive reactive system
 **Test Coverage**: 100% of new implementations

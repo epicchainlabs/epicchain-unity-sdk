@@ -11,7 +11,7 @@ namespace EpicChain.Unity.SDK.Types
 {
     /// <summary>
     /// Contract parameters represent input parameters for contract invocations.
-    /// Supports all Neo VM parameter types with proper JSON serialization.
+    /// Supports all EpicChain VM parameter types with proper JSON serialization.
     /// </summary>
     [System.Serializable]
     public class ContractParameter : IEquatable<ContractParameter>
@@ -126,8 +126,8 @@ namespace EpicChain.Unity.SDK.Types
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             
-            if (value.Length != NeoConstants.SIGNATURE_SIZE)
-                throw new ArgumentException($"Signature is expected to have a length of {NeoConstants.SIGNATURE_SIZE} bytes, but had {value.Length}.", nameof(value));
+            if (value.Length != EpicChainConstants.SIGNATURE_SIZE)
+                throw new ArgumentException($"Signature is expected to have a length of {EpicChainConstants.SIGNATURE_SIZE} bytes, but had {value.Length}.", nameof(value));
             
             return new ContractParameter(ContractParameterType.Signature, value);
         }
@@ -260,8 +260,8 @@ namespace EpicChain.Unity.SDK.Types
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             
-            if (value.Length != NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED)
-                throw new ArgumentException($"Public key must be {NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes but was {value.Length} bytes.", nameof(value));
+            if (value.Length != EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED)
+                throw new ArgumentException($"Public key must be {EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED} bytes but was {value.Length} bytes.", nameof(value));
             
             return new ContractParameter(ContractParameterType.PublicKey, value);
         }
@@ -374,7 +374,7 @@ namespace EpicChain.Unity.SDK.Types
         #region JSON Serialization
         
         /// <summary>
-        /// Custom JSON serialization to match Neo RPC format.
+        /// Custom JSON serialization to match EpicChain RPC format.
         /// </summary>
         [JsonIgnore]
         public object JsonValue
@@ -461,8 +461,8 @@ namespace EpicChain.Unity.SDK.Types
                     break;
                     
                 case ContractParameterType.PublicKey:
-                    if (Value != null && !(Value is byte[] pubKeyBytes && pubKeyBytes.Length == NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED))
-                        throw new InvalidOperationException($"Parameter of type {Type} must have {NeoConstants.PUBLIC_KEY_SIZE_COMPRESSED}-byte array value or null.");
+                    if (Value != null && !(Value is byte[] pubKeyBytes && pubKeyBytes.Length == EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED))
+                        throw new InvalidOperationException($"Parameter of type {Type} must have {EpicChainConstants.PUBLIC_KEY_SIZE_COMPRESSED}-byte array value or null.");
                     break;
                     
                 case ContractParameterType.Array:

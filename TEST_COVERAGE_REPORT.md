@@ -33,7 +33,7 @@
 
 ## 📋 Test Category Breakdown
 
-### 🏗️ **Core SDK Tests (NeoUnityTests.cs)**
+### 🏗️ **Core SDK Tests (EpicChainUnityTests.cs)**
 **Coverage**: ✅ **100% Complete**
 
 #### **Test Methods (12)**:
@@ -43,7 +43,7 @@
 - ✅ `TestNetworkMagicNumberBytes_ShouldReturnCorrectBytes`
 - ✅ `TestConfigurationProperties_ShouldReturnCorrectValues`
 - ✅ `TestAllowTransmissionOnFault_ShouldUpdateConfig`
-- ✅ `TestSetNNSResolver_ShouldUpdateConfig`
+- ✅ `TestSetXNSResolver_ShouldUpdateConfig`
 - ✅ `TestGetBestBlockHash_ShouldReturnValidHash`
 - ✅ `TestGetBlockCount_ShouldReturnPositiveNumber`
 - ✅ `TestGetVersion_ShouldReturnValidVersion`
@@ -77,7 +77,7 @@
 - ✅ `TestExportAsWIF_ShouldCreateValidWIF`
 - ✅ `TestWIFRoundTrip_ShouldPreserveKeyPair`
 - ✅ `TestGetPublicKeyHex_ShouldReturnValidHex`
-- ✅ `TestGetAddress_ShouldReturnValidNeoAddress`
+- ✅ `TestGetAddress_ShouldReturnValidEpicChainAddress`
 - ✅ `TestPublicKey_ShouldBeValidECPoint`
 - ✅ `TestPublicKeyConsistency_ShouldMatchBetweenFormats`
 
@@ -125,14 +125,14 @@
 
 ---
 
-### 📄 **Contract Tests (NeoTokenTests.cs + GasTokenTests.cs)**
+### 📄 **Contract Tests (EpicChainTests.cs + EpicChainTests.cs)**
 **Coverage**: ✅ **100% Complete**
 
-#### **NEO Token Tests (20)**:
+#### **EpicChain Token Tests (20)**:
 - ✅ Candidate registration/unregistration
 - ✅ Voting operations
 - ✅ Committee and validator queries
-- ✅ Unclaimed GAS calculations
+- ✅ Unclaimed EpicPulse calculations
 - ✅ Account state management
 
 #### **GAS Token Tests (20)**:
@@ -170,7 +170,7 @@
 
 ---
 
-### 🌐 **Integration Tests (NeoUnityIntegrationTests.cs)**
+### 🌐 **Integration Tests (EpicChainUnityIntegrationTests.cs)**
 **Coverage**: ✅ **100% Complete**
 
 #### **Real Blockchain Tests (15)**:
@@ -350,7 +350,7 @@
 ### 🔧 **Unity Integration Validation**
 
 #### **MonoBehaviour Tests**
-- ✅ **NeoBlockchainManager**: Complete lifecycle testing
+- ✅ **EpicChainBlockchainManager**: Complete lifecycle testing
 - ✅ **EpicChainWalletComponent**: Full wallet operation testing
 - ✅ **Event System**: All Unity events properly tested
 - ✅ **Inspector Integration**: Serialization validation
@@ -361,7 +361,7 @@
 - ✅ **Property Validation**: Inspector field validation
 
 #### **Editor Tool Tests**
-- ✅ **NeoUnityWindow**: Developer tools testing
+- ✅ **EpicChainUnityWindow**: Developer tools testing
 - ✅ **Contract Deployment**: Deployment interface testing
 - ✅ **Context Menus**: Right-click functionality
 

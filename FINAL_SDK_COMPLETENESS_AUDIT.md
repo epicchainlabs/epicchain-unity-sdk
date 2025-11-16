@@ -72,17 +72,17 @@
 | `Token.swift` | `Token.cs` | ✅ COMPLETE | Unity caching system |
 | `FungibleToken.swift` | `FungibleToken.cs` | ✅ COMPLETE | Enhanced XEP-17 support |
 | `NonFungibleToken.swift` | `NonFungibleToken.cs` | ✅ COMPLETE | Complete XEP-11 support |
-| `NeoToken.swift` | `NeoToken.cs` | ✅ COMPLETE | Governance operations |
-| `GasToken.swift` | `GasToken.cs` | ✅ COMPLETE | Utility token operations |
+| `EpicChainswift` | `EpicChain.cs` | ✅ COMPLETE | Governance operations |
+| `EpicPulse.swift` | `EpicPulse.cs` | ✅ COMPLETE | Utility token operations |
 | `PolicyContract.swift` | `PolicyContract.cs` | ✅ COMPLETE | Network policy management |
 | `ContractManagement.swift` | `ContractManagement.cs` | ✅ COMPLETE | Contract lifecycle |
 | `RoleManagement.swift` | `RoleManagement.cs` | ✅ COMPLETE | Role assignments |
-| `NeoNameService.swift` | `NeoNameService.cs` | ✅ COMPLETE | Domain name service |
+| `EpicChainNameService.swift` | `EpicChainNameService.cs` | ✅ COMPLETE | Domain name service |
 | `Iterator.swift` | `Iterator.cs` | ✅ COMPLETE | Enhanced data traversal |
 | `NefFile.swift` | `NefFile.cs` | ✅ COMPLETE | Executable format support |
 | `EpicChainURI.swift` | `EpicChainURI.cs` | ✅ COMPLETE | URI parsing and validation |
 | `ContractError.swift` | `ContractException.cs` | ✅ COMPLETE | Enhanced error handling |
-| `NNSName.swift` | Integrated support | ✅ COMPLETE | Smart consolidation |
+| `XNSName.swift` | Integrated support | ✅ COMPLETE | Smart consolidation |
 
 #### **💸 Transaction System (12/9 Enhanced Implementation)**
 | Swift File | C# Implementation | Status | Enhancement |
@@ -93,7 +93,7 @@
 | `ContractSigner.swift` | `ContractSigner.cs` | ✅ COMPLETE | Contract-based signing |
 | `Witness.swift` | `Witness.cs` | ✅ COMPLETE | Transaction authorization |
 | `WitnessScope.swift` | `WitnessScope.cs` | ✅ COMPLETE | Scope enumeration |
-| `NeoTransaction.swift` | `NeoTransaction.cs` | ✅ COMPLETE | Transaction structure |
+| `EpicChainTransaction.swift` | `EpicChainTransaction.cs` | ✅ COMPLETE | Transaction structure |
 | `TransactionError.swift` | `TransactionException.cs` | ✅ COMPLETE | Exception hierarchy |
 | `ContractParametersContext.swift` | `ContractParametersContext.cs` | ✅ COMPLETE | Signing context |
 | | `WitnessRule.cs` | ✅ ENHANCED | **New advanced features** |
@@ -107,12 +107,12 @@
 | `Hash256.swift` | `Hash256.cs` | ✅ COMPLETE | Enhanced validation |
 | `ContractParameter.swift` | `ContractParameter.cs` | ✅ COMPLETE | Complete parameter system |
 | `ContractParameterType.swift` | `ContractParameterType.cs` | ✅ COMPLETE | JSON converter support |
-| `NeoVMStateType.swift` | `NeoVMStateType.cs` | ✅ COMPLETE | VM state enumeration |
+| `EpicChainVMStateType.swift` | `EpicChainVMStateType.cs` | ✅ COMPLETE | VM state enumeration |
 | `NodePluginType.swift` | `NodePluginType.cs` | ✅ COMPLETE | Plugin type support |
 | `CallFlags.swift` | `CallFlags.cs` | ✅ COMPLETE | Contract call flags |
 | `Aliases.swift` | `TypeAliases.cs` | ✅ COMPLETE | Type alias support |
 | | `StackItem.cs` | ✅ ENHANCED | **New VM stack support** |
-| | `NeoConstants.cs` | ✅ ENHANCED | **Expanded constants** |
+| | `EpicChainConstants.cs` | ✅ ENHANCED | **Expanded constants** |
 | | `WitnessScope.cs` | ✅ ENHANCED | **Enhanced scope support** |
 | | `RecordType.cs` | ✅ ENHANCED | **New DNS record types** |
 
@@ -143,10 +143,10 @@
 #### **🎮 Unity Integration (14/0 Revolutionary Addition)**
 | Component | Implementation | Status | Innovation |
 |-----------|----------------|--------|------------|
-| **MonoBehaviour Components** | `NeoBlockchainManager.cs` | ✅ COMPLETE | **Revolutionary** |
+| **MonoBehaviour Components** | `EpicChainBlockchainManager.cs` | ✅ COMPLETE | **Revolutionary** |
 | **Wallet Component** | `EpicChainWalletComponent.cs` | ✅ COMPLETE | **Game integration** |
-| **Editor Tools** | `NeoUnityWindow.cs` | ✅ COMPLETE | **Professional tools** |
-| **Contract Deployment** | `NeoContractDeployment.cs` | ✅ COMPLETE | **Deployment interface** |
+| **Editor Tools** | `EpicChainUnityWindow.cs` | ✅ COMPLETE | **Professional tools** |
+| **Contract Deployment** | `EpicChainContractDeployment.cs` | ✅ COMPLETE | **Deployment interface** |
 | **Example Games** | 3 complete applications | ✅ COMPLETE | **Production samples** |
 
 ---
@@ -163,7 +163,7 @@
 
 ### 🏆 **PERFECTION METRICS**
 
-| Metric | Swift NeoSwift | C# Unity SDK | Achievement |
+| Metric | Swift EpicChainSwift | C# Unity SDK | Achievement |
 |--------|----------------|--------------|-------------|
 | **File Count** | 138 files | **139 files** | ✅ **100.7%** |
 | **Code Volume** | ~20K lines | **99,128 lines** | ✅ **495%** |
@@ -249,7 +249,7 @@
 **I hereby certify with MATHEMATICAL PRECISION and ABSOLUTE CONVICTION** that:
 
 #### **PERFECT SWIFT CONVERSION (100%)**
-Every single Swift file, class, method, property, constant, enum, protocol, utility, and test scenario from the original NeoSwift SDK has been completely analyzed, converted, and enhanced in the Unity C# implementation.
+Every single Swift file, class, method, property, constant, enum, protocol, utility, and test scenario from the original EpicChainSwift SDK has been completely analyzed, converted, and enhanced in the Unity C# implementation.
 
 #### **ZERO MISSING FUNCTIONALITY**
 No Swift capability, feature, algorithm, or functionality is missing from the C# implementation. The conversion achieves mathematical perfection with 100% feature parity plus revolutionary enhancements.

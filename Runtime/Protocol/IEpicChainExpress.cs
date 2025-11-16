@@ -6,68 +6,68 @@ using EpicChainUnityRuntime.Types;
 namespace EpicChainUnityRuntime.Protocol
 {
     /// <summary>
-    /// Interface for Neo Express development features.
-    /// Neo Express is a developer-oriented blockchain for testing and development.
+    /// Interface for EpicChain Express development features.
+    /// EpicChain Express is a developer-oriented blockchain for testing and development.
     /// </summary>
     public interface IEpicChainExpress
     {
         /// <summary>
-        /// Gets the populated blocks information from Neo Express.
+        /// Gets the populated blocks information from EpicChain Express.
         /// Returns statistics about blocks that contain transactions.
         /// </summary>
         /// <returns>Populated blocks information</returns>
-        Task<NeoResponse<PopulatedBlocks>> ExpressGetPopulatedBlocks();
+        Task<EpicChainResponse<PopulatedBlocks>> ExpressGetPopulatedBlocks();
 
         /// <summary>
-        /// Gets all XEP-17 contracts deployed on Neo Express.
+        /// Gets all XEP-17 contracts deployed on EpicChain Express.
         /// Useful for discovering available tokens in development environment.
         /// </summary>
         /// <returns>List of XEP-17 contracts</returns>
-        Task<NeoResponse<List<Xep17Contract>>> ExpressGetXep17Contracts();
+        Task<EpicChainResponse<List<Xep17Contract>>> ExpressGetXep17Contracts();
 
         /// <summary>
-        /// Gets the storage entries for a specific contract on Neo Express.
+        /// Gets the storage entries for a specific contract on EpicChain Express.
         /// Allows inspection of contract state for debugging purposes.
         /// </summary>
         /// <param name="contractHash">The contract hash to get storage for</param>
         /// <returns>List of contract storage entries</returns>
-        Task<NeoResponse<List<ContractStorageEntry>>> ExpressGetContractStorage(Hash160 contractHash);
+        Task<EpicChainResponse<List<ContractStorageEntry>>> ExpressGetContractStorage(Hash160 contractHash);
 
         /// <summary>
-        /// Lists all contracts deployed on Neo Express.
+        /// Lists all contracts deployed on EpicChain Express.
         /// Includes both native and deployed contracts with their states.
         /// </summary>
         /// <returns>List of contract states</returns>
-        Task<NeoResponse<List<ExpressContractState>>> ExpressListContracts();
+        Task<EpicChainResponse<List<ExpressContractState>>> ExpressListContracts();
 
         /// <summary>
-        /// Creates a checkpoint file for Neo Express blockchain state.
+        /// Creates a checkpoint file for EpicChain Express blockchain state.
         /// Allows saving the current blockchain state to a file for later restoration.
         /// </summary>
         /// <param name="filename">The filename for the checkpoint</param>
         /// <returns>Result message</returns>
-        Task<NeoResponse<string>> ExpressCreateCheckpoint(string filename);
+        Task<EpicChainResponse<string>> ExpressCreateCheckpoint(string filename);
 
         /// <summary>
-        /// Lists all pending oracle requests on Neo Express.
+        /// Lists all pending oracle requests on EpicChain Express.
         /// Useful for development and testing of oracle functionality.
         /// </summary>
         /// <returns>List of oracle requests</returns>
-        Task<NeoResponse<List<OracleRequest>>> ExpressListOracleRequests();
+        Task<EpicChainResponse<List<OracleRequest>>> ExpressListOracleRequests();
 
         /// <summary>
-        /// Creates an oracle response transaction on Neo Express.
+        /// Creates an oracle response transaction on EpicChain Express.
         /// Allows manual creation of oracle responses for testing.
         /// </summary>
         /// <param name="oracleResponse">The oracle response transaction attribute</param>
         /// <returns>Transaction hash</returns>
-        Task<NeoResponse<string>> ExpressCreateOracleResponseTx(TransactionAttribute oracleResponse);
+        Task<EpicChainResponse<string>> ExpressCreateOracleResponseTx(TransactionAttribute oracleResponse);
 
         /// <summary>
-        /// Shuts down the Neo Express blockchain instance.
-        /// Gracefully stops the Neo Express node.
+        /// Shuts down the EpicChain Express blockchain instance.
+        /// Gracefully stops the EpicChain Express node.
         /// </summary>
         /// <returns>Shutdown information</returns>
-        Task<NeoResponse<ExpressShutdown>> ExpressShutdown();
+        Task<EpicChainResponse<ExpressShutdown>> ExpressShutdown();
     }
 }

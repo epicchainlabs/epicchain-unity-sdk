@@ -8,10 +8,10 @@ namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
     /// Response for the listplugins RPC call.
-    /// Returns a list of plugins loaded by the Neo node.
+    /// Returns a list of plugins loaded by the EpicChain node.
     /// </summary>
     [System.Serializable]
-    public class NeoListPluginsResponse : NeoResponse<List<NeoListPluginsResponse.Plugin>>
+    public class EpicChainListPluginsResponse : EpicChainResponse<List<EpicChainListPluginsResponse.Plugin>>
     {
         /// <summary>
         /// Gets the list of plugins from the response.
@@ -21,7 +21,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// <summary>
         /// Default constructor for JSON deserialization.
         /// </summary>
-        public NeoListPluginsResponse() : base()
+        public EpicChainListPluginsResponse() : base()
         {
         }
 
@@ -30,7 +30,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="plugins">The list of plugins</param>
         /// <param name="id">The request ID</param>
-        public NeoListPluginsResponse(List<Plugin> plugins, int id = 1) : base(plugins, id)
+        public EpicChainListPluginsResponse(List<Plugin> plugins, int id = 1) : base(plugins, id)
         {
         }
 
@@ -39,12 +39,12 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// </summary>
         /// <param name="error">The error information</param>
         /// <param name="id">The request ID</param>
-        public NeoListPluginsResponse(ResponseError error, int id = 1) : base(error, id)
+        public EpicChainListPluginsResponse(ResponseError error, int id = 1) : base(error, id)
         {
         }
 
         /// <summary>
-        /// Represents a Neo node plugin with its metadata.
+        /// Represents a EpicChain node plugin with its metadata.
         /// </summary>
         [System.Serializable]
         public class Plugin

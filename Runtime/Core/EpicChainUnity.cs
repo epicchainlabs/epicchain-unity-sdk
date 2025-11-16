@@ -53,7 +53,7 @@ namespace EpicChain.Unity.SDK.Core
         public EpicChainUnityConfig Config => config;
         
         /// <summary>The EpicChain Name Service resolver script hash configured in the config</summary>
-        public Hash160 NNSResolver => config?.NNSResolver ?? EpicChainUnityConfig.MAINNET_NNS_CONTRACT_HASH;
+        public Hash160 XNSResolver => config?.XNSResolver ?? EpicChainUnityConfig.MAINNET_XNS_CONTRACT_HASH;
         
         /// <summary>The interval in milliseconds in which blocks are produced</summary>
         public int BlockInterval => config?.BlockInterval ?? EpicChainUnityConfig.DEFAULT_BLOCK_TIME;
@@ -175,11 +175,11 @@ namespace EpicChain.Unity.SDK.Core
             config?.PreventTransmissionOnFault();
         }
         
-        /// <summary>Sets the EpicChain Name Service script hash that should be used to resolve NNS domain names</summary>
-        /// <param name="nnsResolver">The NNS resolver script hash</param>
-        public void SetNNSResolver(Hash160 nnsResolver)
+        /// <summary>Sets the EpicChain Name Service script hash that should be used to resolve XNS domain names</summary>
+        /// <param name="xnsResolver">The XNS resolver script hash</param>
+        public void SetXNSResolver(Hash160 xnsResolver)
         {
-            config?.SetNNSResolver(nnsResolver);
+            config?.SetXNSResolver(xnsResolver);
         }
         
         #endregion

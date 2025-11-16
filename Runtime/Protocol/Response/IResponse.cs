@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace EpicChain.Unity.SDK.Protocol.Response
 {
     /// <summary>
-    /// Base interface for all Neo RPC response objects.
+    /// Base interface for all EpicChain RPC response objects.
     /// Provides common functionality for response handling and validation.
     /// </summary>
     public interface IResponse<T>
@@ -36,7 +36,7 @@ namespace EpicChain.Unity.SDK.Protocol.Response
         /// Gets the result data or throws an exception if there was an error.
         /// </summary>
         /// <returns>The result data</returns>
-        /// <exception cref="NeoRpcException">If the response contains an error</exception>
+        /// <exception cref="EpicChainRpcException">If the response contains an error</exception>
         T GetResult();
     }
 }
